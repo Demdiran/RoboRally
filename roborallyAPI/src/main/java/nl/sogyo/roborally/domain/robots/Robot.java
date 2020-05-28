@@ -431,7 +431,4 @@ public class Robot{
         return false;
     }
 
-	public void updateCurrentCard() {
-	}
-
 }

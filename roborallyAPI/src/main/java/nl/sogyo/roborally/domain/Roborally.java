@@ -98,8 +98,7 @@ public class Roborally{
     private void robotPlaysCard(Robot robot, int cardNr){
         if(!robot.isInactive()){
             Card playingCard = robot.getCard(cardNr);
-            playingCard.doCardAction(robot, board, robots);
-            robot.updateCurrentCard();
+            playingCard.doCardAction(robot, board, robots);            
         }
     }
 

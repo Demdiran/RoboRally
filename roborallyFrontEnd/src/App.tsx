@@ -131,7 +131,6 @@ export function App() {
     async function endTurn(cardids: number[]){        
         if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
             websocket.send(JSON.stringify(cardids));
-            console.log(cardids);
         }
         else{
             console.log("No connection.");
