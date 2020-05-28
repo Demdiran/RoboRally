@@ -71,6 +71,7 @@ public class Roborally{
             }                
         }
         if(this.winner == null){
+            activateBoardElements(FastConveyorbelt.class);
             activateBoardElements(SlowConveyorbelt.class);
             activateBoardElements(Gear180.class);
             activateBoardElements(GearRight.class);
@@ -97,6 +98,7 @@ public class Roborally{
     }
 
     void activateAllBoardElements(){
+        activateBoardElements(FastConveyorbelt.class);
         activateBoardElements(SlowConveyorbelt.class);
         activateBoardElements(Gear180.class);
         activateBoardElements(GearRight.class);

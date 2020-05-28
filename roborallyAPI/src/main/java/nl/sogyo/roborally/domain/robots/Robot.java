@@ -36,7 +36,7 @@ public class Robot{
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
     boolean hasWonTheGame;
 
-    private int currentCardIndex = 0;
+    // private int currentCardIndex = 0;
     
     public Robot(){
     }

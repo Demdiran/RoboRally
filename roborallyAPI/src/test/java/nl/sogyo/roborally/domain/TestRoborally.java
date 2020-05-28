@@ -24,6 +24,10 @@ public class TestRoborally {
     private Board WINNINGTESTBOARD = null;
     private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYSLOWCONVEYORBELTWITHOUTPITTESTBOARD = null;
     private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYSLOWCONVEYORBELTWITHPITTESTBOARD = null;
+    private Board FASTCONVEYORBELTTESTBOARD = null;
+    private Board FASTCONVEYORBELTWITHPITTESTBOARD = null;
+    private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD = null;
+    private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD = null;
     private final int[] doNothingIntArray = {7,7,7,7,7};
 
     @Before
@@ -41,6 +45,10 @@ public class TestRoborally {
         WINNINGTESTBOARD = BoardFactory.createWinningBoard();
         MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYSLOWCONVEYORBELTWITHOUTPITTESTBOARD = BoardFactory.createMultipleRobotsPushedToSameSquareBySlowConveyorbeltWithoutPitTestBoard();
         MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYSLOWCONVEYORBELTWITHPITTESTBOARD = BoardFactory.createMultipleRobotsPushedToSameSquareBySlowConveyorbeltWithPitTestBoard();
+        FASTCONVEYORBELTTESTBOARD = BoardFactory.createSmallBoardWithFastConveyers();
+        FASTCONVEYORBELTWITHPITTESTBOARD = BoardFactory.createFastConveyersWithPits();
+        MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithoutPit();
+        MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithPit();
     }
 
     @Test
@@ -1200,4 +1208,125 @@ public class TestRoborally {
         assertEquals(roborally.getWinner(), robot2);
     }
 
+// -----------------------------------------------------------------------------------------------------------------------------------
+
+    // @Test
+    // public void testMovementRobotOnFastConveyorbeltNORTH(){
+    //     Robot robot = new Robot(0,4);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
+    // }
+
+    // @Test
+    // public void testMovementRobotMovesOneOnFastConveyorbeltNORTH(){
+    //     Robot robot = new Robot(0,3);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
+    // }
+
+    // @Test
+    // public void testMovementRobotOnFastConveyorbeltEAST(){
+    //     Robot robot = new Robot(0,0);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     System.out.println(robot.getXCoordinate() + " " + robot.getYCoordinate());
+    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    // }
+
+    // @Test
+    // public void testMovementRobotMovesOneOnFastConveyorbeltEAST(){
+    //     Robot robot = new Robot(1,0);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     System.out.println(robot.getXCoordinate() + " " + robot.getYCoordinate());
+    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    // }
+
+    // @Test
+    // public void testMovementRobotOnFastConveyorbeltSOUTH(){
+    //     Robot robot = new Robot(4,2);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 4 && robot.getYCoordinate() == 4);
+    // }
+
+    // @Test
+    // public void testMovementRobotMovesOneOnFastConveyorbeltSOUTH(){
+    //     Robot robot = new Robot(4,3);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 4 && robot.getYCoordinate() == 4);
+    // }
+
+    // @Test
+    // public void testMovementRobotOnFastConveyorbeltWEST(){
+    //     Robot robot = new Robot(4,0);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    // }
+    
+    // @Test
+    // public void testMovementRobotMovesOneOnFastConveyorbeltWEST(){
+    //     Robot robot = new Robot(3,0);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    // }
+
+    @Test
+    public void testFastConveyorbeltWall(){
+        Robot robot = new Robot(1,1);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 1);
+    }
+
+    // @Test
+    // public void testFastConveyorbeltWallAfterOneMove(){
+    //     Robot robot = new Robot(0,1);
+    //     robot.program(new DoNothingCard());
+    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+    //     roborally.playAllRegistersIfRobotsReady();
+    //     assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 1);
+    // }
+
+
+    //Boards that are already done and need refactored tests:
+    // FASTCONVEYORBELTWITHPITTESTBOARD
+    // MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD
+    // MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD
+
+    //Boards that need to be made:
+    // FASTCONVEYORBELTWITHROTATINGTESTBOARD
+    // probably a few more
+
+    //TODO, write:
+    //test for FastConveyorbeltPit
+    //test for FastConveyorbeltOffBoard
+
+    //test for RobotTurningLeftOnRotatingFastConveyorbelt
+    //test for RobotTurningRightOnRotatingFastConveyorbelt
+    //test for RobotTurningReverseOnRotatingFastConveyorbelt
+    //test for RobotNotTurningOnRotatingFastConveyorbelt
+    //test for RobotNotTurningOnFastConveyorbelt
+    //test for RobotNotTurningWhenPushedOffFastConveyorbelt
+
+    //test for RobotPushedOffFastConveyorbeltIntoOtherRobot
+    //test for TwoRobotsNextToEachOtherOnFastConveyorbelt
+    //test for ThreeRobotsNextToEachOtherOnFastConveyorbelt
+    //test for ThreeRobotsNextToEachOtherOnFastConveyorbeltOtherOrder
+    //test for ThreeRobotsNextToEachOtherOnFastConveyorbeltWithPit
+    //test for RobotNotTurningOnFastConveyorbeltWithOtherRobotInFrontOfObstacle
 }
