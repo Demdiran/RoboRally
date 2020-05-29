@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Deck {
-    List<Card> cardsInDeck = new ArrayList<Card>();
+    private List<Card> cardsInDeck = new ArrayList<Card>();
      
 
     public Deck(){
@@ -21,7 +21,7 @@ public class Deck {
         }
     }
     
-    List<Card> getDeck(){
+    public List<Card> getDeck(){
         return this.cardsInDeck;
     }
 
@@ -56,7 +56,7 @@ public class Deck {
     }
 
     private Card getRandomCard(){
-        Random rand = new Random();
+        Random rand = new Random(); 
         int cardIndex = rand.nextInt(cardsInDeck.size());
         Card randCard = this.cardsInDeck.get(cardIndex);
         this.cardsInDeck.remove(randCard);
@@ -68,4 +68,8 @@ public class Deck {
         this.cardsInDeck.addAll(cards);
     }
     
+    public void addCard(Card c){
+        this.cardsInDeck.add(c);
+    }
+
 }

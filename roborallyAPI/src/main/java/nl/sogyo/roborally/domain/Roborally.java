@@ -82,12 +82,13 @@ public class Roborally{
 
     private void prepareNextRound(){
         robots.sort(Robot.COMPARE_BY_NAME);
-        this.deck = new Deck();  
         for(Robot robot : robots){
             robot.cyclePowerState();
-            robot.clearHand();
-            robot.drawCards(deck);
+            robot.clearHand(deck);
             robot.unready();
+        }
+        for(Robot robot : robots){
+            robot.drawCards(deck);
         }
     }
 

@@ -35,8 +35,6 @@ public class Robot{
     String colour = "orange";
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
     boolean hasWonTheGame;
-
-    private int currentCardIndex = 0;
     
     public Robot(){
     }
@@ -279,20 +277,42 @@ public class Robot{
     }
 
     public void drawCards(Deck deck){
-        this.hand = deck.createHand(9-getHealth());
+        this.hand = deck.createHand(9-getHealth()); 
     }
     
     public List<Card> getHand(){
         return this.hand;
     }
 
-    public void clearHand(Deck d){
-        clearHand();
+    public void clearHand(Deck deck){
+        if(this.health > 4){
+            for(Card card:this.hand){
+                deck.addCard(card);
+            }
+            this.hand.clear();
+        }else{
+            lockCards(deck, 5 - this.health);
+        }
     }
 
-    public void clearHand(){
-        this.hand.clear();
+    private void lockCards(Deck deck, int nrOfCardsToLock){
+        List<Card> disposableCards = new ArrayList<>();
+        for(Card card:this.hand){
+            if( !cardInLockArea(card, nrOfCardsToLock) ){
+                disposableCards.add(card);
+                deck.addCard(card);
+            }
+        }
+        this.hand.removeAll(disposableCards);
+    }    
 
+    private boolean cardInLockArea(Card card, int nrOfCardsToLock){
+        for(int i = 4; i > 4-nrOfCardsToLock; i--){
+            if( card.equals(programmedCards[i]) ){
+                return true;
+            }
+        }        
+        return false;
     }
 
     public boolean isInactive(){
