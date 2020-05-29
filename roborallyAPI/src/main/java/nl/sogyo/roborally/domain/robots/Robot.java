@@ -25,6 +25,7 @@ public class Robot{
 
     Direction orientation = Direction.NORTH;
     Card[] programmedCards = {new DoNothingCard(),new DoNothingCard(),new DoNothingCard(),new DoNothingCard(),new DoNothingCard()};
+    private ArrayList<Card> lockedCards = new ArrayList<Card>();
     int health = 9;
     int xCoordinate;
     int yCoordinate;
@@ -285,6 +286,7 @@ public class Robot{
     }
 
     public void clearHand(Deck deck){
+        this.lockedCards.clear();
         if(this.health > 4){
             for(Card card:this.hand){
                 deck.addCard(card);
@@ -301,6 +303,8 @@ public class Robot{
             if( !cardInLockArea(card, nrOfCardsToLock) ){
                 disposableCards.add(card);
                 deck.addCard(card);
+            }else{
+                this.lockedCards.add(card);
             }
         }
         this.hand.removeAll(disposableCards);
@@ -313,6 +317,10 @@ public class Robot{
             }
         }        
         return false;
+    }
+
+    public List<Card> getLockedCards(){
+        return this.lockedCards;
     }
 
     public boolean isInactive(){

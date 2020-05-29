@@ -3,16 +3,20 @@ import { CardElement, Card } from "./Card";
 
 interface ProgrammedCardsProps{
     cards: Card[],
-    ready(cardids: number[]): void,
+    lockedcards: Card[],
+    ready(cardids: number[], lockedcardids: number[]): void,
     removeCard(cardid: number): void,
 }
 
-export function ProgrammedCards({cards, ready, removeCard}: ProgrammedCardsProps){
+export function ProgrammedCards({cards, lockedcards, ready, removeCard}: ProgrammedCardsProps){
     let mycarddivs = cards.map((card: Card, index: number) => <CardElement card={card} key={card.speed} onClick={removeCard}/>);
+    let lockedcarddivs = lockedcards.map((card: Card, index: number) => <CardElement card={card} key={card.speed} onClick={removeCard}/>);
     return (      
       <div className = "cardsinhandgrid">
-        {mycarddivs}
-        <button onClick={() => ready(cards.map((card: Card) => card.cardid))} disabled={cards.length != 5}>ready</button>
+        {mycarddivs}{lockedcarddivs}
+        <button onClick={() => ready( cards.map((card: Card) => card.cardid),
+         lockedcards.map((card: Card) => card.cardid) ) }
+         disabled={(cards.length+lockedcards.length) != 5}>ready</button>
       </div>
     );
 }

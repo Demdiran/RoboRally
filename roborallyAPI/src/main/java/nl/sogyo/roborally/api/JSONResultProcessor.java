@@ -26,10 +26,13 @@ public class JSONResultProcessor {
 
     public String createCardsResponse(Roborally rRally, Robot robot){
         List<Card> hand = robot.getHand();
+        List<Card> lockedCards = robot.getLockedCards();
         JSONArray cards = createJSONCards(hand);
+        JSONArray lockedCardsJSON = createJSONCards(lockedCards);
         JSONObject response = new JSONObject();
         response.put("messagetype", "drawncards");
         response.put("body", cards);
+        response.put("lockedcards", lockedCardsJSON);
         return response.toJSONString();
     }
 
