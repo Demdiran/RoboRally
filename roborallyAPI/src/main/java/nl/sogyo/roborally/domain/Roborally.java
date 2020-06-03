@@ -83,7 +83,7 @@ public class Roborally{
     private void prepareNextRound(){
         robots.sort(Robot.COMPARE_BY_NAME);
         for(Robot robot : robots){
-            robot.cyclePowerState();
+            robot.cyclePowerState(deck);
             robot.clearHand(deck);
             robot.unready();
         }

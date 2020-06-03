@@ -1,6 +1,7 @@
 package nl.sogyo.roborally.domain.robots;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -210,8 +211,13 @@ public class Robot{
 
     public void programFromHand(int[] cardnrs){
         if(cardnrs.length == 5){
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < 5 - this.lockedCards.size(); i++){
                 programOneCard(this.hand.get(cardnrs[i]), i);
+            }
+            int count = 0;
+            for(int i = this.hand.size(); i < 5; i++){
+                programOneCard(this.lockedCards.get(count), i);
+                count++;
             }
             this.ready = true;
         }
@@ -292,32 +298,33 @@ public class Robot{
                 deck.addCard(card);
             }
             this.hand.clear();
-        }else{
+        }else if(this.health > 0 && this.health < 5){
             lockCards(deck, 5 - this.health);
+        }else{
+            lockCards(deck, 5);
         }
     }
 
     private void lockCards(Deck deck, int nrOfCardsToLock){
         List<Card> disposableCards = new ArrayList<>();
-        for(Card card:this.hand){
-            if( !cardInLockArea(card, nrOfCardsToLock) ){
+        for(Card card: this.hand){
+            if(!Arrays.asList(programmedCards).contains(card)){
+                disposableCards.add(card);
+                deck.addCard(card);
+            }
+        }
+        int position = 0 ;
+        for(Card card:this.programmedCards){
+            if(position < 5 - nrOfCardsToLock){
                 disposableCards.add(card);
                 deck.addCard(card);
             }else{
                 this.lockedCards.add(card);
             }
+            position++;
         }
         this.hand.removeAll(disposableCards);
     }    
-
-    private boolean cardInLockArea(Card card, int nrOfCardsToLock){
-        for(int i = 4; i > 4-nrOfCardsToLock; i--){
-            if( card.equals(programmedCards[i]) ){
-                return true;
-            }
-        }        
-        return false;
-    }
 
     public List<Card> getLockedCards(){
         return this.lockedCards;
@@ -331,10 +338,13 @@ public class Robot{
         return this.activitylevel == ActivityLevel.POWERINGDOWN;
     }
 
-    public void shutDown(){
+    public void shutDown(Deck d){
         this.activitylevel = ActivityLevel.INACTIVE;
         for(int i=0;i<5;i++){
             this.programmedCards[i] = new DoNothingCard();
+        }
+        for(Card card: this.lockedCards){
+            d.addCard(card);
         }
         this.health = 9;
     }
@@ -343,9 +353,9 @@ public class Robot{
         this.activitylevel = ActivityLevel.ACTIVE;
     }
 
-    public void cyclePowerState(){
+    public void cyclePowerState(Deck d){
         if(this.activitylevel == ActivityLevel.POWERINGDOWN){
-            this.shutDown();
+            this.shutDown(d);
         }
         else if(this.activitylevel == ActivityLevel.INACTIVE){
             this.activate();

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import nl.sogyo.roborally.domain.Direction;
 import nl.sogyo.roborally.domain.cards.Card;
+import nl.sogyo.roborally.domain.cards.Deck;
 import nl.sogyo.roborally.domain.cards.DoNothingCard;
 import nl.sogyo.roborally.domain.cards.MoveBackCard;
 import nl.sogyo.roborally.domain.cards.MoveOneCard;
@@ -80,6 +81,44 @@ public class TestRobot{
         int[] cardnrs = {6,7,7,7,7};
         robot.program(cardnrs);
         assertTrue(robot.getCard(0) instanceof MoveBackCard);
+    }
+
+    @Test
+    public void robotHasLockedCardsWithLess4health(){
+        Deck deck = new Deck();
+        Robot robot = new Robot();
+        robot.drawCards(deck);
+        robot.takeDamage(5);
+        robot.clearHand(deck);;
+        assertTrue(robot.getLockedCards().size() == 1);
+        robot.takeDamage(1);
+        robot.clearHand(deck);;
+        assertTrue(robot.getLockedCards().size() == 2);
+        robot.takeDamage(3);
+        robot.clearHand(deck);;
+        assertTrue(robot.getLockedCards().size() == 5);
+    }
+
+    @Test
+    public void deckRefillsAfterPowerCycle(){
+        Deck deck = new Deck();
+        Robot robot = new Robot();
+        robot.drawCards(deck);
+        robot.takeDamage(5);
+        int[] cardnrs = {0,1,2,3,4};
+        robot.programFromHand(cardnrs);
+        robot.clearHand(deck);
+        assertEquals(deck.getSize(), 83);
+        System.out.println(robot.getHand().size()); 
+        robot.drawCards(deck);
+        robot.takeDamage(1);
+        robot.programFromHand(cardnrs);
+        robot.clearHand(deck);
+        assertTrue(deck.getSize() == 82);
+        robot.drawCards(deck);
+        robot.takeDamage(3);
+        robot.clearHand(deck);;
+        assertTrue(deck.getSize() == 79);
     }
 
 }
