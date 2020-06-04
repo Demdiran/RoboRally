@@ -2,7 +2,6 @@ package nl.sogyo.roborally.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class RoborallyWebsocket{
         System.out.println("Message received: " + message);
         if(message.contains("initialize")){
             String name = message.split(" ")[1];
-            Robot robot = new Robot(name, robots.size());
+            Robot robot = new Robot(name, roborally.getBoard(), robots.size());
             robots.put(session, robot);
             roborally.addRobot(robot);
             players.add(session);

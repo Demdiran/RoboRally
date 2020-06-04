@@ -46,6 +46,14 @@ public class Robot{
         else this.colour = "orange";
     }
 
+    public Robot(String name, Board board, int initNumber){
+        this.name = name;
+        if(initNumber < 6) this.colour = colours[initNumber];
+        else this.colour = "orange";
+        board.setRespawnSquare(this, initNumber);
+
+    }
+
     public Robot(int xCoordinate, int yCoordinate, String name, int colourNr){
         this(xCoordinate, yCoordinate);
         this.name = name;
@@ -122,9 +130,12 @@ public class Robot{
             return false;
     }
 
-    public void setRespawnPoint(int xCoordinate, int yCoordinate){
-        this.respawnX = xCoordinate;
-        this.respawnY = yCoordinate;
+    public void setRespawnPointAndCurrentPosition(int x, int y, Direction dir){
+        this.respawnX = x;
+        this.respawnY = y;
+        this.xCoordinate = x;
+        this.yCoordinate = y;
+        this.orientation = dir;
     }
 
     public void moveForward(){
@@ -431,7 +442,8 @@ public class Robot{
     }
 
     public void reachCheckpoint(){
-        setRespawnPoint(getXCoordinate(), getYCoordinate());
+        this.respawnX = getXCoordinate();
+        this.respawnY = getYCoordinate();
         this.hasReachedCheckpoint = true;
     }
 

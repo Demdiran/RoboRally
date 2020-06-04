@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import nl.sogyo.roborally.domain.Direction;
 import nl.sogyo.roborally.domain.elements.Laser;
+import nl.sogyo.roborally.domain.robots.Robot;
 
 public class Board{
 
@@ -89,5 +90,26 @@ public class Board{
 
 	public ArrayList<Laser> getLasers(){
 		return lasers;
+	}
+
+	public void setRespawnSquare(Robot robot, int spawningNumber){
+		int count = -1;
+		int xRespawnPoint = 0;
+		int yRespawnPoint = 0;
+		Direction spawningDirection = Direction.NORTH;
+		outerloop: for(int i=0; i< this.squares.size();i++){
+						ArrayList<Square> currentRow = this.squares.get(i);
+						for(int j=0; j<currentRow.size(); j++){
+							if(currentRow.get(j).respawnSquare)count++;
+							if(count == spawningNumber){
+								xRespawnPoint = i;
+								yRespawnPoint = j;
+								spawningDirection = currentRow.get(j).dir;
+
+								break outerloop;
+							}
+						}
+					}
+		robot.setRespawnPointAndCurrentPosition(xRespawnPoint, yRespawnPoint, spawningDirection);
 	}
 }
