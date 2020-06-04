@@ -484,7 +484,7 @@ public class BoardFactory{
 		row1.add(new FinalCheckPoint());
 		row2.add(new EmptySquare());
 		row2.add(new EmptySquare());
-		row2.add(new EmptySquare());
+		row2.add(new Checkpoint());
 		winningBoard.addRow(row1);
 		winningBoard.addRow(row2);
 		return winningBoard;

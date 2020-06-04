@@ -1159,26 +1159,24 @@ public class TestRoborally {
     }
 
     @Test
-    public void testWinning(){
+    public void testRobotDoesNotWinIfNotReachedFirstCheckpoint(){
         Robot robot = new Robot(0,0);
         Roborally roborally = new Roborally(WINNINGTESTBOARD, robot);
         robot.program(new RotateRightCard());
         roborally.playAllRegistersIfRobotsReady();
-        assertEquals(roborally.getWinner(), null);
         robot.program(new MoveTwoCard());
         roborally.playAllRegistersIfRobotsReady();
-        assertEquals(roborally.getWinner(), robot);
+        assertEquals(roborally.getWinner(), null);
     }
 
     @Test
     public void testWinningIfFinalPointIsNotTheEnd(){
         Robot robot = new Robot(0,0);
         Roborally roborally = new Roborally(WINNINGTESTBOARD, robot);
+        robot.reachCheckpoint();
         robot.program(new RotateRightCard());
         roborally.playAllRegistersIfRobotsReady();
-        assertEquals(roborally.getWinner(), null);
-        Card[] cards = {new DoNothingCard(), new MoveTwoCard(),new UTurnCard(), new MoveOneCard(), new DoNothingCard()};
-        robot.program(cards);
+        robot.program(new MoveTwoCard());
         roborally.playAllRegistersIfRobotsReady();
         assertEquals(roborally.getWinner(), robot);
     }
@@ -1187,6 +1185,8 @@ public class TestRoborally {
     public void testWinningWhenTwoRobotsReachFinalPoint(){
         Robot robot1 = new Robot(0,0);
         Robot robot2 = new Robot(2,1);
+        robot1.reachCheckpoint();
+        robot2.reachCheckpoint();
         Roborally roborally = new Roborally(WINNINGTESTBOARD, robot1);
         roborally.addRobot(robot2);
         robot1.program(new RotateRightCard());

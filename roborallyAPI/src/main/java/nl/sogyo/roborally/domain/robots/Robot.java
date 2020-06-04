@@ -34,6 +34,7 @@ public class Robot{
     String name = "defaultname";
     String colour = "orange";
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
+    boolean hasReachedCheckpoint;
     boolean hasWonTheGame;
     
     public Robot(){
@@ -429,7 +430,19 @@ public class Robot{
         return false;
     }
 
+    public void reachCheckpoint(){
+        setRespawnPoint(getXCoordinate(), getYCoordinate());
+        this.hasReachedCheckpoint = true;
+    }
+
+    public boolean hasReachedCheckpoint(){
+        if(this.hasReachedCheckpoint) return true;
+        return false;
+    }
+
 	public void updateCurrentCard() {
-	}
+    }
+    
+    
 
 }
