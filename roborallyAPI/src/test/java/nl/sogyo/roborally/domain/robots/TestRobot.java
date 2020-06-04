@@ -100,7 +100,7 @@ public class TestRobot{
     }
 
     @Test
-    public void deckRefillsAfterPowerCycle(){
+    public void deckHasLessCardsWhenRobotHasLockedCards1(){
         Deck deck = new Deck();
         Robot robot = new Robot();
         robot.drawCards(deck);
@@ -109,16 +109,47 @@ public class TestRobot{
         robot.programFromHand(cardnrs);
         robot.clearHand(deck);
         assertEquals(deck.getSize(), 83);
-        System.out.println(robot.getHand().size()); 
+    }
+
+    @Test
+    public void deckHasLessCardsWhenRobotHasLockedCards2(){
+        Deck deck = new Deck();
+        Robot robot = new Robot();
         robot.drawCards(deck);
-        robot.takeDamage(1);
+        robot.takeDamage(6);
+        int[] cardnrs = {0,1,2,3,4};
         robot.programFromHand(cardnrs);
         robot.clearHand(deck);
         assertTrue(deck.getSize() == 82);
+    }
+
+    @Test
+    public void deckHasLessCardsWhenRobotHasLockedCards3(){
+        Deck deck = new Deck();
+        Robot robot = new Robot();
         robot.drawCards(deck);
-        robot.takeDamage(3);
-        robot.clearHand(deck);;
+        robot.takeDamage(9);
+        int[] cardnrs = {0,1,2,3,4};
+        robot.programFromHand(cardnrs);
+        robot.clearHand(deck);
         assertTrue(deck.getSize() == 79);
     }
+
+    @Test
+    public void deckRefillsAfterPowerCycle(){
+        Deck deck = new Deck();
+        Robot robot = new Robot();
+        robot.drawCards(deck);
+        robot.takeDamage(9);
+        int[] cardnrs = {0,1,2,3,4};
+        robot.programFromHand(cardnrs);
+        robot.shutDown(deck);
+        robot.clearHand(deck);
+        assertTrue(deck.getSize() == 84);
+    }
+
+
+
+
 
 }
