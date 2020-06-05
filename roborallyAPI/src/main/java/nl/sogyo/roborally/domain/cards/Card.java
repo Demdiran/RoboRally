@@ -22,13 +22,13 @@ public abstract class Card{
 	protected boolean moveRobotInDirectionIfPossible(Robot robot, Direction direction, Board board, List<Robot> otherRobots){
         boolean hasMoved = true;
         boolean isBlockedByWall = checkForWall(robot, direction, board);
-        if(!isBlockedByWall){
+        if( !isBlockedByWall && robot.isOnBoard() ){
             robot.move(direction);
             for(Robot otherRobot : otherRobots){
                 if(otherRobot.isAt(robot.getXCoordinate(), robot.getYCoordinate()) && otherRobot != robot){
                     hasMoved &= moveRobotInDirectionIfPossible(otherRobot, direction, board, otherRobots);
                     if(hasMoved){
-                        respawnIfNecessary(otherRobot, board);
+                        setOffBoardIfNecessary(robot, board);
                     }
                     else{
                         robot.move(direction.getReverse());
@@ -48,26 +48,25 @@ public abstract class Card{
         return currentPosition.hasWallAt(direction);
     }
     
-    protected boolean respawnIfNecessary(Robot robot, Board board){        
+    protected void setOffBoardIfNecessary(Robot robot, Board board){        
         if(robotNotOnBoard(robot, board) || robotInPit(robot, board)) {
-            robot.respawn();
-            return true;
+            robot.setOffBoard();;
         }
+    }
+    
+    private boolean robotNotOnBoard(Robot robot, Board board){
+        return robot.getXCoordinate() < 0 || robot.getYCoordinate() < 0 || robot.getXCoordinate() >= board.getWidth() || robot.getYCoordinate() >= board.getHeight();
+    }
+
+    private boolean robotInPit(Robot robot, Board board){
+        Square square = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+        if(square instanceof Pit) return true;
         return false;
     }
 
     protected void checkIfWinner(Robot robot, Board board){
         Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
         if(currentPosition instanceof FinalCheckPoint && robot.hasReachedCheckpoint()) robot.setToWinner();;             
-    }
-    
-    private boolean robotNotOnBoard(Robot robot, Board board){
-        return robot.getXCoordinate() < 0 || robot.getYCoordinate() < 0 || robot.getXCoordinate() >= board.getWidth() || robot.getYCoordinate() >= board.getHeight();
-    }
-    
-    private boolean robotInPit(Robot robot, Board board){
-        Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-        return (currentPosition instanceof Pit);
     }
 
     public int getSpeed(){

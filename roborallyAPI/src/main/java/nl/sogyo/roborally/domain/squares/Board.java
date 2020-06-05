@@ -93,23 +93,28 @@ public class Board{
 	}
 
 	public void setRespawnSquare(Robot robot, int spawningNumber){
-		int count = -1;
+		int countRespawnSquares = -1;
 		int xRespawnPoint = 0;
 		int yRespawnPoint = 0;
 		Direction spawningDirection = Direction.NORTH;
 		outerloop: for(int i=0; i< this.squares.size();i++){
 						ArrayList<Square> currentRow = this.squares.get(i);
 						for(int j=0; j<currentRow.size(); j++){
-							if(currentRow.get(j).respawnSquare)count++;
-							if(count == spawningNumber){
+							if(currentRow.get(j).respawnSquare)countRespawnSquares++;
+							if(countRespawnSquares == spawningNumber){
 								xRespawnPoint = i;
 								yRespawnPoint = j;
 								spawningDirection = currentRow.get(j).dir;
-
 								break outerloop;
 							}
 						}
 					}
 		robot.setRespawnPointAndCurrentPosition(xRespawnPoint, yRespawnPoint, spawningDirection);
 	}
+
+	public boolean squareExists(int x, int y){
+		if(x < this.squares.size() && y < this.squares.get(x).size() ) return true;
+		return false;
+	}
+
 }

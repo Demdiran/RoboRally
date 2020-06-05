@@ -17,7 +17,6 @@ public class MoveBackCard extends Card{
 
     public void doCardAction(Robot robot, Board board, List<Robot> robots){
         moveRobotInDirectionIfPossible(robot, robot.getOrientation().getReverse(), board, robots);
-        respawnIfNecessary(robot, board);
         checkIfWinner(robot, board);
     }
 

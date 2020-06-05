@@ -70,7 +70,7 @@ public class SlowConveyorbelt extends Square{
                         if(otherRobotMoved){
                             turnRobotIfNecessary(robot, board);
                             robot.move(direction);
-                            respawnRobotIfNecessary(robot, board);
+                            setRobotOffBoardIfNecessary(robot, board);
                         }
                         else canMove = false;
                         break;
@@ -82,10 +82,10 @@ public class SlowConveyorbelt extends Square{
                 if(!otherRobotAtDestination){
                     turnRobotIfNecessary(robot, board);
                     robot.move(direction);
-                    respawnRobotIfNecessary(robot, board);
+                    setRobotOffBoardIfNecessary(robot, board);
                 }
             }
-            else robot.respawn();
+            else setRobotOffBoardIfNecessary(robot, board);
         }
         else canMove = false;
         robotsOnSlowConveyorbelt.remove(robot);
@@ -144,12 +144,10 @@ public class SlowConveyorbelt extends Square{
         else return board.getSquare(xCoordinate, yCoordinate);
     }
     
-    private boolean respawnRobotIfNecessary(Robot robot, Board board){        
+    private void setRobotOffBoardIfNecessary(Robot robot, Board board){        
         if(robotNotOnBoard(robot, board) || robotInPit(robot, board)) {
-            robot.respawn();
-            return true;
+            robot.setOffBoard();;
         }
-        return false;
     }
     
     private boolean robotNotOnBoard(Robot robot, Board board){
