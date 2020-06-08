@@ -32,7 +32,7 @@ public class Robot{
     int yCoordinate;
     int respawnX;
     int respawnY;
-    boolean ready = false;
+    boolean ready;
     String name = "defaultname";
     String colour = "orange";
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
@@ -210,6 +210,7 @@ public class Robot{
     }
 
     public void programFromHand(int[] cardnrs){
+        this.ready = true;
         if(cardnrs.length == 5){
             for(int i = 0; i < 5 - this.lockedCards.size(); i++){
                 programOneCard(this.hand.get(cardnrs[i]), i);
