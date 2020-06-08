@@ -21,14 +21,13 @@ public abstract class Card{
 
 	protected boolean moveRobotInDirectionIfPossible(Robot robot, Direction direction, Board board, List<Robot> otherRobots){
         boolean hasMoved = true;
-        boolean isBlockedByWall = checkForWall(robot, direction, board);
-        if( !isBlockedByWall && robot.isOnBoard() ){
+        if( robot.isOnBoard() && !hasWallInFront(robot, direction, board)){
             robot.move(direction);
             for(Robot otherRobot : otherRobots){
                 if(otherRobot.isAt(robot.getXCoordinate(), robot.getYCoordinate()) && otherRobot != robot){
                     hasMoved &= moveRobotInDirectionIfPossible(otherRobot, direction, board, otherRobots);
                     if(hasMoved){
-                        setOffBoardIfNecessary(robot, board);
+                        setOffBoardIfNecessary(otherRobot, board);
                     }
                     else{
                         robot.move(direction.getReverse());
@@ -36,6 +35,7 @@ public abstract class Card{
                     break;
                 }
             }
+            setOffBoardIfNecessary(robot, board);
         }
         else{
             hasMoved = false;
@@ -43,7 +43,7 @@ public abstract class Card{
         return hasMoved;
     }
     
-    private boolean checkForWall(Robot robot, Direction direction, Board board){
+    private boolean hasWallInFront(Robot robot, Direction direction, Board board){
         Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
         return currentPosition.hasWallAt(direction);
     }
@@ -65,8 +65,10 @@ public abstract class Card{
     }
 
     protected void checkIfWinner(Robot robot, Board board){
-        Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-        if(currentPosition instanceof FinalCheckPoint && robot.hasReachedCheckpoint()) robot.setToWinner();;             
+        if(robot.isOnBoard()){
+            Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+            if(currentPosition instanceof FinalCheckPoint && robot.hasReachedCheckpoint()) robot.setToWinner(); 
+        }            
     }
 
     public int getSpeed(){

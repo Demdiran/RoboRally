@@ -137,7 +137,9 @@ public class Roborally{
 
     private void fireRobotLasers(){
         for(Robot robot : robots){
-            robot.fireLaser(robots, board);
+            if(robot.isOnBoard()){
+                robot.fireLaser(robots, board);
+            }
         }
     }
 

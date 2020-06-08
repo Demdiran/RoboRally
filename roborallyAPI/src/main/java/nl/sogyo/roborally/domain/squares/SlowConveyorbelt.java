@@ -37,14 +37,18 @@ public class SlowConveyorbelt extends Square{
 
     @Override
     public void doSquareAction(Robot robot, Board board, List<Robot> robots){
-        moveRobotInDirectionIfPossible(robot, movementDirection, board, robots);
+        if(robot.isOnBoard()){
+            moveRobotInDirectionIfPossible(robot, movementDirection, board, robots);
+        }
     }
 
     public static void addRobotsToSlowConveyorbeltList(Board board, List<Robot> robots){
         for(Robot robot : robots){
-            Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-            if(currentPosition instanceof SlowConveyorbelt & !(robotsOnSlowConveyorbelt.contains(robot))){
-                robotsOnSlowConveyorbelt.add(robot);
+            if(robot.isOnBoard()){
+                Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+                if(currentPosition instanceof SlowConveyorbelt & !(robotsOnSlowConveyorbelt.contains(robot))){
+                    robotsOnSlowConveyorbelt.add(robot);
+                }
             }
         }
     }

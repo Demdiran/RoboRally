@@ -18,7 +18,6 @@ public class MoveOneCard extends Card{
 	public void doCardAction(Robot robot, Board board, List<Robot> robots){
         moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);
         checkIfWinner(robot, board);
-
     }
 
     // public void doCardAction(Robot robot, Board board){

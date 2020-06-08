@@ -54,5 +54,13 @@ public abstract class Square{
     
     public abstract String getType();
 
+    public Direction getRespawnDirection(){
+        if(this.respawnSquare){
+            return this.dir;
+        }else{
+            return Direction.NORTH;
+        }
+    }
+
     public abstract void doSquareAction(Robot robot, Board board, List<Robot> robots);
 }

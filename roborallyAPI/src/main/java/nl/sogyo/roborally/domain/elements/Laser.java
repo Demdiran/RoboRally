@@ -53,7 +53,10 @@ public class Laser{
         }
     }
     
-
+    private void fireInDirection(List<Robot> robots, Board board, Direction dir){
+        
+    }
+    
     private void fireNorth(List<Robot> robots, Board board){
         int xCoordinate = this.xCoordinate;
         int yCoordinate = this.yCoordinate;

@@ -113,7 +113,7 @@ public class Board{
 	}
 
 	public boolean squareExists(int x, int y){
-		if(x < this.squares.size() && y < this.squares.get(x).size() ) return true;
+		if(x < this.squares.size() && y < this.squares.get(x).size() && x > 0 && y > 0 ) return true;
 		return false;
 	}
 

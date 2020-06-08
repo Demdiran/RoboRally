@@ -450,7 +450,7 @@ public class BoardFactory{
 		
 		ArrayList<Square> row2 = new ArrayList<>();
 		row2.add(new EmptySquare("WRs"));
-		row2.add(new EmptySquare());
+		row2.add(new Checkpoint());
 		row2.add(new EmptySquare());
 		row2.add(new EmptySquare());
 		
@@ -464,7 +464,7 @@ public class BoardFactory{
 		row4.add(new EmptySquare("Rs"));
 		row4.add(new EmptySquare("S"));
 		row4.add(new EmptySquare());
-		row4.add(new Checkpoint());
+		row4.add(new FinalCheckPoint());
 
 		defaultBoard.addRow(row1);
 		defaultBoard.addRow(row2);

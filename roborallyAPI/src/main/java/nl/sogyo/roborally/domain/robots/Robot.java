@@ -253,6 +253,7 @@ public class Robot{
         if(!this.onBoard){
             this.xCoordinate = this.respawnX;
             this.yCoordinate = this.respawnY;
+            this.orientation = board.getSquare(this.xCoordinate, this.yCoordinate).getRespawnDirection();
             for(Robot r: robots){
                 if(!r.equals(this)&& r.getXCoordinate() == this.respawnX && r.getYCoordinate() == this.respawnY){
                     r.moveToSurroundingSquare(board, robots);
@@ -404,15 +405,17 @@ public class Robot{
     }
 
     public void fireLaser(List<Robot> robots, Board board){
-        switch(this.orientation){
-            case NORTH: fireNorth(robots, board);
-                        break;
-            case EAST: fireEast(robots, board);
-                        break;                        
-            case SOUTH: fireSouth(robots, board);
-                        break;            
-            case WEST: fireWest(robots, board);
-                        break;
+        if(isOnBoard()){
+            switch(this.orientation){
+                case NORTH: fireNorth(robots, board);
+                            break;
+                case EAST: fireEast(robots, board);
+                            break;                        
+                case SOUTH: fireSouth(robots, board);
+                            break;            
+                case WEST: fireWest(robots, board);
+                            break;
+            }
         }
     }
 
