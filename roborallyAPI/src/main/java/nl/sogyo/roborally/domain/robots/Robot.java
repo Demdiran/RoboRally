@@ -35,11 +35,6 @@ public class Robot{
     String colour = "orange";
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
     boolean hasWonTheGame;
-<<<<<<< HEAD
-
-    // private int currentCardIndex = 0;
-=======
->>>>>>> master
     
     public Robot(){
     }
