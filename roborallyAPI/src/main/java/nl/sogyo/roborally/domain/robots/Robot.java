@@ -532,6 +532,7 @@ public class Robot{
     }
 
     public void setOffBoard(){
+        System.out.println("Setting robot off board..");
         this.onBoard = false;
     }
 

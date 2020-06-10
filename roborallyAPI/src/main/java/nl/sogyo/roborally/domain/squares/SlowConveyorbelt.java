@@ -38,7 +38,7 @@ public class SlowConveyorbelt extends Square{
     @Override
     public void doSquareAction(Robot robot, Board board, List<Robot> robots){
         if(robot.isOnBoard()){
-            moveRobotInDirectionIfPossible(robot, movementDirection, board, robots);
+            moveRobotInDirectionIfPossible(robot, board, robots);
         }
     }
 
@@ -57,66 +57,73 @@ public class SlowConveyorbelt extends Square{
         robotsOnSlowConveyorbelt.clear();
     }
 
-    private boolean moveRobotInDirectionIfPossible(Robot robot, Direction direction, Board board, List<Robot> otherRobots){
+    private boolean moveRobotInDirectionIfPossible(Robot robot, Board board, List<Robot> robots){
         boolean canMove = true;
         SlowConveyorbelt currentPosition = (SlowConveyorbelt) board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-        boolean isBlockedByWall = currentPosition.hasWallAt(direction);
+        boolean isBlockedByWall = currentPosition.hasWallAt(this.movementDirection);
         boolean robotHasNotAlreadyMovedOnBelt = robotsOnSlowConveyorbelt.contains(robot);
-        if(!isBlockedByWall & robotHasNotAlreadyMovedOnBelt & !robotsHaveSameDestination(robot, board)){
-            Square destination = getDestination(robot.getXCoordinate(), robot.getYCoordinate(), board);
-            if(destination != null){
-                boolean otherRobotAtDestination = false;
-                for(Robot otherRobot : otherRobots){
-                    otherRobotAtDestination = checkIfOtherRobotIsAtDestination(otherRobot, board, destination);
-                    if(otherRobotAtDestination && (otherRobot != robot & destination instanceof SlowConveyorbelt)){
-                        SlowConveyorbelt destinationBelt = (SlowConveyorbelt) destination;
-                        boolean otherRobotMoved = destinationBelt.moveRobotInDirectionIfPossible(otherRobot, destinationBelt.getMovementDirection(), board, otherRobots);
-                        if(otherRobotMoved){
-                            turnRobotIfNecessary(robot, board);
-                            robot.move(direction);
-                            setRobotOffBoardIfNecessary(robot, board);
-                        }
-                        else canMove = false;
-                        break;
-                    } else if(otherRobotAtDestination && (otherRobot != robot & !(destination instanceof SlowConveyorbelt))){
-                        canMove = false;
-                        break;
-                    }
-                }
-                if(!otherRobotAtDestination){
-                    turnRobotIfNecessary(robot, board);
-                    robot.move(direction);
-                    setRobotOffBoardIfNecessary(robot, board);
-                }
+        Square destination = getDestination(robot.getXCoordinate(), robot.getYCoordinate(), board);
+        if(!isBlockedByWall & robotHasNotAlreadyMovedOnBelt &! robotsHaveSameDestination(robot, board)){
+            if(destination == null){
+                robot.setOffBoard();
+            }else{
+                canMove = moveRobotIfSquareIsNotNull(robot, destination, board, robots);
             }
-            else setRobotOffBoardIfNecessary(robot, board);
-        }
-        else canMove = false;
+        }else{
+            canMove = false;
+        } 
         robotsOnSlowConveyorbelt.remove(robot);
         return canMove;
     }
 
-    private boolean checkIfOtherRobotIsAtDestination(Robot otherRobot, Board board, Square destination){
-        Square otherRobotPosition = board.getSquare(otherRobot.getXCoordinate(), otherRobot.getYCoordinate());
-        if(destination == otherRobotPosition) return true;
-        else return false;
+    private boolean moveRobotIfSquareIsNotNull(Robot robot, Square destination, Board board, List<Robot> robots){
+        boolean canMove = true;
+        Robot otherRobotAtDestination = findOtherRobotAtDestination(robot, board, destination, robots);
+        if(otherRobotAtDestination == null){
+            turnRobotIfNecessary(robot, board);
+            robot.move(this.movementDirection);
+            setRobotOffBoardIfNecessary(robot, board);
+        }else{
+            canMove = moveRobotWhenOtherRobotIsOnItsDestination(robot, otherRobotAtDestination, destination, board, robots);
+        }
+        return canMove;
+    }
+
+    private boolean moveRobotWhenOtherRobotIsOnItsDestination(Robot robot, Robot otherRobot, Square destination, Board board, List<Robot> robots){
+        boolean canMove = false;
+        if(destination instanceof SlowConveyorbelt){
+            SlowConveyorbelt destinationBelt = (SlowConveyorbelt) destination;
+            boolean otherRobotMoved = destinationBelt.moveRobotInDirectionIfPossible(otherRobot, board, robots);
+            if(otherRobotMoved){
+                turnRobotIfNecessary(robot, board);
+                robot.move(this.movementDirection);
+                setRobotOffBoardIfNecessary(robot, board);
+                canMove = true;
+            }
+        }
+        return canMove;
+    }
+
+    private Robot findOtherRobotAtDestination(Robot robot, Board board, Square destination, List<Robot> robots){
+        for(Robot otherRobot : robots){
+            Square otherRobotPosition = board.getSquare(otherRobot.getXCoordinate(), otherRobot.getYCoordinate());
+            if(otherRobot != robot && destination == otherRobotPosition){
+                return otherRobot;
+            }
+        }
+        return null;
     }
 
     private boolean robotsHaveSameDestination(Robot robot, Board board){
         Square currentRobotDestination = getDestination(robot.getXCoordinate(), robot.getYCoordinate(), board);
         boolean destinationMatch = false;
-        if(!(currentRobotDestination instanceof Pit)){
-            ArrayList<Robot> copyRobotsOnSlowConveyorbelt = new ArrayList<Robot>();
-            for(Robot robotOnOriginalList : robotsOnSlowConveyorbelt) copyRobotsOnSlowConveyorbelt.add(robotOnOriginalList);
-            for(Robot otherRobot : copyRobotsOnSlowConveyorbelt){
-                if(robotsOnSlowConveyorbelt.size() > 1){
-                Square otherRobotDestination = getDestination(otherRobot.getXCoordinate(), otherRobot.getYCoordinate(), board);
-                if((otherRobotDestination == currentRobotDestination) && (otherRobot != robot)){
-                    destinationMatch = true;
-                    robotsOnSlowConveyorbelt.remove(otherRobot);
-                    }
-                } else break;
-            }
+        for(Robot otherRobot : robotsOnSlowConveyorbelt){
+            Square otherRobotDestination = getDestination(otherRobot.getXCoordinate(), otherRobot.getYCoordinate(), board);
+            if(otherRobotDestination == currentRobotDestination &&
+                        otherRobot != robot && !(currentRobotDestination instanceof Pit) ){
+                destinationMatch = true;
+                robotsOnSlowConveyorbelt.remove(otherRobot);
+            }                
         }
         return destinationMatch;
     }
@@ -150,7 +157,7 @@ public class SlowConveyorbelt extends Square{
     
     private void setRobotOffBoardIfNecessary(Robot robot, Board board){        
         if(robotNotOnBoard(robot, board) || robotInPit(robot, board)) {
-            robot.setOffBoard();;
+            robot.setOffBoard();
         }
     }
     
