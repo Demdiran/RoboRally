@@ -1221,70 +1221,68 @@ public class TestRoborally {
         assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
     }
 
-    // @Test
-    // public void testMovementRobotMovesOneOnFastConveyorbeltNORTH(){
-    //     Robot robot = new Robot(0,3);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
-    // }
+    @Test
+    public void testMovementRobotMovesOneOnFastConveyorbeltNORTH(){
+        Robot robot = new Robot(0,3);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
+    }
 
-    // @Test
-    // public void testMovementRobotOnFastConveyorbeltEAST(){
-    //     Robot robot = new Robot(0,0);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     System.out.println(robot.getXCoordinate() + " " + robot.getYCoordinate());
-    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
-    // }
+    @Test
+    public void testMovementRobotOnFastConveyorbeltEAST(){
+        Robot robot = new Robot(0,0);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    }
 
-    // @Test
-    // public void testMovementRobotMovesOneOnFastConveyorbeltEAST(){
-    //     Robot robot = new Robot(1,0);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     System.out.println(robot.getXCoordinate() + " " + robot.getYCoordinate());
-    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
-    // }
+    @Test
+    public void testMovementRobotMovesOneOnFastConveyorbeltEAST(){
+        Robot robot = new Robot(1,0);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    }
 
-    // @Test
-    // public void testMovementRobotOnFastConveyorbeltSOUTH(){
-    //     Robot robot = new Robot(4,2);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 4 && robot.getYCoordinate() == 4);
-    // }
+    @Test
+    public void testMovementRobotOnFastConveyorbeltSOUTH(){
+        Robot robot = new Robot(4,2);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 4 && robot.getYCoordinate() == 4);
+    }
 
-    // @Test
-    // public void testMovementRobotMovesOneOnFastConveyorbeltSOUTH(){
-    //     Robot robot = new Robot(4,3);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 4 && robot.getYCoordinate() == 4);
-    // }
+    @Test
+    public void testMovementRobotMovesOneOnFastConveyorbeltSOUTH(){
+        Robot robot = new Robot(4,3);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 4 && robot.getYCoordinate() == 4);
+    }
 
-    // @Test
-    // public void testMovementRobotOnFastConveyorbeltWEST(){
-    //     Robot robot = new Robot(4,0);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
-    // }
+    @Test
+    public void testMovementRobotOnFastConveyorbeltWEST(){
+        Robot robot = new Robot(4,0);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    }
     
-    // @Test
-    // public void testMovementRobotMovesOneOnFastConveyorbeltWEST(){
-    //     Robot robot = new Robot(3,0);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
-    // }
+    @Test
+    public void testMovementRobotMovesOneOnFastConveyorbeltWEST(){
+        Robot robot = new Robot(3,0);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 2 && robot.getYCoordinate() == 0);
+    }
 
     @Test
     public void testFastConveyorbeltWall(){
@@ -1295,14 +1293,14 @@ public class TestRoborally {
         assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 1);
     }
 
-    // @Test
-    // public void testFastConveyorbeltWallAfterOneMove(){
-    //     Robot robot = new Robot(0,1);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 1);
-    // }
+    @Test
+    public void testFastConveyorbeltWallAfterOneMove(){
+        Robot robot = new Robot(0,1);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 1);
+    }
 
 
     //Boards that are already done and need refactored tests:
