@@ -121,11 +121,13 @@ public class Roborally{
 
     private <T extends Square> void activateBoardElements(Class<T> elementTypeToActivate){
         SlowConveyorbelt.addRobotsToSlowConveyorbeltList(board, robots);
+        FastConveyorbelt.addRobotsToFastConveyorbeltList(board, robots);
         for(Robot robot : robots){
             Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
             if(elementTypeToActivate.isInstance(position)) position.doSquareAction(robot, board, robots);
         }
         SlowConveyorbelt.clearListRobotsOnSlowConveyorbelt();
+        FastConveyorbelt.clearListRobotsOnFastConveyorbelt();
     }
 
     private void fireBoardLasers(){

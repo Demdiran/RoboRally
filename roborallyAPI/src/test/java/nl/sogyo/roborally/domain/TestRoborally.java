@@ -1212,14 +1212,14 @@ public class TestRoborally {
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 
-    // @Test
-    // public void testMovementRobotOnFastConveyorbeltNORTH(){
-    //     Robot robot = new Robot(0,4);
-    //     robot.program(new DoNothingCard());
-    //     Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
-    //     roborally.playAllRegistersIfRobotsReady();
-    //     assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
-    // }
+    @Test
+    public void testMovementRobotOnFastConveyorbeltNORTH(){
+        Robot robot = new Robot(0,4, "Robot1", 7);
+        robot.program(new DoNothingCard());
+        Roborally roborally = new Roborally(FASTCONVEYORBELTTESTBOARD, robot);
+        roborally.playAllRegistersIfRobotsReady();
+        assert(robot.getXCoordinate() == 0 && robot.getYCoordinate() == 2);
+    }
 
     // @Test
     // public void testMovementRobotMovesOneOnFastConveyorbeltNORTH(){

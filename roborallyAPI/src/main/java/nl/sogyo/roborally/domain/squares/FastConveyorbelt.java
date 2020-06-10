@@ -171,27 +171,33 @@ public class FastConveyorbelt extends Square {
      * @return The expected destination of a FastConveyorbelt
      */
     private Square getDestination(int xCoordinate, int yCoordinate, Board board){
+        System.out.println("Getting the destination of the square at position [" + xCoordinate + "," + yCoordinate + "].");
         FastConveyorbelt origin = (FastConveyorbelt) board.getSquare(xCoordinate, yCoordinate);
         boolean onlyOneStepForward = true;
         switch(origin.movementDirection){
-            case NORTH: if(board.getSquare(xCoordinate, yCoordinate--) instanceof FastConveyorbelt) onlyOneStepForward = false;
+            case NORTH: int yCoordinateIntermediateDestinationNorth = yCoordinate - 1;
+                        if(board.getSquare(xCoordinate, yCoordinateIntermediateDestinationNorth) instanceof FastConveyorbelt) onlyOneStepForward = false;
                         if(onlyOneStepForward) yCoordinate--;
                         else yCoordinate = yCoordinate-2;
                         break;
-            case EAST: if(board.getSquare(xCoordinate++, yCoordinate) instanceof FastConveyorbelt) onlyOneStepForward = false;
+            case EAST: int xCoordinateIntermediateDestinationEast = xCoordinate + 1;
+                        if(board.getSquare(xCoordinateIntermediateDestinationEast, yCoordinate) instanceof FastConveyorbelt) onlyOneStepForward = false;
                         if(onlyOneStepForward) xCoordinate++;
                         else xCoordinate = xCoordinate+2;
                         break;
-            case SOUTH: if(board.getSquare(xCoordinate, yCoordinate++) instanceof FastConveyorbelt) onlyOneStepForward = false;
+            case SOUTH: int yCoordinateIntermediateDestinationSouth = yCoordinate + 1;
+                        if(board.getSquare(xCoordinate, yCoordinateIntermediateDestinationSouth) instanceof FastConveyorbelt) onlyOneStepForward = false;
                         if(onlyOneStepForward) yCoordinate++;
                         else yCoordinate = yCoordinate+2;
                         break;
-            case WEST: if(board.getSquare(xCoordinate--, yCoordinate) instanceof FastConveyorbelt) onlyOneStepForward = false;
+            case WEST: int xCoordinateIntermediateDestinationWest = xCoordinate - 1;
+                        if(board.getSquare(xCoordinateIntermediateDestinationWest, yCoordinate) instanceof FastConveyorbelt) onlyOneStepForward = false;
                         if(onlyOneStepForward) xCoordinate--;
                         else xCoordinate = xCoordinate-2;
                         break;
         }
-        System.out.println("The current robot needs to move " + onlyOneStepForward + " steps.");
+        System.out.println("The destination of the current square is at position [" + xCoordinate + "," + yCoordinate + "].");
+        System.out.println("The current robot needs to move only one step forward: " + onlyOneStepForward);
         if(xCoordinate < 0 || yCoordinate < 0 || xCoordinate >= board.getWidth() || yCoordinate >= board.getHeight()) return null;
         else return board.getSquare(xCoordinate, yCoordinate);
     }
