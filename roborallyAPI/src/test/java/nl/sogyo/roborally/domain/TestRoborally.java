@@ -28,6 +28,7 @@ public class TestRoborally {
     private Board FASTCONVEYORBELTWITHPITTESTBOARD = null;
     private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD = null;
     private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD = null;
+    private Board BIGFASTCONVEYORBELTTESTBOARD = null;
     private final int[] doNothingIntArray = {7,7,7,7,7};
 
     @Before
@@ -49,6 +50,7 @@ public class TestRoborally {
         FASTCONVEYORBELTWITHPITTESTBOARD = BoardFactory.createFastConveyersWithPits();
         MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithoutPit();
         MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithPit();
+        BIGFASTCONVEYORBELTTESTBOARD = BoardFactory.createBigFastConveyorBeltTestBoard();
     }
 
     @Test
