@@ -871,6 +871,7 @@ public class BoardFactory{
 		row9.add(new EmptySquare());
 		row9.add(new FastConveyorbelt(Direction.NORTH));
 
+		bigFastConveyorBeltTestBoard.addRow(row0);
 		bigFastConveyorBeltTestBoard.addRow(row1);
 		bigFastConveyorBeltTestBoard.addRow(row2);
 		bigFastConveyorBeltTestBoard.addRow(row3);
@@ -1007,6 +1008,7 @@ public class BoardFactory{
 		row9.add(new EmptySquare());
 		row9.add(new EmptySquare());
 
+		fastConveyorBeltFrontEndGameBoard.addRow(row0);
 		fastConveyorBeltFrontEndGameBoard.addRow(row1);
 		fastConveyorBeltFrontEndGameBoard.addRow(row2);
 		fastConveyorBeltFrontEndGameBoard.addRow(row3);
