@@ -554,7 +554,6 @@ public class Robot{
         return false;
     }
 
-<<<<<<< HEAD
     public void reachCheckpoint(){
         this.respawnX = getXCoordinate();
         this.respawnY = getYCoordinate();
@@ -580,6 +579,4 @@ public class Robot{
 
     }
 
-=======
->>>>>>> master
 }

@@ -1177,7 +1177,7 @@ public class TestRoborally {
     }
 
     @Test
-    public void testWinningWhenTwoRobotsReachFinalPoint(){
+    public void testWinningWhenTwoRobotsReachFinalPoint1(){
         Robot robot1 = new Robot(0,0);
         Robot robot2 = new Robot(2,1);
         robot1.reachCheckpoint();

@@ -19,11 +19,7 @@ import nl.sogyo.roborally.domain.squares.BoardFactory;
 
 @ServerEndpoint(value = "/websocket")
 public class RoborallyWebsocket{
-<<<<<<< HEAD
     private static final Roborally roborally = new Roborally(BoardFactory.createSlowConveyorbeltTestBoardOther());
-=======
-    private static final Roborally roborally = new Roborally(BoardFactory.createLockingCardsTestBoard());
->>>>>>> master
     private static final List<Session> players = new ArrayList<>();
     private static final Map<Session, Robot> robots = new HashMap<>();
     
