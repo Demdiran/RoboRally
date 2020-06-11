@@ -195,4 +195,12 @@ public class TestBoard{
         assert(bigFastConveyorBeltTestBoard.allLasersOnWalls());
     }
 
+    @Test
+    public void testFastConveyorBeltFrontEndGameBoard(){
+        Board fastConveyorBeltFrontEndGameBoard = BoardFactory.createFastConveyorBeltFrontEndGameBoard();
+        assert(fastConveyorBeltFrontEndGameBoard.isRectangular());
+        assert(fastConveyorBeltFrontEndGameBoard.hasConsistentWalls());
+        assert(fastConveyorBeltFrontEndGameBoard.allLasersOnWalls());
+    }
+
 }

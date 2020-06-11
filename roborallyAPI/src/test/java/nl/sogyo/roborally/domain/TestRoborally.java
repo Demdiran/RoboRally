@@ -1302,31 +1302,28 @@ public class TestRoborally {
         assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 1);
     }
 
-
-    //Boards that are already done and need refactored tests:
+    //Boards that are already done and ready tests:
     // FASTCONVEYORBELTWITHPITTESTBOARD
     // MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD
     // MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD
+    // BIGFASTCONVEYORBELTTESTBOARD
 
-    //Boards that need to be made:
-    // FASTCONVEYORBELTWITHROTATINGTESTBOARD
-    // probably a few more
-
-    //TODO, write:
-    //test for FastConveyorbeltPit
-    //test for FastConveyorbeltOffBoard
-
+    //todo, write:
+    //test for robots pushed into pit (after 0 and 1 step)
+    //test for robots pushed off board (after 0 and 1 step)
+    //test for robots pushed into wall (after 0 and 1 step)
+    
+    //test for RobotPushedOffFastConveyorbeltIntoOtherRobot
+    //test for TwoRobotsNextToEachOtherOnFastConveyorbelt
+    //test for ThreeRobotsNextToEachOtherOnFastConveyorbelt
+    //test for ThreeRobotsNextToEachOtherOnFastConveyorbeltOtherOrder
+    //test for ThreeRobotsNextToEachOtherOnFastConveyorbeltWithPit
+    
+    //test for RobotNotTurningOnFastConveyorbeltWithOtherRobotInFrontOfObstacle
     //test for RobotTurningLeftOnRotatingFastConveyorbelt
     //test for RobotTurningRightOnRotatingFastConveyorbelt
     //test for RobotTurningReverseOnRotatingFastConveyorbelt
     //test for RobotNotTurningOnRotatingFastConveyorbelt
     //test for RobotNotTurningOnFastConveyorbelt
     //test for RobotNotTurningWhenPushedOffFastConveyorbelt
-
-    //test for RobotPushedOffFastConveyorbeltIntoOtherRobot
-    //test for TwoRobotsNextToEachOtherOnFastConveyorbelt
-    //test for ThreeRobotsNextToEachOtherOnFastConveyorbelt
-    //test for ThreeRobotsNextToEachOtherOnFastConveyorbeltOtherOrder
-    //test for ThreeRobotsNextToEachOtherOnFastConveyorbeltWithPit
-    //test for RobotNotTurningOnFastConveyorbeltWithOtherRobotInFrontOfObstacle
 }

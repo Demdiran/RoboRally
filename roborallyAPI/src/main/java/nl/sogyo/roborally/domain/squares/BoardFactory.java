@@ -884,4 +884,140 @@ public class BoardFactory{
 		return bigFastConveyorBeltTestBoard;
 	}
 
+	public static Board createFastConveyorBeltFrontEndGameBoard(){
+		Board fastConveyorBeltFrontEndGameBoard = new Board();
+
+		ArrayList<Square> row0 = new ArrayList<>();
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new Pit());
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare("E"));
+		row1.add(new EmptySquare("W"));
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new EmptySquare());
+		row1.add(new GearRight());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		row3.add(new EmptySquare("E"));
+		row3.add(new EmptySquare("W"));
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new GearLeft());
+		row3.add(new EmptySquare());
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.SOUTH));
+		row5.add(new EmptySquare("E"));
+		row5.add(new EmptySquare("W"));
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+
+		ArrayList<Square> row6 = new ArrayList<>();
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+
+		ArrayList<Square> row7 = new ArrayList<>();
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new FastConveyorbelt(Direction.EAST));
+		row7.add(new FastConveyorbelt(Direction.EAST, "S"));
+		row7.add(new FastConveyorbelt(Direction.EAST, "S"));
+		row7.add(new FastConveyorbelt(Direction.EAST, "S"));
+		row7.add(new FastConveyorbelt(Direction.EAST));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+
+		ArrayList<Square> row8 = new ArrayList<>();
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new FastConveyorbelt(Direction.WEST));
+		row8.add(new FastConveyorbelt(Direction.WEST, "N"));
+		row8.add(new FastConveyorbelt(Direction.WEST, "N"));
+		row8.add(new FastConveyorbelt(Direction.WEST, "N"));
+		row8.add(new FastConveyorbelt(Direction.WEST));
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+
+		ArrayList<Square> row9 = new ArrayList<>();
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+
+		fastConveyorBeltFrontEndGameBoard.addRow(row1);
+		fastConveyorBeltFrontEndGameBoard.addRow(row2);
+		fastConveyorBeltFrontEndGameBoard.addRow(row3);
+		fastConveyorBeltFrontEndGameBoard.addRow(row4);
+		fastConveyorBeltFrontEndGameBoard.addRow(row5);
+		fastConveyorBeltFrontEndGameBoard.addRow(row6);
+		fastConveyorBeltFrontEndGameBoard.addRow(row7);
+		fastConveyorBeltFrontEndGameBoard.addRow(row8);
+		fastConveyorBeltFrontEndGameBoard.addRow(row9);
+
+		return fastConveyorBeltFrontEndGameBoard;
+	}
+
 }
