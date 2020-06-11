@@ -23,6 +23,7 @@ public class Roborally{
 
     public Roborally(Robot robot){
         this.robots.add(robot);
+        this.board = BoardFactory.createTESTBOARD4X4();
     }
 
     public Roborally(Board board){
@@ -88,8 +89,18 @@ public class Roborally{
             robot.unready();
             robot.respawnIfNecessary(board, robots);
         }
+        removeUnactiveRobots();
         for(Robot robot : robots){
             robot.drawCards(deck);
+        }
+    }
+
+    private void removeUnactiveRobots(){
+        List<Robot> copyRobots = new ArrayList<Robot>(robots);
+        for(Robot r:copyRobots){
+            if(!r.isOnBoard()){
+                robots.remove(r);
+            }
         }
     }
 
