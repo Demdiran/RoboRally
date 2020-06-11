@@ -86,6 +86,7 @@ public class Roborally{
             robot.cyclePowerState(deck);
             robot.clearHand(deck);
             robot.unready();
+            robot.respawnIfNecessary(board, robots);
         }
         for(Robot robot : robots){
             robot.drawCards(deck);
@@ -120,8 +121,10 @@ public class Roborally{
     private <T extends Square> void activateBoardElements(Class<T> elementTypeToActivate){
         SlowConveyorbelt.addRobotsToSlowConveyorbeltList(board, robots);
         for(Robot robot : robots){
-            Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-            if(elementTypeToActivate.isInstance(position)) position.doSquareAction(robot, board, robots);
+            if(robot.isOnBoard()){
+                Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+                if(elementTypeToActivate.isInstance(position)) position.doSquareAction(robot, board, robots);
+            }
         }
         SlowConveyorbelt.clearListRobotsOnSlowConveyorbelt();
     }
@@ -134,7 +137,9 @@ public class Roborally{
 
     private void fireRobotLasers(){
         for(Robot robot : robots){
-            robot.fireLaser(robots, board);
+            if(robot.isOnBoard()){
+                robot.fireLaser(robots, board);
+            }
         }
     }
 

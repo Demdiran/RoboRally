@@ -17,14 +17,10 @@ public class MoveThreeCard extends Card{
 
     public void doCardAction(Robot robot, Board board, List<Robot> robots){
         boolean hasMoved = moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);
-        boolean hasRespawned = respawnIfNecessary(robot, board);
-        if(hasMoved && !hasRespawned){
-            hasMoved = moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);
-            hasRespawned = respawnIfNecessary(robot, board);
-            
-            if(hasMoved && !hasRespawned){
+        if(hasMoved && robot.isOnBoard()){
+            hasMoved = moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);            
+            if(hasMoved && robot.isOnBoard()){
                 moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);
-                respawnIfNecessary(robot, board);
                 checkIfWinner(robot, board);
             }
         }

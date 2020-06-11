@@ -2,7 +2,6 @@ package nl.sogyo.roborally.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import nl.sogyo.roborally.domain.squares.BoardFactory;
 
 @ServerEndpoint(value = "/websocket")
 public class RoborallyWebsocket{
-    private static final Roborally roborally = new Roborally(BoardFactory.createLockingCardsTestBoard());
+    private static final Roborally roborally = new Roborally(BoardFactory.createSlowConveyorbeltTestBoardOther());
     private static final List<Session> players = new ArrayList<>();
     private static final Map<Session, Robot> robots = new HashMap<>();
     
@@ -34,7 +33,7 @@ public class RoborallyWebsocket{
         System.out.println("Message received: " + message);
         if(message.contains("initialize")){
             String name = message.split(" ")[1];
-            Robot robot = new Robot(name, robots.size());
+            Robot robot = new Robot(name, roborally.getBoard(), robots.size());
             robots.put(session, robot);
             roborally.addRobot(robot);
             players.add(session);

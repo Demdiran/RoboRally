@@ -441,29 +441,29 @@ public class BoardFactory{
 		Board defaultBoard = new Board();
 
 		ArrayList<Square> row1 = new ArrayList<>();
-		row1.add(new EmptySquare());
+		row1.add(new EmptySquare("Rs"));
 		row1.add(new EmptySquare());
 		row1.add(new EmptySquare("N"));
 		row1.add(new EmptySquare());
 
 		
 		ArrayList<Square> row2 = new ArrayList<>();
-		row2.add(new EmptySquare("W"));
-		row2.add(new EmptySquare());
+		row2.add(new EmptySquare("WRs"));
+		row2.add(new Checkpoint());
 		row2.add(new EmptySquare());
 		row2.add(new EmptySquare());
 		
 		ArrayList<Square> row3 = new ArrayList<>();
-		row3.add(new EmptySquare());
+		row3.add(new EmptySquare("Rs"));
 		row3.add(new EmptySquare());
 		row3.add(new EmptySquare());
 		row3.add(new EmptySquare("E"));
 		
 		ArrayList<Square> row4 = new ArrayList<>();
-		row4.add(new EmptySquare());
+		row4.add(new EmptySquare("Rs"));
 		row4.add(new EmptySquare("S"));
 		row4.add(new EmptySquare());
-		row4.add(new Checkpoint());
+		row4.add(new FinalCheckPoint());
 
 		defaultBoard.addRow(row1);
 		defaultBoard.addRow(row2);
@@ -483,7 +483,7 @@ public class BoardFactory{
 		row1.add(new FinalCheckPoint());
 		row2.add(new EmptySquare());
 		row2.add(new EmptySquare());
-		row2.add(new EmptySquare());
+		row2.add(new Checkpoint());
 		winningBoard.addRow(row1);
 		winningBoard.addRow(row2);
 		return winningBoard;

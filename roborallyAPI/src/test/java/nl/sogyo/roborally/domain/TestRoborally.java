@@ -362,8 +362,7 @@ public class TestRoborally {
         assert(robot.isAt(0, 0));
     }
     
-// --------------------------------------------------
-
+// --------------------------------------------------SlowconveyerBelt START
     @Test
     public void testMovementRobotOnSlowConveyorbeltNORTH(){
         Robot robot = new Robot(0,2);
@@ -572,10 +571,6 @@ public class TestRoborally {
         robot2.setRespawnPoint(1, 4);
         Robot robot3 = new Robot(1, 1, "Robot3", 7);
         robot3.setRespawnPoint(0, 5);
-        Card card = new DoNothingCard();
-        robot1.program(card);
-        robot2.program(card);
-        robot3.program(card);
         Roborally roborally = new Roborally(MULTIPLEROBOTSONSLOWCONVEYORBELTWITHPITTESTBOARD);
         roborally.addRobot(robot1);
         roborally.addRobot(robot2);
@@ -583,7 +578,7 @@ public class TestRoborally {
         roborally.activateAllBoardElements();
         assert(robot1.getXCoordinate() == 1 && robot1.getYCoordinate() == 2);
         assert(robot2.getXCoordinate() == 1 && robot2.getYCoordinate() == 1);        
-        assert(robot3.getXCoordinate() == 0 && robot3.getYCoordinate() == 5);        
+        assert(robot3.getXCoordinate() == -1 && robot3.getYCoordinate() == -1);        
     }
 
     @Test
@@ -597,7 +592,7 @@ public class TestRoborally {
         Roborally roborally = new Roborally(MULTIPLEROBOTSONSLOWCONVEYORBELTTESTBOARD);
         roborally.addRobot(robot1);
         roborally.addRobot(robot2);
-        roborally.activateAllBoardElements();
+        roborally.playAllRegistersIfRobotsReady();
         assert(robot1.getXCoordinate() == 0 && robot1.getYCoordinate() == 0);
         assert(robot2.getXCoordinate() == 0 && robot2.getYCoordinate() == 1);        
     }
@@ -618,7 +613,7 @@ public class TestRoborally {
         roborally.addRobot(robot1);
         roborally.addRobot(robot2);
         roborally.addRobot(robot3);
-        roborally.activateAllBoardElements();
+        roborally.playAllRegistersIfRobotsReady();
         assert(robot1.getXCoordinate() == 0 && robot1.getYCoordinate() == 1);
         assert(robot1.getOrientation() == Direction.EAST);
         assert(robot2.getXCoordinate() == 1 && robot2.getYCoordinate() == 1);
@@ -664,7 +659,7 @@ public class TestRoborally {
         roborally.addRobot(robot2);
         roborally.addRobot(robot3);
         roborally.addRobot(robot4);
-        roborally.activateAllBoardElements();
+        roborally.playAllRegistersIfRobotsReady();
         assert(robot1.getXCoordinate() == 0 && robot1.getYCoordinate() == 0);
         assert(robot2.getXCoordinate() == 2 && robot2.getYCoordinate() == 0);
         assert(robot3.getXCoordinate() == 2 && robot3.getYCoordinate() == 2);
@@ -745,24 +740,24 @@ public class TestRoborally {
     
     @Test
     public void testCheckpoint(){
-        Robot robot = new Robot(3,2, Direction.SOUTH);
+        Robot robot = new Robot(1,0, Direction.SOUTH);
         robot.setRespawnPoint(0, 0);
         robot.program(0);
         Roborally roborally = new Roborally(TESTBOARD4X4, robot);
         assert(robot.getRespawnXCoordinate() == 0 && robot.getRespawnYCoordinate() == 0);
         roborally.playAllRegistersIfRobotsReady();
-        assert(robot.getRespawnXCoordinate() == 3 && robot.getRespawnYCoordinate() == 3);
+        assert(robot.getRespawnXCoordinate() == 1 && robot.getRespawnYCoordinate() == 1);
     }
 
     @Test
     public void testCheckpoint2(){
-        Robot robot = new Robot(2,3, Direction.EAST);
+        Robot robot = new Robot(0,1, Direction.EAST);
         robot.setRespawnPoint(0, 0);
         robot.program(0);
         Roborally roborally = new Roborally(TESTBOARD4X4, robot);
         assert(robot.getRespawnXCoordinate() == 0 && robot.getRespawnYCoordinate() == 0);
         roborally.playAllRegistersIfRobotsReady();
-        assert(robot.getRespawnXCoordinate() == 3 && robot.getRespawnYCoordinate() == 3);
+        assert(robot.getRespawnXCoordinate() == 1 && robot.getRespawnYCoordinate() == 1);
     }
 
     @Test
@@ -1159,34 +1154,34 @@ public class TestRoborally {
     }
 
     @Test
-    public void testWinning(){
+    public void testRobotDoesNotWinIfNotReachedFirstCheckpoint(){
         Robot robot = new Robot(0,0);
         Roborally roborally = new Roborally(WINNINGTESTBOARD, robot);
         robot.program(new RotateRightCard());
         roborally.playAllRegistersIfRobotsReady();
-        assertEquals(roborally.getWinner(), null);
         robot.program(new MoveTwoCard());
         roborally.playAllRegistersIfRobotsReady();
-        assertEquals(roborally.getWinner(), robot);
+        assertEquals(roborally.getWinner(), null);
     }
 
     @Test
     public void testWinningIfFinalPointIsNotTheEnd(){
         Robot robot = new Robot(0,0);
         Roborally roborally = new Roborally(WINNINGTESTBOARD, robot);
+        robot.reachCheckpoint();
         robot.program(new RotateRightCard());
         roborally.playAllRegistersIfRobotsReady();
-        assertEquals(roborally.getWinner(), null);
-        Card[] cards = {new DoNothingCard(), new MoveTwoCard(),new UTurnCard(), new MoveOneCard(), new DoNothingCard()};
-        robot.program(cards);
+        robot.program(new MoveTwoCard());
         roborally.playAllRegistersIfRobotsReady();
         assertEquals(roborally.getWinner(), robot);
     }
 
     @Test
-    public void testWinningWhenTwoRobotsReachFinalPoint(){
+    public void testWinningWhenTwoRobotsReachFinalPoint1(){
         Robot robot1 = new Robot(0,0);
         Robot robot2 = new Robot(2,1);
+        robot1.reachCheckpoint();
+        robot2.reachCheckpoint();
         Roborally roborally = new Roborally(WINNINGTESTBOARD, robot1);
         roborally.addRobot(robot2);
         robot1.program(new RotateRightCard());

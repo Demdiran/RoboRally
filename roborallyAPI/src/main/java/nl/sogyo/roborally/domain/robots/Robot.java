@@ -33,9 +33,11 @@ public class Robot{
     int respawnX;
     int respawnY;
     boolean ready;
+    boolean onBoard = true;
     String name = "defaultname";
     String colour = "orange";
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
+    boolean hasReachedCheckpoint;
     boolean hasWonTheGame;
     
     public Robot(){
@@ -45,6 +47,14 @@ public class Robot{
         this.name = name;
         if(colourNr < 6) this.colour = colours[colourNr];
         else this.colour = "orange";
+    }
+
+    public Robot(String name, Board board, int initNumber){
+        this.name = name;
+        if(initNumber < 6) this.colour = colours[initNumber];
+        else this.colour = "orange";
+        board.setRespawnSquare(this, initNumber);
+
     }
 
     public Robot(int xCoordinate, int yCoordinate, String name, int colourNr){
@@ -123,9 +133,17 @@ public class Robot{
             return false;
     }
 
-    public void setRespawnPoint(int xCoordinate, int yCoordinate){
-        this.respawnX = xCoordinate;
-        this.respawnY = yCoordinate;
+    public void setRespawnPointAndCurrentPosition(int x, int y, Direction dir){
+        this.respawnX = x;
+        this.respawnY = y;
+        this.xCoordinate = x;
+        this.yCoordinate = y;
+        this.orientation = dir;
+    }
+
+    public void setRespawnPoint(int x, int y){
+        this.respawnX = x;
+        this.respawnY = y;
     }
 
     public void moveForward(){
@@ -239,9 +257,73 @@ public class Robot{
         this.orientation = this.orientation.getReverse();
     }
 
-    public void respawn(){
-        this.xCoordinate = this.respawnX;
-        this.yCoordinate = this.respawnY;
+    public void respawnIfNecessary(Board board, List<Robot> robots){
+        if(!this.onBoard){
+            this.xCoordinate = this.respawnX;
+            this.yCoordinate = this.respawnY;
+            this.orientation = board.getSquare(this.xCoordinate, this.yCoordinate).getRespawnDirection();
+            for(Robot r: robots){
+                if(!r.equals(this)&& r.getXCoordinate() == this.respawnX && r.getYCoordinate() == this.respawnY){
+                    r.moveToSurroundingSquare(board, robots);
+                }
+            }
+        }
+        this.onBoard = true;
+    }
+
+    private void moveToSurroundingSquare(Board board, List<Robot> robots){
+        for(int attempt = 1 ; attempt<9;attempt++){
+            if(moveToSurroundingSquareAttempt(board, robots, attempt)) break;
+        }
+
+    }
+
+    private boolean moveToSurroundingSquareAttempt(Board board, List<Robot> robots, int attempt){
+        switch(attempt){
+            case 1:
+                if( nextSquareIsFree(board, robots, 1,0) ) return true;
+                break;
+            case 2:
+                if( nextSquareIsFree(board, robots, 0,1) ) return true;
+                break;
+            case 3:
+                if( nextSquareIsFree(board, robots, -1,0) ) return true;
+                break;
+            case 4:
+                if( nextSquareIsFree(board, robots, 0,-1) ) return true;
+                break;
+            case 5:
+                if( nextSquareIsFree(board, robots, 1,1) ) return true;
+                break;
+            case 6:
+                if( nextSquareIsFree(board, robots, -1,1) ) return true;
+                break;
+            case 7:
+                if( nextSquareIsFree(board, robots, 1,-1) ) return true;
+                break;
+            case 8:
+                if( nextSquareIsFree(board, robots, -1,-1) ) return true;
+                break;
+        }
+        return false;
+
+    }
+
+    private boolean nextSquareIsFree(Board board, List<Robot> robots, int xDistance, int yDistance){
+        int xCoor = getXCoordinate() + xDistance;
+        int yCoor = getYCoordinate() + yDistance;
+        for(Robot r: robots){
+            if( r.isOnCoordinates(xCoor, yCoor) && board.squareExists(xCoor, xCoor) ){
+                this.xCoordinate += xDistance;
+                this.yCoordinate += yDistance;
+                return true;
+             }
+        }
+        return false;
+    }
+
+    private boolean isOnCoordinates(int x, int y){
+        return getXCoordinate() == x && getYCoordinate() == y;
     }
 
     public void setXCoordinate(int xCoordinate){
@@ -364,15 +446,17 @@ public class Robot{
     }
 
     public void fireLaser(List<Robot> robots, Board board){
-        switch(this.orientation){
-            case NORTH: fireNorth(robots, board);
-                        break;
-            case EAST: fireEast(robots, board);
-                        break;                        
-            case SOUTH: fireSouth(robots, board);
-                        break;            
-            case WEST: fireWest(robots, board);
-                        break;
+        if(isOnBoard()){
+            switch(this.orientation){
+                case NORTH: fireNorth(robots, board);
+                            break;
+                case EAST: fireEast(robots, board);
+                            break;                        
+                case SOUTH: fireSouth(robots, board);
+                            break;            
+                case WEST: fireWest(robots, board);
+                            break;
+            }
         }
     }
 
@@ -468,6 +552,31 @@ public class Robot{
     public boolean isWinner(){
         if(this.hasWonTheGame) return true;
         return false;
+    }
+
+    public void reachCheckpoint(){
+        this.respawnX = getXCoordinate();
+        this.respawnY = getYCoordinate();
+        this.hasReachedCheckpoint = true;
+    }
+
+    public boolean hasReachedCheckpoint(){
+        if(this.hasReachedCheckpoint) return true;
+        return false;
+    }
+
+	public void updateCurrentCard() {
+    }
+    
+    public boolean isOnBoard(){
+        return this.onBoard;
+    }
+
+    public void setOffBoard(){
+        this.onBoard = false;
+        this.xCoordinate = -1;
+        this.yCoordinate = -1;
+
     }
 
 }
