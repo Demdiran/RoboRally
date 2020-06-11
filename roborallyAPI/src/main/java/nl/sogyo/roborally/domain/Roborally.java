@@ -82,13 +82,14 @@ public class Roborally{
 
     private void prepareNextRound(){
         robots.sort(Robot.COMPARE_BY_NAME);
-        this.deck = new Deck();  
         for(Robot robot : robots){
-            robot.cyclePowerState();
-            robot.clearHand();
-            robot.drawCards(deck);
+            robot.cyclePowerState(deck);
+            robot.clearHand(deck);
             robot.unready();
             robot.respawnIfNecessary(board, robots);
+        }
+        for(Robot robot : robots){
+            robot.drawCards(deck);
         }
     }
 
@@ -109,8 +110,7 @@ public class Roborally{
     private void robotPlaysCard(Robot robot, int cardNr){
         if(!robot.isInactive()){
             Card playingCard = robot.getCard(cardNr);
-            playingCard.doCardAction(robot, board, robots);
-            robot.updateCurrentCard();
+            playingCard.doCardAction(robot, board, robots);            
         }
     }
 

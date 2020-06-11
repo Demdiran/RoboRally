@@ -1,6 +1,7 @@
 package nl.sogyo.roborally.domain.robots;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Robot{
 
     Direction orientation = Direction.NORTH;
     Card[] programmedCards = {new DoNothingCard(),new DoNothingCard(),new DoNothingCard(),new DoNothingCard(),new DoNothingCard()};
+    private ArrayList<Card> lockedCards = new ArrayList<Card>();
     int health = 9;
     int xCoordinate;
     int yCoordinate;
@@ -228,9 +230,15 @@ public class Robot{
     public void programFromHand(int[] cardnrs){
         this.ready = true;
         if(cardnrs.length == 5){
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < 5 - this.lockedCards.size(); i++){
                 programOneCard(this.hand.get(cardnrs[i]), i);
             }
+            int count = 0;
+            for(int i = this.hand.size(); i < 5; i++){
+                programOneCard(this.lockedCards.get(count), i);
+                count++;
+            }
+            this.ready = true;
         }
         else{
             throw new RuntimeException("must program 5 cards");
@@ -359,20 +367,50 @@ public class Robot{
     }
 
     public void drawCards(Deck deck){
-        this.hand = deck.createHand(9-getHealth());
+        this.hand = deck.createHand(9-getHealth()); 
     }
     
     public List<Card> getHand(){
         return this.hand;
     }
 
-    public void clearHand(Deck d){
-        clearHand();
+    public void clearHand(Deck deck){
+        this.lockedCards.clear();
+        if(this.health > 4){
+            for(Card card:this.hand){
+                deck.addCard(card);
+            }
+            this.hand.clear();
+        }else if(this.health > 0 && this.health < 5){
+            lockCards(deck, 5 - this.health);
+        }else{
+            lockCards(deck, 5);
+        }
     }
 
-    public void clearHand(){
-        this.hand.clear();
+    private void lockCards(Deck deck, int nrOfCardsToLock){
+        List<Card> disposableCards = new ArrayList<>();
+        for(Card card: this.hand){
+            if(!Arrays.asList(programmedCards).contains(card)){
+                disposableCards.add(card);
+                deck.addCard(card);
+            }
+        }
+        int position = 0 ;
+        for(Card card:this.programmedCards){
+            if(position < 5 - nrOfCardsToLock){
+                disposableCards.add(card);
+                deck.addCard(card);
+            }else{
+                this.lockedCards.add(card);
+            }
+            position++;
+        }
+        this.hand.removeAll(disposableCards);
+    }    
 
+    public List<Card> getLockedCards(){
+        return this.lockedCards;
     }
 
     public boolean isInactive(){
@@ -383,10 +421,13 @@ public class Robot{
         return this.activitylevel == ActivityLevel.POWERINGDOWN;
     }
 
-    public void shutDown(){
+    public void shutDown(Deck d){
         this.activitylevel = ActivityLevel.INACTIVE;
         for(int i=0;i<5;i++){
             this.programmedCards[i] = new DoNothingCard();
+        }
+        for(Card card: this.lockedCards){
+            d.addCard(card);
         }
         this.health = 9;
     }
@@ -395,9 +436,9 @@ public class Robot{
         this.activitylevel = ActivityLevel.ACTIVE;
     }
 
-    public void cyclePowerState(){
+    public void cyclePowerState(Deck d){
         if(this.activitylevel == ActivityLevel.POWERINGDOWN){
-            this.shutDown();
+            this.shutDown(d);
         }
         else if(this.activitylevel == ActivityLevel.INACTIVE){
             this.activate();
@@ -513,6 +554,7 @@ public class Robot{
         return false;
     }
 
+<<<<<<< HEAD
     public void reachCheckpoint(){
         this.respawnX = getXCoordinate();
         this.respawnY = getYCoordinate();
@@ -538,4 +580,6 @@ public class Robot{
 
     }
 
+=======
+>>>>>>> master
 }

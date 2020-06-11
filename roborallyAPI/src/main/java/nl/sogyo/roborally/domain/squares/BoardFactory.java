@@ -146,7 +146,6 @@ public class BoardFactory{
 		faultyLaserTestBoard.addRow(row1);
 		faultyLaserTestBoard.addRow(row2);
 		faultyLaserTestBoard.addRow(row3);
-
 		Laser laser1 = new Laser(0,0, Direction.SOUTH, 1);
 		Laser laser2 = new Laser(0,1, Direction.EAST, 1);
 		Laser laser3 = new Laser(1,2, Direction.NORTH, 1);
@@ -487,6 +486,28 @@ public class BoardFactory{
 		row2.add(new Checkpoint());
 		winningBoard.addRow(row1);
 		winningBoard.addRow(row2);
+		return winningBoard;
+	} 
+
+	public static Board createLockingCardsTestBoard(){
+		Board winningBoard = new Board();
+		ArrayList<Square> row1 = new ArrayList<>();
+		ArrayList<Square> row2 = new ArrayList<>();
+		ArrayList<Square> row3 = new ArrayList<>();
+		row1.add(new EmptySquare("N"));
+		row1.add(new EmptySquare("N"));
+		row1.add(new EmptySquare("N"));
+		row2.add(new EmptySquare("W"));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row3.add(new EmptySquare("S"));
+		row3.add(new EmptySquare("S"));
+		row3.add(new EmptySquare("S"));
+		Laser laser1 = new Laser(0,1, Direction.EAST, 1);
+		winningBoard.addRow(row1);
+		winningBoard.addRow(row2);
+		winningBoard.addRow(row3);
+		winningBoard.addLaser(laser1);
 		return winningBoard;
 	} 
 

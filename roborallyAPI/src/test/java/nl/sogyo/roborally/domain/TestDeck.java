@@ -68,4 +68,62 @@ public class TestDeck{
         assertEquals(9, robot2.getHand().size());
         assertEquals(84-18, roborally.getDeck().getSize());
     }
+    
+    @Test
+    public void TestClearHandReturnsLessCardsWhenDamaged(){
+        Deck deck = new Deck();
+        Robot r = new Robot();
+        r.drawCards(deck);
+        r.takeDamage(5);
+        Card[] cards = new Card[5];
+        for(int i = 0;i<5;i++){
+            cards[i] = r.getHand().get(i);
+        }
+        r.program(cards);
+        r.clearHand(deck);
+        assertEquals(deck.getSize(), 83);
+    }
+
+    @Test
+    public void TestClearHandEnsuresProgrammedCardsAreNotReturnedToDeck(){
+        Deck deck = new Deck();
+        Robot r = new Robot();
+        r.drawCards(deck);
+        r.takeDamage(6);
+        Card[] cards = new Card[5];
+        for(int i = 0;i<5;i++){
+            cards[i] = r.getHand().get(i);
+        }
+        Card card3 = r.getHand().get(2);
+        Card card4 = r.getHand().get(3);
+        Card card5 = r.getHand().get(4);
+        r.program(cards);
+        r.clearHand(deck);
+        assert(deck.getDeck().contains(card3));
+        assert(!deck.getDeck().contains(card4));
+        assert(!deck.getDeck().contains(card5));
+    }
+
+    @Test
+    public void TestClearHandEnsuresProgrammedCardsAreNotReturnedToDeck2(){
+        Deck deck = new Deck();
+        Robot r = new Robot();
+        r.drawCards(deck);
+        r.takeDamage(7);
+        Card[] cards = new Card[5];
+        for(int i = 0;i<5;i++){
+            cards[i] = r.getHand().get(i);
+        }
+        Card card2 = r.getHand().get(1);
+        Card card3 = r.getHand().get(2);
+        Card card4 = r.getHand().get(3);
+        Card card5 = r.getHand().get(4);
+        r.program(cards);
+        r.clearHand(deck);
+        assert(deck.getDeck().contains(card2));
+        assert(!deck.getDeck().contains(card3));
+        assert(!deck.getDeck().contains(card4));
+        assert(!deck.getDeck().contains(card5));
+    }
+
 }
