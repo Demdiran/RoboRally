@@ -532,8 +532,10 @@ public class Robot{
     }
 
     public void setOffBoard(){
-        System.out.println("Setting robot off board..");
         this.onBoard = false;
+        this.xCoordinate = -1;
+        this.yCoordinate = -1;
+
     }
 
 }
