@@ -20,6 +20,6 @@ public class Checkpoint extends Square{
 
     @Override
     public void doSquareAction(Robot robot, Board board, List<Robot> robots){
-        robot.setRespawnPoint(robot.getXCoordinate(), robot.getYCoordinate());
+        robot.reachCheckpoint();
     }
 }

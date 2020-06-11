@@ -10,23 +10,29 @@ public abstract class Square{
     protected boolean eastWall;
     protected boolean southWall;
     protected boolean westWall;
+    protected boolean respawnSquare;
+    protected Direction dir;
 
     public Square(){
     }
 
-    public Square(String walls){
-		if(walls.contains("N")){
+    public Square(String input){
+		if(input.contains("N")){
 			this.northWall = true;
 		}
-		if(walls.contains("E")){
+		if(input.contains("E")){
 			this.eastWall = true;
         }
-        if(walls.contains("S")){
+        if(input.contains("S")){
 			this.southWall = true;
 		}
-		if(walls.contains("W")){
+		if(input.contains("W")){
 			this.westWall = true;
-		}
+        }
+        if(input.contains("R")){
+            this.respawnSquare = true;
+            setDirection(input);
+        }
     }
 
     public boolean hasWallAt(Direction direction){
@@ -38,8 +44,23 @@ public abstract class Square{
             default: throw new RuntimeException("Somehow there are more than four directions.");
         }
     }
+
+    private void setDirection(String str){       
+        if(str.contains("e"))  this.dir = Direction.EAST;
+		if(str.contains("w"))  this.dir = Direction.WEST;       
+        if(str.contains("n"))  this.dir = Direction.NORTH;
+		if(str.contains("s"))  this.dir = Direction.SOUTH;        
+    }
     
     public abstract String getType();
+
+    public Direction getRespawnDirection(){
+        if(this.respawnSquare){
+            return this.dir;
+        }else{
+            return Direction.NORTH;
+        }
+    }
 
     public abstract void doSquareAction(Robot robot, Board board, List<Robot> robots);
 }

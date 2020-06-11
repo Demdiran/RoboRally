@@ -83,12 +83,14 @@ public class Roborally{
 
     private void prepareNextRound(){
         robots.sort(Robot.COMPARE_BY_NAME);
-        this.deck = new Deck();  
         for(Robot robot : robots){
-            robot.cyclePowerState();
-            robot.clearHand();
-            robot.drawCards(deck);
+            robot.cyclePowerState(deck);
+            robot.clearHand(deck);
             robot.unready();
+            robot.respawnIfNecessary(board, robots);
+        }
+        for(Robot robot : robots){
+            robot.drawCards(deck);
         }
     }
 
@@ -110,8 +112,7 @@ public class Roborally{
     private void robotPlaysCard(Robot robot, int cardNr){
         if(!robot.isInactive()){
             Card playingCard = robot.getCard(cardNr);
-            playingCard.doCardAction(robot, board, robots);
-            robot.updateCurrentCard();
+            playingCard.doCardAction(robot, board, robots);            
         }
     }
 
@@ -123,8 +124,10 @@ public class Roborally{
         SlowConveyorbelt.addRobotsToSlowConveyorbeltList(board, robots);
         FastConveyorbelt.addRobotsToFastConveyorbeltList(board, robots);
         for(Robot robot : robots){
-            Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-            if(elementTypeToActivate.isInstance(position)) position.doSquareAction(robot, board, robots);
+            if(robot.isOnBoard()){
+                Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+                if(elementTypeToActivate.isInstance(position)) position.doSquareAction(robot, board, robots);
+            }
         }
         SlowConveyorbelt.clearListRobotsOnSlowConveyorbelt();
         FastConveyorbelt.clearListRobotsOnFastConveyorbelt();
@@ -138,7 +141,9 @@ public class Roborally{
 
     private void fireRobotLasers(){
         for(Robot robot : robots){
-            robot.fireLaser(robots, board);
+            if(robot.isOnBoard()){
+                robot.fireLaser(robots, board);
+            }
         }
     }
 

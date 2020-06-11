@@ -19,6 +19,7 @@ export function App() {
     const [ powerstatus, setPowerstatus ] = useState("Active");
     const [ lasers, setLasers ] = useState<Laser[] | undefined>(undefined);
     const [ programmedCards, setProgrammedCards ] = useState<Card[]>([]);
+    const [ lockedCards, setLockedCards ] = useState<Card[]>([]);
     const [gameWinner, setWinner]  = useState<String | undefined>(undefined);
 
     if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined){
@@ -27,7 +28,7 @@ export function App() {
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
                     <PlayerList players={robots}></PlayerList>
                     <CardsInhand cards = {cardsInHand} onClick={programCard}></CardsInhand>
-                    <ProgrammedCards cards={programmedCards} removeCard={unProgramCard} ready={endTurn}></ProgrammedCards>
+                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={endTurn}></ProgrammedCards>
                 </div>);
     }
     else if(gameWinner != undefined){
@@ -60,6 +61,7 @@ export function App() {
                 else if(message.messagetype == "drawncards"){
                     setCardsInHand(message.body);
                     setProgrammedCards([]);
+                    setLockedCards(message.lockedcards);
                 } 
                 else if(message.messagetype == "powerstatus") setPowerstatus(message.body);
                 else if(message.messagetype == "lasers") setLasers(message.body);
@@ -128,10 +130,13 @@ export function App() {
         }
     }
 
-    async function endTurn(cardids: number[]){        
+    async function endTurn(cardids: number[], lockedids: number[]){        
         if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
-            websocket.send(JSON.stringify(cardids));
+            for (var i=0; i < lockedids.length; i++) {
+                cardids.push(lockedids[i]);
+            }
             console.log(cardids);
+            websocket.send(JSON.stringify(cardids));
         }
         else{
             console.log("No connection.");

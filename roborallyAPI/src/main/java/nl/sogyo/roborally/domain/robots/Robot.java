@@ -1,6 +1,7 @@
 package nl.sogyo.roborally.domain.robots;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,15 +26,18 @@ public class Robot{
 
     Direction orientation = Direction.NORTH;
     Card[] programmedCards = {new DoNothingCard(),new DoNothingCard(),new DoNothingCard(),new DoNothingCard(),new DoNothingCard()};
+    private ArrayList<Card> lockedCards = new ArrayList<Card>();
     int health = 9;
     int xCoordinate;
     int yCoordinate;
     int respawnX;
     int respawnY;
     boolean ready;
+    boolean onBoard = true;
     String name = "defaultname";
     String colour = "orange";
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
+    boolean hasReachedCheckpoint;
     boolean hasWonTheGame;
     
     public Robot(){
@@ -43,6 +47,14 @@ public class Robot{
         this.name = name;
         if(colourNr < 6) this.colour = colours[colourNr];
         else this.colour = "orange";
+    }
+
+    public Robot(String name, Board board, int initNumber){
+        this.name = name;
+        if(initNumber < 6) this.colour = colours[initNumber];
+        else this.colour = "orange";
+        board.setRespawnSquare(this, initNumber);
+
     }
 
     public Robot(int xCoordinate, int yCoordinate, String name, int colourNr){
@@ -121,9 +133,17 @@ public class Robot{
             return false;
     }
 
-    public void setRespawnPoint(int xCoordinate, int yCoordinate){
-        this.respawnX = xCoordinate;
-        this.respawnY = yCoordinate;
+    public void setRespawnPointAndCurrentPosition(int x, int y, Direction dir){
+        this.respawnX = x;
+        this.respawnY = y;
+        this.xCoordinate = x;
+        this.yCoordinate = y;
+        this.orientation = dir;
+    }
+
+    public void setRespawnPoint(int x, int y){
+        this.respawnX = x;
+        this.respawnY = y;
     }
 
     public void moveForward(){
@@ -210,9 +230,15 @@ public class Robot{
     public void programFromHand(int[] cardnrs){
         this.ready = true;
         if(cardnrs.length == 5){
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < 5 - this.lockedCards.size(); i++){
                 programOneCard(this.hand.get(cardnrs[i]), i);
             }
+            int count = 0;
+            for(int i = this.hand.size(); i < 5; i++){
+                programOneCard(this.lockedCards.get(count), i);
+                count++;
+            }
+            this.ready = true;
         }
         else{
             throw new RuntimeException("must program 5 cards");
@@ -231,9 +257,73 @@ public class Robot{
         this.orientation = this.orientation.getReverse();
     }
 
-    public void respawn(){
-        this.xCoordinate = this.respawnX;
-        this.yCoordinate = this.respawnY;
+    public void respawnIfNecessary(Board board, List<Robot> robots){
+        if(!this.onBoard){
+            this.xCoordinate = this.respawnX;
+            this.yCoordinate = this.respawnY;
+            this.orientation = board.getSquare(this.xCoordinate, this.yCoordinate).getRespawnDirection();
+            for(Robot r: robots){
+                if(!r.equals(this)&& r.getXCoordinate() == this.respawnX && r.getYCoordinate() == this.respawnY){
+                    r.moveToSurroundingSquare(board, robots);
+                }
+            }
+        }
+        this.onBoard = true;
+    }
+
+    private void moveToSurroundingSquare(Board board, List<Robot> robots){
+        for(int attempt = 1 ; attempt<9;attempt++){
+            if(moveToSurroundingSquareAttempt(board, robots, attempt)) break;
+        }
+
+    }
+
+    private boolean moveToSurroundingSquareAttempt(Board board, List<Robot> robots, int attempt){
+        switch(attempt){
+            case 1:
+                if( nextSquareIsFree(board, robots, 1,0) ) return true;
+                break;
+            case 2:
+                if( nextSquareIsFree(board, robots, 0,1) ) return true;
+                break;
+            case 3:
+                if( nextSquareIsFree(board, robots, -1,0) ) return true;
+                break;
+            case 4:
+                if( nextSquareIsFree(board, robots, 0,-1) ) return true;
+                break;
+            case 5:
+                if( nextSquareIsFree(board, robots, 1,1) ) return true;
+                break;
+            case 6:
+                if( nextSquareIsFree(board, robots, -1,1) ) return true;
+                break;
+            case 7:
+                if( nextSquareIsFree(board, robots, 1,-1) ) return true;
+                break;
+            case 8:
+                if( nextSquareIsFree(board, robots, -1,-1) ) return true;
+                break;
+        }
+        return false;
+
+    }
+
+    private boolean nextSquareIsFree(Board board, List<Robot> robots, int xDistance, int yDistance){
+        int xCoor = getXCoordinate() + xDistance;
+        int yCoor = getYCoordinate() + yDistance;
+        for(Robot r: robots){
+            if( r.isOnCoordinates(xCoor, yCoor) && board.squareExists(xCoor, xCoor) ){
+                this.xCoordinate += xDistance;
+                this.yCoordinate += yDistance;
+                return true;
+             }
+        }
+        return false;
+    }
+
+    private boolean isOnCoordinates(int x, int y){
+        return getXCoordinate() == x && getYCoordinate() == y;
     }
 
     public void setXCoordinate(int xCoordinate){
@@ -277,20 +367,50 @@ public class Robot{
     }
 
     public void drawCards(Deck deck){
-        this.hand = deck.createHand(9-getHealth());
+        this.hand = deck.createHand(9-getHealth()); 
     }
     
     public List<Card> getHand(){
         return this.hand;
     }
 
-    public void clearHand(Deck d){
-        clearHand();
+    public void clearHand(Deck deck){
+        this.lockedCards.clear();
+        if(this.health > 4){
+            for(Card card:this.hand){
+                deck.addCard(card);
+            }
+            this.hand.clear();
+        }else if(this.health > 0 && this.health < 5){
+            lockCards(deck, 5 - this.health);
+        }else{
+            lockCards(deck, 5);
+        }
     }
 
-    public void clearHand(){
-        this.hand.clear();
+    private void lockCards(Deck deck, int nrOfCardsToLock){
+        List<Card> disposableCards = new ArrayList<>();
+        for(Card card: this.hand){
+            if(!Arrays.asList(programmedCards).contains(card)){
+                disposableCards.add(card);
+                deck.addCard(card);
+            }
+        }
+        int position = 0 ;
+        for(Card card:this.programmedCards){
+            if(position < 5 - nrOfCardsToLock){
+                disposableCards.add(card);
+                deck.addCard(card);
+            }else{
+                this.lockedCards.add(card);
+            }
+            position++;
+        }
+        this.hand.removeAll(disposableCards);
+    }    
 
+    public List<Card> getLockedCards(){
+        return this.lockedCards;
     }
 
     public boolean isInactive(){
@@ -301,10 +421,13 @@ public class Robot{
         return this.activitylevel == ActivityLevel.POWERINGDOWN;
     }
 
-    public void shutDown(){
+    public void shutDown(Deck d){
         this.activitylevel = ActivityLevel.INACTIVE;
         for(int i=0;i<5;i++){
             this.programmedCards[i] = new DoNothingCard();
+        }
+        for(Card card: this.lockedCards){
+            d.addCard(card);
         }
         this.health = 9;
     }
@@ -313,9 +436,9 @@ public class Robot{
         this.activitylevel = ActivityLevel.ACTIVE;
     }
 
-    public void cyclePowerState(){
+    public void cyclePowerState(Deck d){
         if(this.activitylevel == ActivityLevel.POWERINGDOWN){
-            this.shutDown();
+            this.shutDown(d);
         }
         else if(this.activitylevel == ActivityLevel.INACTIVE){
             this.activate();
@@ -323,15 +446,17 @@ public class Robot{
     }
 
     public void fireLaser(List<Robot> robots, Board board){
-        switch(this.orientation){
-            case NORTH: fireNorth(robots, board);
-                        break;
-            case EAST: fireEast(robots, board);
-                        break;                        
-            case SOUTH: fireSouth(robots, board);
-                        break;            
-            case WEST: fireWest(robots, board);
-                        break;
+        if(isOnBoard()){
+            switch(this.orientation){
+                case NORTH: fireNorth(robots, board);
+                            break;
+                case EAST: fireEast(robots, board);
+                            break;                        
+                case SOUTH: fireSouth(robots, board);
+                            break;            
+                case WEST: fireWest(robots, board);
+                            break;
+            }
         }
     }
 
@@ -429,7 +554,29 @@ public class Robot{
         return false;
     }
 
+    public void reachCheckpoint(){
+        this.respawnX = getXCoordinate();
+        this.respawnY = getYCoordinate();
+        this.hasReachedCheckpoint = true;
+    }
+
+    public boolean hasReachedCheckpoint(){
+        if(this.hasReachedCheckpoint) return true;
+        return false;
+    }
+
 	public void updateCurrentCard() {
-	}
+    }
+    
+    public boolean isOnBoard(){
+        return this.onBoard;
+    }
+
+    public void setOffBoard(){
+        this.onBoard = false;
+        this.xCoordinate = -1;
+        this.yCoordinate = -1;
+
+    }
 
 }
