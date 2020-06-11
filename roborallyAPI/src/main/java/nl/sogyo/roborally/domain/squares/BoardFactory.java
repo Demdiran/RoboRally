@@ -814,7 +814,7 @@ public class BoardFactory{
 		row3.add(new FastConveyorbelt(Direction.NORTH));
 		row3.add(new FastConveyorbelt(Direction.SOUTH));
 		row3.add(new EmptySquare());
-		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.NORTH));
 		row3.add(new EmptySquare());
 		row3.add(new EmptySquare());
 		row3.add(new EmptySquare());
@@ -826,7 +826,7 @@ public class BoardFactory{
 		row4.add(new FastConveyorbelt(Direction.NORTH));
 		row4.add(new FastConveyorbelt(Direction.SOUTH));
 		row4.add(new EmptySquare());
-		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
 		row4.add(new EmptySquare());
 		row4.add(new EmptySquare());
 		row4.add(new EmptySquare());
@@ -838,7 +838,7 @@ public class BoardFactory{
 		row5.add(new FastConveyorbelt(Direction.NORTH));
 		row5.add(new FastConveyorbelt(Direction.NORTH));
 		row5.add(new EmptySquare());
-		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.NORTH));
 		row5.add(new EmptySquare());
 		row5.add(new EmptySquare());
 		row5.add(new EmptySquare());
@@ -850,7 +850,7 @@ public class BoardFactory{
 		row6.add(new FastConveyorbelt(Direction.NORTH));
 		row6.add(new FastConveyorbelt(Direction.NORTH));
 		row6.add(new EmptySquare());
-		row6.add(new EmptySquare());
+		row6.add(new FastConveyorbelt(Direction.NORTH));
 		row6.add(new EmptySquare());
 		row6.add(new EmptySquare());
 		row6.add(new EmptySquare());
