@@ -1634,21 +1634,20 @@ public class TestRoborally {
         assert(robot2.getXCoordinate() == 9 && robot2.getYCoordinate() == 1);
     }
 
-    // I do not know what to do with this situation, maybe the current behaviour is ok:
-    // @Test
-    // public void testRobotMovingOnlyOneStepDueToOtherCrossingRobots(){
-    //     Robot robot1 = new Robot(7, 2, "Robot1", 7);
-    //     Robot robot2 = new Robot(9, 3, "Robot2", 7);
-    //     Robot robot3 = new Robot(9, 4, "Robot3", 7);
-    //     Roborally roborally = new Roborally(BIGFASTCONVEYORBELTTESTBOARD);
-    //     roborally.addRobot(robot1);
-    //     roborally.addRobot(robot2);
-    //     roborally.addRobot(robot3);
-    //     roborally.activateAllBoardElements();
-    //     assert(robot1.getXCoordinate() == 8 && robot1.getYCoordinate() == 1);
-    //     assert(robot2.getXCoordinate() == 9 && robot2.getYCoordinate() == 1);
-    //     assert(robot2.getXCoordinate() == 9 && robot2.getYCoordinate() == 2);
-    // }
+    @Test
+    public void testRobotMovingOnlyOneStepDueToOtherCrossingRobots(){
+        Robot robot1 = new Robot(7, 2, "Robot1", 7);
+        Robot robot2 = new Robot(9, 3, "Robot2", 7);
+        Robot robot3 = new Robot(9, 4, "Robot3", 7);
+        Roborally roborally = new Roborally(BIGFASTCONVEYORBELTTESTBOARD);
+        roborally.addRobot(robot1);
+        roborally.addRobot(robot2);
+        roborally.addRobot(robot3);
+        roborally.activateAllBoardElements();
+        assert(robot1.getXCoordinate() == 8 && robot1.getYCoordinate() == 2);
+        assert(robot2.getXCoordinate() == 9 && robot2.getYCoordinate() == 1);
+        assert(robot3.getXCoordinate() == 9 && robot3.getYCoordinate() == 3);
+    }
 
     @Test
     public void testFourRobotsPushedToSamePitByFastConveyorbelt(){
