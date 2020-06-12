@@ -32,7 +32,7 @@ public class FastConveyorbelt extends Square {
 
     @Override
     public String getType() {
-        return "FastConveyerBelt" + this.movementDirection;
+        return "FastConveyorbelt" + this.movementDirection;
     }
 
     @Override

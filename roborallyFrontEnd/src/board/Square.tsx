@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Robot, RobotElement } from "./../Robot";
 import { Laser, Laserbeam, LaserElement, BeamElement } from "./Laser";
-import { Flag, Home, Rotate90DegreesCcw, RotateLeft, RotateRight, Brightness1, KeyboardArrowUp, KeyboardArrowRight, KeyboardArrowDown, KeyboardArrowLeft } from "@material-ui/icons";
+// import { Flag, Home, Rotate90DegreesCcw, RotateLeft, RotateRight, Brightness1, KeyboardArrowUp, KeyboardArrowRight, KeyboardArrowDown, KeyboardArrowLeft } from "@material-ui/icons";
+import { Flag, Home, Rotate90DegreesCcw, RotateLeft, RotateRight, Brightness1, KeyboardArrowUp, KeyboardArrowRight, KeyboardArrowDown, KeyboardArrowLeft, DoubleArrow } from "@material-ui/icons";
 import { Badge } from "@material-ui/core";
 import zIndex from "@material-ui/core/styles/zIndex";
 export class Square{
@@ -148,6 +149,15 @@ function createStyle(square: Square, columnNumber: number, rowNumber: number){
 }
 
 function createImage(type: string, zIndex: number){
+    // let FastConveyorbeltWest: React.CSSProperties = {
+    //     fontSize: 80,
+    //     position: "absolute",
+    //     left: "50%",
+    //     top: "50%",
+    //     transform: "translate(-50%, -50%)",
+    //     -webkit-transform: rotate(180deg),
+    //     zIndex: zIndex,
+    // };
     let iconStyle: React.CSSProperties = {
         fontSize: 80,
         position: "absolute",
@@ -168,9 +178,10 @@ function createImage(type: string, zIndex: number){
         case "SlowConveyorbeltSouth": return <KeyboardArrowDown style={iconStyle}/>;
         case "SlowConveyorbeltWest": return <KeyboardArrowLeft style={iconStyle}/>;
         case "FastConveyorbeltNorth": return <Badge badgeContent={2}><KeyboardArrowUp style={iconStyle}/></Badge>;
-        case "FastConveyorbeltEast": return <Badge badgeContent={2}><KeyboardArrowRight style={iconStyle}/></Badge>;
-        case "FastConveyorbeltSouth": return <Badge badgeContent={2}><KeyboardArrowDown style={iconStyle}/></Badge>;
-        case "FastConveyorbeltWest": return <Badge badgeContent={2}><KeyboardArrowLeft style={iconStyle}/></Badge>;
+        case "FastConveyorbeltEast": return <DoubleArrow style={iconStyle}></DoubleArrow>;
+        case "FastConveyorbeltSouth": return <KeyboardArrowDown style={iconStyle}> <KeyboardArrowDown style={iconStyle}></KeyboardArrowDown> </KeyboardArrowDown>;
+        // case "FastConveyorbeltWest": return <div class="FastConveyorbeltWest-rotate"><DoubleArrow style={iconStyle}/></div>;
+        // case "FastConveyorbeltWest": return <DoubleArrow style={FastConveyorbeltWest-rotate}/>;
         default: return <div></div>;
     }
 }

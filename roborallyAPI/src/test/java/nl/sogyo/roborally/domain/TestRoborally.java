@@ -29,8 +29,9 @@ public class TestRoborally {
     private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD = null;
     private Board MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD = null;
     private Board BIGFASTCONVEYORBELTTESTBOARD = null;
+    private Board FASTSLOWCONVEYORSINTERACTIONTESTBOARD = null;
     private final int[] doNothingIntArray = {7,7,7,7,7};
-
+    
     @Before
     public void initializeBoards(){
         TESTBOARD4X4 = BoardFactory.createTESTBOARD4X4();
@@ -51,6 +52,7 @@ public class TestRoborally {
         MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHOUTPITTESTBOARD = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithoutPit();
         MULTIPLEROBOTSPUSHEDTOSAMESQUAREBYFASTCONVEYORBELTWITHPITTESTBOARD = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithPit();
         BIGFASTCONVEYORBELTTESTBOARD = BoardFactory.createBigFastConveyorBeltTestBoard();
+        FASTSLOWCONVEYORSINTERACTIONTESTBOARD = BoardFactory.createFastSlowConveyorsInteractionTestBoard();
     }
 
     @Test
@@ -1698,4 +1700,45 @@ public class TestRoborally {
         assert(robot4.getXCoordinate() == 1 && robot4.getYCoordinate() == 2);
     }
 
+    @Test
+    public void testRobotPushedFromFastToSlowConveyorbeltTwoSteps(){
+        Robot robot = new Robot(1, 3);
+        Roborally roborally = new Roborally(FASTSLOWCONVEYORSINTERACTIONTESTBOARD, robot);
+        roborally.activateAllBoardElements();
+        assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 6);
+    }
+
+    @Test
+    public void testRobotPushedFromFastToSlowConveyorbeltOneSteps(){
+        Robot robot = new Robot(1, 4);
+        Roborally roborally = new Roborally(FASTSLOWCONVEYORSINTERACTIONTESTBOARD, robot);
+        roborally.activateAllBoardElements();
+        assert(robot.getXCoordinate() == 1 && robot.getYCoordinate() == 6);
+    }
+
+    @Test
+    public void testRobotPushedFromSlowToFastConveyorbelt(){
+        Robot robot = new Robot(3, 5);
+        Roborally roborally = new Roborally(FASTSLOWCONVEYORSINTERACTIONTESTBOARD, robot);
+        roborally.activateAllBoardElements();
+        assert(robot.getXCoordinate() == 3 && robot.getYCoordinate() == 4);
+    }
+
+    @Test
+    public void testRobotNotTurningWhenPushedFromFastToSlowConveyorbelt(){
+        Robot robot = new Robot(6, 9, Direction.EAST);
+        Roborally roborally = new Roborally(FASTSLOWCONVEYORSINTERACTIONTESTBOARD, robot);
+        roborally.activateAllBoardElements();
+        assert(robot.getXCoordinate() == 7 && robot.getYCoordinate() == 8);
+        assert(robot.getOrientation() == Direction.EAST);
+    }
+
+    @Test
+    public void testRobotNotTurningWhenPushedFromSlowToFastConveyorbelt(){
+        Robot robot = new Robot(6, 1, Direction.EAST);
+        Roborally roborally = new Roborally(FASTSLOWCONVEYORSINTERACTIONTESTBOARD, robot);
+        roborally.activateAllBoardElements();
+        assert(robot.getXCoordinate() == 7 && robot.getYCoordinate() == 1);
+        assert(robot.getOrientation() == Direction.EAST);
+    }
 }
