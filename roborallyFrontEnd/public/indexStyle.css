@@ -107,3 +107,37 @@ html {
   padding: 3px;
   margin-top: 50%;
 }
+
+.FastConveyorbeltNorth-rotate {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.FastConveyorbeltSouth-rotate {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.FastConveyorbeltWest-rotate {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-top: 50%;
+}
+
+/* .FastConveyorbeltWest-rotate {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+} */
