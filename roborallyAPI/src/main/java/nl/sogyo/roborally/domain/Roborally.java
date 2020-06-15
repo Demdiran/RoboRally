@@ -71,7 +71,8 @@ public class Roborally{
             }                
         }
         if(this.winner == null){
-            activateBoardElements(SlowConveyorbelt.class);
+            activateFastConveyorbelt();
+            activateSlowConveyorbelt();
             activateBoardElements(Gear180.class);
             activateBoardElements(GearRight.class);
             activateBoardElements(GearLeft.class);
@@ -109,7 +110,8 @@ public class Roborally{
     }
 
     void activateAllBoardElements(){
-        activateBoardElements(SlowConveyorbelt.class);
+        activateFastConveyorbelt();
+        activateSlowConveyorbelt();
         activateBoardElements(Gear180.class);
         activateBoardElements(GearRight.class);
         activateBoardElements(GearLeft.class);
@@ -130,11 +132,39 @@ public class Roborally{
     }
 
     private <T extends Square> void activateBoardElements(Class<T> elementTypeToActivate){
-        SlowConveyorbelt.addRobotsToSlowConveyorbeltList(board, robots);
         for(Robot robot : robots){
             if(robot.isOnBoard()){
                 Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
                 if(elementTypeToActivate.isInstance(position)) position.doSquareAction(robot, board, robots);
+            }
+        }
+    }
+
+    private void activateFastConveyorbelt(){
+        FastConveyorbelt.addRobotsToFastConveyorbeltList(board, robots);
+        for(Robot robot: robots){
+            if(robot.isOnBoard()){
+                Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+                if(position instanceof FastConveyorbelt) position.doSquareAction(robot, board, robots);
+            }
+        }
+        FastConveyorbelt.clearListRobotsOnFastConveyorbelt();
+        FastConveyorbelt.addRobotsToFastConveyorbeltList(board, robots);
+        for(Robot robot: robots){
+            if(robot.isOnBoard()){
+                Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+                if(position instanceof FastConveyorbelt) position.doSquareAction(robot, board, robots);
+            }
+        }
+        FastConveyorbelt.clearListRobotsOnFastConveyorbelt();
+    }
+
+    private void activateSlowConveyorbelt(){
+        SlowConveyorbelt.addRobotsToSlowConveyorbeltList(board, robots);
+        for(Robot robot: robots){
+            if(robot.isOnBoard()){
+                Square position = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+                if(position instanceof SlowConveyorbelt) position.doSquareAction(robot, board, robots);
             }
         }
         SlowConveyorbelt.clearListRobotsOnSlowConveyorbelt();

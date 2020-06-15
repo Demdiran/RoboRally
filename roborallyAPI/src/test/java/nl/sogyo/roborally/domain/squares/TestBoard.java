@@ -154,4 +154,60 @@ public class TestBoard{
         assert(multipleRobotsPushedToSameSquareBySlowConveyorbeltWithoutPitTestBoard.hasConsistentWalls());
         assert(multipleRobotsPushedToSameSquareBySlowConveyorbeltWithoutPitTestBoard.allLasersOnWalls());
     }
+
+    @Test
+    public void testSmallBoardWithFastConveyers(){
+        Board smallBoardWithFastConveyers = BoardFactory.createSmallBoardWithFastConveyers();
+        assert(smallBoardWithFastConveyers.isRectangular());
+        assert(smallBoardWithFastConveyers.hasConsistentWalls());
+        assert(smallBoardWithFastConveyers.allLasersOnWalls());
+    }
+
+    @Test
+    public void testFastConveyersWithPits(){
+        Board fastConveyersWithPits = BoardFactory.createFastConveyersWithPits();
+        assert(fastConveyersWithPits.isRectangular());
+        assert(fastConveyersWithPits.hasConsistentWalls());
+        assert(fastConveyersWithPits.allLasersOnWalls());
+    }
+
+    @Test
+    public void testMultipleRobotsPushedOnFastConveyersWithPit(){
+        Board multipleRobotsPushedOnFastConveyersWithPit = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithPit();
+        assert(multipleRobotsPushedOnFastConveyersWithPit.isRectangular());
+        assert(multipleRobotsPushedOnFastConveyersWithPit.hasConsistentWalls());
+        assert(multipleRobotsPushedOnFastConveyersWithPit.allLasersOnWalls());
+    }
+
+    @Test
+    public void testMultipleRobotsPushedOnFastConveyersWithoutPit(){
+        Board multipleRobotsPushedOnFastConveyersWithoutPit = BoardFactory.createMultipleRobotsPushedOnFastConveyersWithoutPit();
+        assert(multipleRobotsPushedOnFastConveyersWithoutPit.isRectangular());
+        assert(multipleRobotsPushedOnFastConveyersWithoutPit.hasConsistentWalls());
+        assert(multipleRobotsPushedOnFastConveyersWithoutPit.allLasersOnWalls());
+    }
+
+    @Test
+    public void testBigFastConveyorBeltTestBoard(){
+        Board bigFastConveyorBeltTestBoard = BoardFactory.createBigFastConveyorBeltTestBoard();
+        assert(bigFastConveyorBeltTestBoard.isRectangular());
+        assert(bigFastConveyorBeltTestBoard.hasConsistentWalls());
+        assert(bigFastConveyorBeltTestBoard.allLasersOnWalls());
+    }
+
+    @Test
+    public void testFastConveyorBeltFrontEndGameBoard(){
+        Board fastConveyorBeltFrontEndGameBoard = BoardFactory.createFastConveyorBeltFrontEndGameBoard();
+        assert(fastConveyorBeltFrontEndGameBoard.isRectangular());
+        assert(fastConveyorBeltFrontEndGameBoard.hasConsistentWalls());
+        assert(fastConveyorBeltFrontEndGameBoard.allLasersOnWalls());
+    }
+    
+    @Test
+    public void testFastSlowConveyorsInteractionTestBoard(){
+        Board fastSlowConveyorsInteractionTestBoard = BoardFactory.createFastSlowConveyorsInteractionTestBoard();
+        assert(fastSlowConveyorsInteractionTestBoard.isRectangular());
+        assert(fastSlowConveyorsInteractionTestBoard.hasConsistentWalls());
+    }
+
 }
