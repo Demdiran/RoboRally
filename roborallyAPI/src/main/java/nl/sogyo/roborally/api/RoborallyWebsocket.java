@@ -43,12 +43,22 @@ public class RoborallyWebsocket{
             Robot robot = robots.get(session);
             robot.turnOnOrOff();
             updatePlayerPowerStatus(session);
+        } else if(message.equals("display next move")){
+            Robot robot = robots.get(session);
+            robot.wantsToExecuteNextMove();
+            roborally.playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove();
+            if(roborally.getWinner() != null){
+                String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
+                session.getBasicRemote().sendText(gameover);
+            }
         }
         else{            
             int[] cardnrs = MessageParser.parseMessage(message);
             Robot robot = robots.get(session);
             robot.programFromHand(cardnrs);
+            // this line needs to be deleted once I'm ready with "display next move"
             roborally.playAllRegistersIfRobotsReady();
+            // this if-block needs to be moved into else if("display next move")
             if(roborally.getWinner() != null){
                 String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
                 session.getBasicRemote().sendText(gameover);

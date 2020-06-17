@@ -16,6 +16,7 @@ public class Roborally{
     Board board;
     private Robot winner = null;
     Deck deck = new Deck();
+    private int nextRegisterToBePlayed = 0;
     
     public Roborally(){
         this.board = BoardFactory.createTESTBOARD4X4();
@@ -50,6 +51,14 @@ public class Roborally{
         return robotsReady;
     }
 
+    public boolean allRobotsReadyForNextMove(){
+        boolean robotsReadyForNextMove = true;
+        for(Robot robot : robots){
+            robotsReadyForNextMove &= (robot.readyForNextMove());
+        }
+        return robotsReadyForNextMove;
+    }
+
     public void playAllRegistersIfRobotsReady(){
         if(allRobotsReady()){
             for(int registernr=0;registernr<5;registernr++){
@@ -61,10 +70,20 @@ public class Roborally{
         }
     }
 
+    public void playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove(){
+        if(this.nextRegisterToBePlayed < 5){
+            if(allRobotsReady() & allRobotsReadyForNextMove()){
+                playRegister(this.nextRegisterToBePlayed);
+                this.nextRegisterToBePlayed++;
+            }
+        } else prepareNextRound();
+    }   
+
     private void playRegister(int registernr){
         robots.sort(Robot.COMPARE_BY_CARD(registernr));
         for(Robot robot : robots){
             robotPlaysCard(robot, registernr);
+            robot.hasExecutedNextMove();
             if(robot.isWinner()){
                 this.winner = robot;
             }                
