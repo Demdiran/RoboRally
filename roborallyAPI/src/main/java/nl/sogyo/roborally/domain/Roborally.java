@@ -198,4 +198,8 @@ public class Roborally{
     public Deck getDeck(){
         return this.deck;
     }
+
+    public void resetWinner(){
+        this.winner = null;
+    }
 }
