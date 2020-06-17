@@ -580,4 +580,604 @@ public class BoardFactory{
 		smallCompleteBoard.addLaser(laser4);
 		return smallCompleteBoard;
 	}
+
+	public static Board createSmallBoardWithFastConveyers(){
+		Board smallFastConveyerBoard = new Board();
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new FastConveyorbelt(Direction.EAST));
+		row1.add(new FastConveyorbelt(Direction.EAST));
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.WEST));
+		row1.add(new FastConveyorbelt(Direction.WEST));
+
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new FastConveyorbelt(Direction.EAST));
+		row2.add(new FastConveyorbelt(Direction.EAST, "E"));
+		row2.add(new EmptySquare("WE"));
+		row2.add(new FastConveyorbelt(Direction.WEST, "W"));
+		row2.add(new FastConveyorbelt(Direction.WEST));
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare("S"));
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new FastConveyorbelt(Direction.NORTH, "N"));
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.SOUTH, "S"));
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare("N"));
+		row5.add(new EmptySquare());
+
+		smallFastConveyerBoard.addRow(row1);
+		smallFastConveyerBoard.addRow(row2);
+		smallFastConveyerBoard.addRow(row3);
+		smallFastConveyerBoard.addRow(row4);
+		smallFastConveyerBoard.addRow(row5);
+
+		return smallFastConveyerBoard;
+	}
+
+	public static Board createFastConveyersWithPits(){
+		Board smallFastConveyerBoardWithPits = new Board();
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new FastConveyorbelt(Direction.EAST));
+		row1.add(new FastConveyorbelt(Direction.EAST));
+		row1.add(new Pit());
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new FastConveyorbelt(Direction.WEST));
+		row2.add(new FastConveyorbelt(Direction.WEST));
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new Pit());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new Pit());
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.EAST));
+		row4.add(new FastConveyorbelt(Direction.EAST));
+		
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new FastConveyorbelt(Direction.SOUTH));
+		row5.add(new Pit());
+		row5.add(new FastConveyorbelt(Direction.WEST));
+		row5.add(new FastConveyorbelt(Direction.WEST));
+
+		smallFastConveyerBoardWithPits.addRow(row1);
+		smallFastConveyerBoardWithPits.addRow(row2);
+		smallFastConveyerBoardWithPits.addRow(row3);
+		smallFastConveyerBoardWithPits.addRow(row4);
+		smallFastConveyerBoardWithPits.addRow(row5);
+
+		return smallFastConveyerBoardWithPits;
+	}
+
+	public static Board createMultipleRobotsPushedOnFastConveyersWithPit(){
+		Board smallFastConveyerBoardWithPits = new Board();
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new FastConveyorbelt(Direction.EAST));
+		row3.add(new FastConveyorbelt(Direction.EAST));
+		row3.add(new Pit());
+		row3.add(new FastConveyorbelt(Direction.WEST));
+		row3.add(new FastConveyorbelt(Direction.WEST));
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+
+		smallFastConveyerBoardWithPits.addRow(row1);
+		smallFastConveyerBoardWithPits.addRow(row2);
+		smallFastConveyerBoardWithPits.addRow(row3);
+		smallFastConveyerBoardWithPits.addRow(row4);
+		smallFastConveyerBoardWithPits.addRow(row5);
+
+		return smallFastConveyerBoardWithPits;
+	}
+
+		public static Board createMultipleRobotsPushedOnFastConveyersWithoutPit(){
+		Board smallFastConveyerBoardWithoutPit = new Board();
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new FastConveyorbelt(Direction.EAST));
+		row3.add(new FastConveyorbelt(Direction.EAST));
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.WEST));
+		row3.add(new FastConveyorbelt(Direction.WEST));
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+
+		smallFastConveyerBoardWithoutPit.addRow(row1);
+		smallFastConveyerBoardWithoutPit.addRow(row2);
+		smallFastConveyerBoardWithoutPit.addRow(row3);
+		smallFastConveyerBoardWithoutPit.addRow(row4);
+		smallFastConveyerBoardWithoutPit.addRow(row5);
+
+		return smallFastConveyerBoardWithoutPit;
+	}
+
+	public static Board createBigFastConveyorBeltTestBoard(){
+		Board bigFastConveyorBeltTestBoard = new Board();
+
+		ArrayList<Square> row0 = new ArrayList<>();
+		row0.add(new FastConveyorbelt(Direction.NORTH, "N"));
+		row0.add(new FastConveyorbelt(Direction.NORTH));
+		row0.add(new Pit());
+		row0.add(new FastConveyorbelt(Direction.WEST));
+		row0.add(new FastConveyorbelt(Direction.WEST));
+		row0.add(new FastConveyorbelt(Direction.WEST));
+		row0.add(new FastConveyorbelt(Direction.WEST));
+		row0.add(new FastConveyorbelt(Direction.WEST));
+		row0.add(new FastConveyorbelt(Direction.WEST));
+		row0.add(new EmptySquare());
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.EAST));
+		row2.add(new FastConveyorbelt(Direction.EAST));
+		row2.add(new FastConveyorbelt(Direction.EAST));
+		row2.add(new FastConveyorbelt(Direction.EAST));
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+
+		ArrayList<Square> row6 = new ArrayList<>();
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+		row6.add(new EmptySquare());
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+
+		ArrayList<Square> row7 = new ArrayList<>();
+		row7.add(new FastConveyorbelt(Direction.NORTH));
+		row7.add(new FastConveyorbelt(Direction.NORTH));
+		row7.add(new FastConveyorbelt(Direction.NORTH));
+		row7.add(new FastConveyorbelt(Direction.NORTH));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new FastConveyorbelt(Direction.NORTH));
+
+		ArrayList<Square> row8 = new ArrayList<>();
+		row8.add(new FastConveyorbelt(Direction.NORTH));
+		row8.add(new FastConveyorbelt(Direction.NORTH));
+		row8.add(new FastConveyorbelt(Direction.NORTH));
+		row8.add(new FastConveyorbelt(Direction.NORTH));
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new FastConveyorbelt(Direction.NORTH));
+
+		ArrayList<Square> row9 = new ArrayList<>();
+		row9.add(new FastConveyorbelt(Direction.NORTH));
+		row9.add(new FastConveyorbelt(Direction.NORTH));
+		row9.add(new FastConveyorbelt(Direction.NORTH));
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new FastConveyorbelt(Direction.NORTH));
+
+		bigFastConveyorBeltTestBoard.addRow(row0);
+		bigFastConveyorBeltTestBoard.addRow(row1);
+		bigFastConveyorBeltTestBoard.addRow(row2);
+		bigFastConveyorBeltTestBoard.addRow(row3);
+		bigFastConveyorBeltTestBoard.addRow(row4);
+		bigFastConveyorBeltTestBoard.addRow(row5);
+		bigFastConveyorBeltTestBoard.addRow(row6);
+		bigFastConveyorBeltTestBoard.addRow(row7);
+		bigFastConveyorBeltTestBoard.addRow(row8);
+		bigFastConveyorBeltTestBoard.addRow(row9);
+
+		return bigFastConveyorBeltTestBoard;
+	}
+
+	public static Board createFastConveyorBeltFrontEndGameBoard(){
+		Board fastConveyorBeltFrontEndGameBoard = new Board();
+
+		ArrayList<Square> row0 = new ArrayList<>();
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new Pit());
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare("E"));
+		row1.add(new EmptySquare("W"));
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new EmptySquare());
+		row1.add(new GearRight());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		row3.add(new EmptySquare("E"));
+		row3.add(new EmptySquare("W"));
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new GearLeft());
+		row3.add(new EmptySquare());
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new EmptySquare());
+		row4.add(new SlowConveyorbelt(Direction.EAST));
+		row4.add(new SlowConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.SOUTH));
+		row5.add(new EmptySquare("E"));
+		row5.add(new EmptySquare("W"));
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new SlowConveyorbelt(Direction.NORTH));
+		row5.add(new SlowConveyorbelt(Direction.WEST));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+
+		ArrayList<Square> row6 = new ArrayList<>();
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+
+		ArrayList<Square> row7 = new ArrayList<>();
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new FastConveyorbelt(Direction.EAST));
+		row7.add(new FastConveyorbelt(Direction.EAST, "S"));
+		row7.add(new FastConveyorbelt(Direction.EAST, "S"));
+		row7.add(new FastConveyorbelt(Direction.EAST, "S"));
+		row7.add(new FastConveyorbelt(Direction.EAST));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+
+		ArrayList<Square> row8 = new ArrayList<>();
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new FastConveyorbelt(Direction.WEST));
+		row8.add(new FastConveyorbelt(Direction.WEST, "N"));
+		row8.add(new FastConveyorbelt(Direction.WEST, "N"));
+		row8.add(new FastConveyorbelt(Direction.WEST, "N"));
+		row8.add(new FastConveyorbelt(Direction.WEST));
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+
+		ArrayList<Square> row9 = new ArrayList<>();
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+
+		fastConveyorBeltFrontEndGameBoard.addRow(row0);
+		fastConveyorBeltFrontEndGameBoard.addRow(row1);
+		fastConveyorBeltFrontEndGameBoard.addRow(row2);
+		fastConveyorBeltFrontEndGameBoard.addRow(row3);
+		fastConveyorBeltFrontEndGameBoard.addRow(row4);
+		fastConveyorBeltFrontEndGameBoard.addRow(row5);
+		fastConveyorBeltFrontEndGameBoard.addRow(row6);
+		fastConveyorBeltFrontEndGameBoard.addRow(row7);
+		fastConveyorBeltFrontEndGameBoard.addRow(row8);
+		fastConveyorBeltFrontEndGameBoard.addRow(row9);
+
+		return fastConveyorBeltFrontEndGameBoard;
+	}
+
+	public static Board createFastSlowConveyorsInteractionTestBoard(){
+		Board fastSlowConveyorsInteractionTestBoard = new Board();
+
+		ArrayList<Square> row0 = new ArrayList<>();
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new SlowConveyorbelt(Direction.EAST));
+		row1.add(new SlowConveyorbelt(Direction.EAST));
+		row1.add(new SlowConveyorbelt(Direction.EAST));
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.NORTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new FastConveyorbelt(Direction.SOUTH));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.NORTH));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new FastConveyorbelt(Direction.SOUTH));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.NORTH));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new EmptySquare());
+		row5.add(new SlowConveyorbelt(Direction.SOUTH));
+		row5.add(new EmptySquare());
+		row5.add(new SlowConveyorbelt(Direction.NORTH));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+
+		ArrayList<Square> row6 = new ArrayList<>();
+		row6.add(new EmptySquare());
+		row6.add(new SlowConveyorbelt(Direction.SOUTH));
+		row6.add(new EmptySquare());
+		row6.add(new SlowConveyorbelt(Direction.NORTH));
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new SlowConveyorbelt(Direction.NORTH));
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+
+		ArrayList<Square> row7 = new ArrayList<>();
+		row7.add(new EmptySquare());
+		row7.add(new SlowConveyorbelt(Direction.SOUTH));
+		row7.add(new EmptySquare());
+		row7.add(new SlowConveyorbelt(Direction.NORTH));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new SlowConveyorbelt(Direction.NORTH));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+
+		ArrayList<Square> row8 = new ArrayList<>();
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new SlowConveyorbelt(Direction.NORTH));
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+
+		ArrayList<Square> row9 = new ArrayList<>();
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new FastConveyorbelt(Direction.EAST));
+		row9.add(new FastConveyorbelt(Direction.EAST));
+		row9.add(new FastConveyorbelt(Direction.EAST));
+		row9.add(new FastConveyorbelt(Direction.EAST));
+		row9.add(new SlowConveyorbelt(Direction.NORTH));
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+
+		fastSlowConveyorsInteractionTestBoard.addRow(row0);
+		fastSlowConveyorsInteractionTestBoard.addRow(row1);
+		fastSlowConveyorsInteractionTestBoard.addRow(row2);
+		fastSlowConveyorsInteractionTestBoard.addRow(row3);
+		fastSlowConveyorsInteractionTestBoard.addRow(row4);
+		fastSlowConveyorsInteractionTestBoard.addRow(row5);
+		fastSlowConveyorsInteractionTestBoard.addRow(row6);
+		fastSlowConveyorsInteractionTestBoard.addRow(row7);
+		fastSlowConveyorsInteractionTestBoard.addRow(row8);
+		fastSlowConveyorsInteractionTestBoard.addRow(row9);
+
+		return fastSlowConveyorsInteractionTestBoard;
+	}
+
 }
