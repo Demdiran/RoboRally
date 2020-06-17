@@ -206,4 +206,8 @@ public class Roborally{
     public Deck getDeck(){
         return this.deck;
     }
+
+    public int getNextRegisterToBePlayed(){
+        return this.nextRegisterToBePlayed;
+    }
 }
