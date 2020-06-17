@@ -86,9 +86,9 @@ public class Roborally{
         robots.sort(Robot.COMPARE_BY_NAME);
         for(Robot robot : robots){
             robot.cyclePowerState(deck);
-            robot.clearHand(deck);
             robot.unready();
             robot.respawnIfNecessary(board, robots);
+            robot.clearHand(deck);
         }
         removeUnactiveRobots();
         for(Robot robot : robots){
