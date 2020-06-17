@@ -3,6 +3,7 @@ package nl.sogyo.roborally.domain.robots;
 import org.junit.Test;
 
 import nl.sogyo.roborally.domain.Direction;
+import nl.sogyo.roborally.domain.Roborally;
 import nl.sogyo.roborally.domain.cards.Card;
 import nl.sogyo.roborally.domain.cards.Deck;
 import nl.sogyo.roborally.domain.cards.DoNothingCard;
@@ -147,6 +148,41 @@ public class TestRobot{
         robot.clearHand(deck);
         assertTrue(deck.getSize() == 84);
     }
+
+    @Test
+    public void robotRespawnsWithLessThanOneHealth(){
+        Robot robot = new Robot();
+        Roborally rally = new Roborally(robot);
+        robot.takeDamage(8);
+        robot.program(7);
+        rally.playAllRegistersIfRobotsReady();
+        assertTrue(robot.getHealth() == 1);
+        robot.program(7);
+        robot.takeDamage(1);
+        rally.playAllRegistersIfRobotsReady();
+        assertEquals(9,robot.getHealth());
+    }
+
+    @Test
+    public void robotDoesNotRespawnAfterThreeDeaths(){
+        Robot robot = new Robot();
+        Roborally rally = new Roborally(robot);
+        robot.takeDamage(9);
+        robot.program(7);
+        rally.playAllRegistersIfRobotsReady();
+        robot.takeDamage(9);
+        robot.program(7);
+        rally.playAllRegistersIfRobotsReady();
+        robot.takeDamage(9);
+        robot.program(7);
+        rally.playAllRegistersIfRobotsReady();
+        assertTrue(robot.isOnBoard());
+        robot.takeDamage(9);
+        robot.program(7);
+        rally.playAllRegistersIfRobotsReady();
+        assertTrue(!robot.isOnBoard());
+    }
+
 
 
 
