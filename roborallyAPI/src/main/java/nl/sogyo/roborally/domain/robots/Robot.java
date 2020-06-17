@@ -40,6 +40,7 @@ public class Robot{
     ActivityLevel activitylevel = ActivityLevel.ACTIVE;
     boolean hasReachedCheckpoint;
     boolean hasWonTheGame;
+    int lives = 3;
     
     public Robot(){
     }
@@ -125,6 +126,9 @@ public class Robot{
 
     public void takeDamage(int damage){
         this.health -= damage;
+        if(this.health <= 0 ){
+            setOffBoard();
+        }
     }
 
     public boolean isAt(int xCoordinate, int yCoordinate){
@@ -259,17 +263,18 @@ public class Robot{
     }
 
     public void respawnIfNecessary(Board board, List<Robot> robots){
-        if(!this.onBoard){
+        if(!this.onBoard && this.lives >= 0){
             this.xCoordinate = this.respawnX;
             this.yCoordinate = this.respawnY;
             this.orientation = board.getSquare(this.xCoordinate, this.yCoordinate).getRespawnDirection();
+            this.health = 9;
             for(Robot r: robots){
                 if(!r.equals(this)&& r.getXCoordinate() == this.respawnX && r.getYCoordinate() == this.respawnY){
                     r.moveToSurroundingSquare(board, robots);
                 }
             }
+            this.onBoard = true;
         }
-        this.onBoard = true;
     }
 
     private void moveToSurroundingSquare(Board board, List<Robot> robots){
@@ -589,7 +594,7 @@ public class Robot{
         this.onBoard = false;
         this.xCoordinate = -1;
         this.yCoordinate = -1;
-
+        this.lives--;
     }
 
 }

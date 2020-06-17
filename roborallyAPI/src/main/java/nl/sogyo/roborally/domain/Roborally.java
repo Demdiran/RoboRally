@@ -24,6 +24,7 @@ public class Roborally{
 
     public Roborally(Robot robot){
         this.robots.add(robot);
+        this.board = BoardFactory.createTESTBOARD4X4();
     }
 
     public Roborally(Board board){
@@ -104,12 +105,22 @@ public class Roborally{
         robots.sort(Robot.COMPARE_BY_NAME);
         for(Robot robot : robots){
             robot.cyclePowerState(deck);
-            robot.clearHand(deck);
             robot.unready();
             robot.respawnIfNecessary(board, robots);
+            robot.clearHand(deck);
         }
+        removeUnactiveRobots();
         for(Robot robot : robots){
             robot.drawCards(deck);
+        }
+    }
+
+    private void removeUnactiveRobots(){
+        List<Robot> copyRobots = new ArrayList<Robot>(robots);
+        for(Robot r:copyRobots){
+            if(!r.isOnBoard()){
+                robots.remove(r);
+            }
         }
     }
 
@@ -209,5 +220,9 @@ public class Roborally{
 
     public int getNextRegisterToBePlayed(){
         return this.nextRegisterToBePlayed;
+    }
+    
+    public void resetWinner(){
+        this.winner = null;
     }
 }
