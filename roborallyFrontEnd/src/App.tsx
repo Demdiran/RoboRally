@@ -9,6 +9,7 @@ import { Card } from "./board/Card";
 import { CardsInhand } from "./board/CardsInHand";
 import { Powerbutton } from "./Powerbutton";
 import { NextMoveButton } from "./NextMoveButton";
+import { DealNewCardsButton } from "./DealNewCardsButton";
 import { Laser } from "./board/Laser";
 import { ProgrammedCards } from "./board/ProgrammedCards";
 
@@ -28,9 +29,10 @@ export function App() {
                     <Board squares = {board} robots={robots} lasers={lasers}></Board>
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
                     <NextMoveButton onClick={() => displayNextMove()}/>
+                    <DealNewCardsButton onClick={() => endTurn()}/>
                     <PlayerList players={robots}></PlayerList>
                     <CardsInhand cards = {cardsInHand} onClick={programCard}></CardsInhand>
-                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={endTurn}></ProgrammedCards>
+                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={sendProgrammedCardsToServer}></ProgrammedCards>
                 </div>);
     }
     else if(gameWinner != undefined){
@@ -126,6 +128,15 @@ export function App() {
     async function powerDown(){
         if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
             websocket.send("switchpower");
+        }
+        else{
+            console.log("No connection.");
+        }
+    }
+
+    async function sendProgrammedCardsToServer(){
+        if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
+            websocket.send("programme cards");
         }
         else{
             console.log("No connection.");
