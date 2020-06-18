@@ -49,11 +49,11 @@ public class RoborallyWebsocket{
                 updatePlayerPowerStatus(player);
             }
         }
-        else if(message.equals("programme cards")){
-            int[] cardnrs = MessageParser.parseMessage(message);
-            Robot robot = robots.get(session);
-            robot.programFromHand(cardnrs);
-        }
+        // else if(message.contains("programme cards: ")){
+        //     int[] cardnrs = MessageParser.parseMessage(message);
+        //     Robot robot = robots.get(session);
+        //     robot.programFromHand(cardnrs);
+        // }
         else if(message.equals("display next move")){
             Robot robot = robots.get(session);
             robot.wantsToExecuteNextMove();
@@ -61,13 +61,22 @@ public class RoborallyWebsocket{
             if(roborally.getWinner() != null){
                 String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
                 session.getBasicRemote().sendText(gameover);
-            } else if(roborally.getNextRegisterToBePlayed() < 5 & roborally.allRobotsReady()){
+            } else if(roborally.getNextRegisterToBePlayed() <= 5 & roborally.allRobotsReady()){
                 for(Session player : players){
                     updateRobots(player);
                 }
-            } else if(roborally.getNextRegisterToBePlayed() == 5){
+            }
+        }
+        else if(message.equals("end turn")){
+            if(roborally.getNextRegisterToBePlayed() >= 5){
+                roborally.prepareNextRound();
                 updateAllPlayers();
             }
+        }
+        else {
+            int[] cardnrs = MessageParser.parseMessage(message);
+            Robot robot = robots.get(session);
+            robot.programFromHand(cardnrs);
         }
     }
 

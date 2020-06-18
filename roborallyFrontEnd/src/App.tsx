@@ -23,6 +23,7 @@ export function App() {
     const [ programmedCards, setProgrammedCards ] = useState<Card[]>([]);
     const [ lockedCards, setLockedCards ] = useState<Card[]>([]);
     const [gameWinner, setWinner]  = useState<String | undefined>(undefined);
+    let readyButtonClicked = false;
 
     if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined){
         return (<div>
@@ -134,12 +135,19 @@ export function App() {
         }
     }
 
-    async function sendProgrammedCardsToServer(){
-        if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
-            websocket.send("programme cards");
-        }
-        else{
-            console.log("No connection.");
+    async function sendProgrammedCardsToServer(cardids: number[], lockedids: number[]){
+        if(readyButtonClicked == false){
+            if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
+                for (var i=0; i < lockedids.length; i++) {
+                    cardids.push(lockedids[i]);
+                }
+                console.log(cardids);
+                websocket.send(JSON.stringify(cardids));
+            }
+            else{
+                console.log("No connection.");
+            }
+            readyButtonClicked = true;
         }
     }
 
@@ -152,17 +160,13 @@ export function App() {
         }
     }
 
-    async function endTurn(cardids: number[], lockedids: number[]){        
+    async function endTurn(){        
         if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
-            for (var i=0; i < lockedids.length; i++) {
-                cardids.push(lockedids[i]);
-            }
-            console.log(cardids);
-            websocket.send(JSON.stringify(cardids));
+            websocket.send("end turn");
         }
         else{
             console.log("No connection.");
         }
+        readyButtonClicked = false;
     }
 }
-

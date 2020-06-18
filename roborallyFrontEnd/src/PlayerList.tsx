@@ -31,8 +31,11 @@ function createPlayerEntry(robot: Robot){
         color: robot.colour,
     };
     let readytext = "";
-    if(robot.ready) readytext = " is ready";
-    else readytext = " is programming, and active";
+    if(!robot.ready) readytext = " is programming, and active";
+    else if(robot.ready) readytext = " is ready";
+    
+    if(robot.wantsToExecuteNextMove) readytext = " wants to display next move";
+
     if(robot.status == "Inactive") readytext = " has powered down.";
     return (
         <p style={style} key={robot.name}>

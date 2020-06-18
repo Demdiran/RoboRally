@@ -77,7 +77,7 @@ public class Roborally{
                 playRegister(this.nextRegisterToBePlayed);
                 this.nextRegisterToBePlayed++;
             }
-        } else prepareNextRound();
+        }
     }   
 
     private void playRegister(int registernr){
@@ -101,7 +101,7 @@ public class Roborally{
         }
     }
 
-    private void prepareNextRound(){
+    public void prepareNextRound(){
         robots.sort(Robot.COMPARE_BY_NAME);
         for(Robot robot : robots){
             robot.cyclePowerState(deck);
@@ -110,6 +110,7 @@ public class Roborally{
             robot.clearHand(deck);
         }
         removeUnactiveRobots();
+        this.nextRegisterToBePlayed = 0;
         for(Robot robot : robots){
             robot.drawCards(deck);
         }
