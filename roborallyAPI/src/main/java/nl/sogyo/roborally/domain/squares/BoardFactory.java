@@ -769,6 +769,32 @@ public class BoardFactory{
 		return smallFastConveyerBoardWithoutPit;
 	}
 
+	public static Board createRepairSquareBoard(){
+		Board board = new Board();
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		ArrayList<Square> row2 = new ArrayList<>();
+		ArrayList<Square> row3 = new ArrayList<>();
+
+		row1.add(new EmptySquare("NW"));
+		row1.add(new EmptySquare("N"));
+		row1.add(new EmptySquare("NE"));
+
+		row2.add(new EmptySquare("W"));
+		row2.add(new RepairSquare(2));
+		row2.add(new EmptySquare("E"));
+
+		row3.add(new EmptySquare("SW"));
+		row3.add(new EmptySquare("S"));
+		row3.add(new EmptySquare("SE"));
+		Laser laser1 = new Laser(2,0, Direction.SOUTH, 1);
+		board.addLaser(laser1);
+		board.addRow(row1);
+		board.addRow(row2);
+		board.addRow(row3);
+		return board;
+	}
+
 	public static Board createBigFastConveyorBeltTestBoard(){
 		Board bigFastConveyorBeltTestBoard = new Board();
 

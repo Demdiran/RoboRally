@@ -130,6 +130,13 @@ public class Robot{
         }
     }
 
+    public void receiveHealth(int healthPoints){
+        this.health += healthPoints;
+        if(this.health > 9){
+            this.health = 9;
+        }
+    }
+
     public boolean isAt(int xCoordinate, int yCoordinate){
         if(this.xCoordinate == xCoordinate && this.yCoordinate == yCoordinate)
             return true;

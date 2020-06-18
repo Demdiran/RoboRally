@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Robot, RobotElement } from "./../Robot";
 import { Laser, Laserbeam, LaserElement, BeamElement } from "./Laser";
-import { Flag, Home, Rotate90DegreesCcw, RotateLeft, RotateRight, Brightness1, KeyboardArrowUp, KeyboardArrowRight, KeyboardArrowDown, KeyboardArrowLeft, DoubleArrow } from "@material-ui/icons";
+import { Flag, Home, Rotate90DegreesCcw, RotateLeft, RotateRight, Brightness1, KeyboardArrowUp, KeyboardArrowRight, KeyboardArrowDown, KeyboardArrowLeft, DoubleArrow, Build } from "@material-ui/icons";
 import zIndex from "@material-ui/core/styles/zIndex";
 
 export class Square{
@@ -177,6 +177,7 @@ function createImage(type: string, zIndex: number){
         case "SlowConveyorbeltEast": return <KeyboardArrowRight style={iconStyle}/>;
         case "SlowConveyorbeltSouth": return <KeyboardArrowDown style={iconStyle}/>;
         case "SlowConveyorbeltWest": return <KeyboardArrowLeft style={iconStyle}/>;
+        case "RepairSquare": return <Build style={iconStyle}/>;
         case "FastConveyorbeltNorth": return <img src="https://img.icons8.com/material/50/000000/double-up.png" style={iconStyle}/>;
         // case "FastConveyorbeltEast": return <DoubleArrow style={iconStyle}></DoubleArrow>;
         case "FastConveyorbeltEast": return <img src="https://img.icons8.com/material/50/000000/double-right.png" style={iconStyle}/>;
