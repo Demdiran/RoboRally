@@ -222,7 +222,11 @@ public class Roborally{
     public int getNextRegisterToBePlayed(){
         return this.nextRegisterToBePlayed;
     }
-    
+
+    public void resetNextRegisterToBePlayed(){
+        this.nextRegisterToBePlayed = 0;
+    }
+
     public void resetWinner(){
         this.winner = null;
     }

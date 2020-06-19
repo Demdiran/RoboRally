@@ -16,7 +16,7 @@ public class RotateRightCard extends Card{
     }
 
     public void doCardAction(Robot robot, Board board, List<Robot> robots) {
-        robot.turnRight();
+        if(robot.isOnBoard()) robot.turnRight();
     }
 
     public String getName(){

@@ -31,7 +31,7 @@ export function App() {
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
                     <NextMoveButton onClick={() => displayNextMove()}/>
                     <DealNewCardsButton onClick={() => endTurn()}/>
-                    <PlayerList players={robots}></PlayerList>
+                    <PlayerList players={robots} board = {board}></PlayerList>
                     <CardsInhand cards = {cardsInHand} onClick={programCard}></CardsInhand>
                     <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={sendProgrammedCardsToServer}></ProgrammedCards>
                 </div>);
@@ -80,11 +80,6 @@ export function App() {
 
         setWebsocket(tempwebsocket);
     }
-
-    // function setWinner(winner: String){
-    //     console.log("reached winner", {winner});
-    //     return { gameWinner : winner };
-    // }
 
     function createBoard(squares: Square[][]){
         let board = squares.map(row => row.map(square => new Square(square.type, square.northwall, square.eastwall, square.southwall, square.westwall)));

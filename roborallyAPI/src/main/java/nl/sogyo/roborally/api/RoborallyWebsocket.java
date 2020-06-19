@@ -35,6 +35,7 @@ public class RoborallyWebsocket{
             String name = message.split(" ")[1];
             Robot robot = new Robot(name, roborally.getBoard(), robots.size());
             roborally.resetWinner();
+            roborally.resetNextRegisterToBePlayed();
             robots.put(session, robot);
             roborally.addRobot(robot);
             players.add(session);
@@ -49,11 +50,6 @@ public class RoborallyWebsocket{
                 updatePlayerPowerStatus(player);
             }
         }
-        // else if(message.contains("programme cards: ")){
-        //     int[] cardnrs = MessageParser.parseMessage(message);
-        //     Robot robot = robots.get(session);
-        //     robot.programFromHand(cardnrs);
-        // }
         else if(message.equals("display next move")){
             Robot robot = robots.get(session);
             robot.wantsToExecuteNextMove();
