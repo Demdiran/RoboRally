@@ -110,7 +110,7 @@ public class Roborally{
         return this.winner;
     }
 
-    void activateAllBoardElements(){
+    public void activateAllBoardElements(){
         activateFastConveyorbelt();
         activateSlowConveyorbelt();
         activateBoardElements(Gear180.class);
