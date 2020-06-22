@@ -8,6 +8,8 @@ import { PlayerList } from "./PlayerList";
 import { Card } from "./board/Card";
 import { CardsInhand } from "./board/CardsInHand";
 import { Powerbutton } from "./Powerbutton";
+import { NextMoveButton } from "./NextMoveButton";
+import { DealNewCardsButton } from "./DealNewCardsButton";
 import { Laser } from "./board/Laser";
 import { ProgrammedCards } from "./board/ProgrammedCards";
 
@@ -21,14 +23,17 @@ export function App() {
     const [ programmedCards, setProgrammedCards ] = useState<Card[]>([]);
     const [ lockedCards, setLockedCards ] = useState<Card[]>([]);
     const [gameWinner, setWinner]  = useState<String | undefined>(undefined);
+    let readyButtonClicked = false;
 
     if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined){
         return (<div>
                     <Board squares = {board} robots={robots} lasers={lasers}></Board>
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
-                    <PlayerList players={robots}></PlayerList>
+                    <NextMoveButton onClick={() => displayNextMove()}/>
+                    <DealNewCardsButton onClick={() => endTurn()}/>
+                    <PlayerList players={robots} board = {board}></PlayerList>
                     <CardsInhand cards = {cardsInHand} onClick={programCard}></CardsInhand>
-                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={endTurn}></ProgrammedCards>
+                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={sendProgrammedCardsToServer}></ProgrammedCards>
                 </div>);
     }
     else if(gameWinner != undefined){
@@ -75,11 +80,6 @@ export function App() {
 
         setWebsocket(tempwebsocket);
     }
-
-    // function setWinner(winner: String){
-    //     console.log("reached winner", {winner});
-    //     return { gameWinner : winner };
-    // }
 
     function createBoard(squares: Square[][]){
         let board = squares.map(row => row.map(square => new Square(square.type, square.northwall, square.eastwall, square.southwall, square.westwall)));
@@ -130,17 +130,38 @@ export function App() {
         }
     }
 
-    async function endTurn(cardids: number[], lockedids: number[]){        
-        if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
-            for (var i=0; i < lockedids.length; i++) {
-                cardids.push(lockedids[i]);
+    async function sendProgrammedCardsToServer(cardids: number[], lockedids: number[]){
+        if(readyButtonClicked == false){
+            if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
+                for (var i=0; i < lockedids.length; i++) {
+                    cardids.push(lockedids[i]);
+                }
+                console.log(cardids);
+                websocket.send(JSON.stringify(cardids));
             }
-            console.log(cardids);
-            websocket.send(JSON.stringify(cardids));
+            else{
+                console.log("No connection.");
+            }
+            readyButtonClicked = true;
+        }
+    }
+
+    async function displayNextMove(){
+        if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
+            websocket.send("display next move");
         }
         else{
             console.log("No connection.");
         }
     }
-}
 
+    async function endTurn(){        
+        if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
+            websocket.send("end turn");
+        }
+        else{
+            console.log("No connection.");
+        }
+        readyButtonClicked = false;
+    }
+}

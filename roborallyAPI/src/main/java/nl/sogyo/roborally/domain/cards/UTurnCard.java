@@ -16,8 +16,10 @@ public class UTurnCard extends Card{
     }
 
     public void doCardAction(Robot robot, Board board, List<Robot> robots) {
-        robot.turnRight();
-        robot.turnRight();
+        if(robot.isOnBoard()){
+            robot.turnRight();
+            robot.turnRight();
+        }
     }
 
     @Override
