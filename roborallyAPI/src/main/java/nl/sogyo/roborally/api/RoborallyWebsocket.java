@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-
 import nl.sogyo.roborally.domain.Roborally;
 import nl.sogyo.roborally.domain.robots.Robot;
 import nl.sogyo.roborally.domain.squares.BoardFactory;
@@ -50,10 +48,6 @@ public class RoborallyWebsocket{
             Robot robot = robots.get(session);
             robot.programFromHand(cardnrs);
             roborally.playAllRegistersIfRobotsReady();
-            if(roborally.getWinner() != null){
-                String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
-                session.getBasicRemote().sendText(gameover);
-            }
         }
         updateAllPlayers();
 
@@ -74,6 +68,10 @@ public class RoborallyWebsocket{
             updateRobots(player);
             updatePlayerPowerStatus(player);
             updatePlayerHand(player);
+            if(roborally.getWinner() != null){
+                String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
+                player.getBasicRemote().sendText(gameover);
+            }
         }
     }
 
