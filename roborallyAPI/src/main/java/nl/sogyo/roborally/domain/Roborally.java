@@ -71,11 +71,8 @@ public class Roborally{
     }
 
     public void playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove(){
-        System.out.println("Inside playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove()");
         if(this.nextRegisterToBePlayed < 5){
-            System.out.println("next register to be played is: " + this.nextRegisterToBePlayed);
             if(allRobotsReady() & allRobotsReadyForNextMove()){
-                System.out.println("All robots are ready for the next move: " + allRobotsReadyForNextMove());
                 playRegister(this.nextRegisterToBePlayed);
                 this.nextRegisterToBePlayed++;
             }
