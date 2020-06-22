@@ -64,16 +64,18 @@ public class Roborally{
         if(allRobotsReady()){
             for(int registernr=0;registernr<5;registernr++){
                 playRegister(registernr);
-                if(this.winner != null) break;//TO DO: add a check that one robot cannot move the other from
-                //the winner square and be the winner himself.
+                if(this.winner != null) break;
             }
             prepareNextRound();
         }
     }
 
     public void playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove(){
+        System.out.println("Inside playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove()");
         if(this.nextRegisterToBePlayed < 5){
+            System.out.println("next register to be played is: " + this.nextRegisterToBePlayed);
             if(allRobotsReady() & allRobotsReadyForNextMove()){
+                System.out.println("All robots are ready for the next move: " + allRobotsReadyForNextMove());
                 playRegister(this.nextRegisterToBePlayed);
                 this.nextRegisterToBePlayed++;
             }
