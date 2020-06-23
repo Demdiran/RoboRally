@@ -31,7 +31,15 @@ function createRow(row: Square[], rowNumber: number):JSX.Element[]{
 }
 
 function addRobotToBoard(robot: Robot, board: Square[][]){
-    board[robot.yCoordinate][robot.xCoordinate].robot = robot;
+        if(!robotOffBoard(robot, board)){
+        board[robot.yCoordinate][robot.xCoordinate].robot = robot;
+    }
+}
+
+function robotOffBoard(robot: Robot, board: Square[][]){
+    if(robot.xCoordinate < 0 || robot.xCoordinate > board[0].length || robot.yCoordinate < 0 || robot.yCoordinate > board.length){
+        return true;
+    } else return false;
 }
 
 function addLaserToBoard(laser: Laser, board: Square[][]){

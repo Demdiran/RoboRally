@@ -33,6 +33,7 @@ public class Robot{
     int respawnX;
     int respawnY;
     boolean ready;
+    boolean wantsToExecuteNextMove;
     boolean onBoard = true;
     String name = "defaultname";
     String colour = "orange";
@@ -369,6 +370,18 @@ public class Robot{
 
     public boolean isReady(){
         return this.ready;
+    }
+
+    public void hasExecutedNextMove(){
+        this.wantsToExecuteNextMove = false;
+    }
+
+    public boolean readyForNextMove(){
+        return this.wantsToExecuteNextMove;
+    }
+
+    public void wantsToExecuteNextMove(){
+        this.wantsToExecuteNextMove = true;
     }
 
     public void drawCards(Deck deck){
