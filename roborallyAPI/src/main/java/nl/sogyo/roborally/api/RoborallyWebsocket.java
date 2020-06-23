@@ -5,21 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-
 import nl.sogyo.roborally.domain.Roborally;
 import nl.sogyo.roborally.domain.robots.Robot;
 import nl.sogyo.roborally.domain.squares.BoardFactory;
 
 @ServerEndpoint(value = "/websocket")
 public class RoborallyWebsocket{
-    private static final Roborally roborally = new Roborally(BoardFactory.createTESTBOARD4X4());
+    private static final Roborally roborally = new Roborally(BoardFactory.createSmallCompleteBoard());
     private static final List<Session> players = new ArrayList<>();
     private static final Map<Session, Robot> robots = new HashMap<>();
     
@@ -35,28 +33,48 @@ public class RoborallyWebsocket{
             String name = message.split(" ")[1];
             Robot robot = new Robot(name, roborally.getBoard(), robots.size());
             roborally.resetWinner();
+            roborally.resetNextRegisterToBePlayed();
             robots.put(session, robot);
             roborally.addRobot(robot);
             players.add(session);
             sendBoardInformation(session);
+            updateAllPlayers();
         }
         else if(message.equals("switchpower")){
             Robot robot = robots.get(session);
             robot.turnOnOrOff();
             updatePlayerPowerStatus(session);
+            for(Session player : players){
+                updatePlayerPowerStatus(player);
+            }
         }
-        else{            
-            int[] cardnrs = MessageParser.parseMessage(message);
+        else if(message.equals("display next move")){
             Robot robot = robots.get(session);
-            robot.programFromHand(cardnrs);
-            roborally.playAllRegistersIfRobotsReady();
+            robot.wantsToExecuteNextMove();
+            roborally.playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove();
             if(roborally.getWinner() != null){
                 String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
                 session.getBasicRemote().sendText(gameover);
+            } else if(roborally.getNextRegisterToBePlayed() <= 5){
+                for(Session player : players){
+                    updateRobots(player);
+                }
             }
         }
-        updateAllPlayers();
-
+        else if(message.equals("end turn")){
+            if(roborally.getNextRegisterToBePlayed() >= 5){
+                roborally.prepareNextRound();
+                updateAllPlayers();
+            }
+        }
+        else {
+            int[] cardnrs = MessageParser.parseMessage(message);
+            Robot robot = robots.get(session);
+            robot.programFromHand(cardnrs);
+            for(Session player : players){
+                updateRobots(player);
+            }
+        }
     }
 
     @OnClose
@@ -74,6 +92,10 @@ public class RoborallyWebsocket{
             updateRobots(player);
             updatePlayerPowerStatus(player);
             updatePlayerHand(player);
+            if(roborally.getWinner() != null){
+                String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
+                player.getBasicRemote().sendText(gameover);
+            }
         }
     }
 

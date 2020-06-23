@@ -16,6 +16,7 @@ public class Roborally{
     Board board;
     private Robot winner = null;
     Deck deck = new Deck();
+    private int nextRegisterToBePlayed = 0;
     
     public Roborally(){
         this.board = BoardFactory.createTESTBOARD4X4();
@@ -51,21 +52,38 @@ public class Roborally{
         return robotsReady;
     }
 
+    public boolean allRobotsReadyForNextMove(){
+        boolean robotsReadyForNextMove = true;
+        for(Robot robot : robots){
+            robotsReadyForNextMove &= (robot.readyForNextMove());
+        }
+        return robotsReadyForNextMove;
+    }
+
     public void playAllRegistersIfRobotsReady(){
         if(allRobotsReady()){
             for(int registernr=0;registernr<5;registernr++){
                 playRegister(registernr);
-                if(this.winner != null) break;//TO DO: add a check that one robot cannot move the other from
-                //the winner square and be the winner himself.
+                if(this.winner != null) break;
             }
             prepareNextRound();
         }
     }
 
+    public void playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove(){
+        if(this.nextRegisterToBePlayed < 5){
+            if(allRobotsReady() & allRobotsReadyForNextMove()){
+                playRegister(this.nextRegisterToBePlayed);
+                this.nextRegisterToBePlayed++;
+            }
+        }
+    }   
+
     private void playRegister(int registernr){
         robots.sort(Robot.COMPARE_BY_CARD(registernr));
         for(Robot robot : robots){
             robotPlaysCard(robot, registernr);
+            robot.hasExecutedNextMove();
             if(robot.isWinner()){
                 this.winner = robot;
             }                
@@ -83,7 +101,7 @@ public class Roborally{
         }
     }
 
-    private void prepareNextRound(){
+    public void prepareNextRound(){
         robots.sort(Robot.COMPARE_BY_NAME);
         for(Robot robot : robots){
             robot.cyclePowerState(deck);
@@ -92,6 +110,7 @@ public class Roborally{
             robot.clearHand(deck);
         }
         removeUnactiveRobots();
+        this.nextRegisterToBePlayed = 0;
         for(Robot robot : robots){
             robot.drawCards(deck);
         }
@@ -198,6 +217,14 @@ public class Roborally{
 
     public Deck getDeck(){
         return this.deck;
+    }
+
+    public int getNextRegisterToBePlayed(){
+        return this.nextRegisterToBePlayed;
+    }
+
+    public void resetNextRegisterToBePlayed(){
+        this.nextRegisterToBePlayed = 0;
     }
 
     public void resetWinner(){

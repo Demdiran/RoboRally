@@ -7,6 +7,7 @@ export interface Robot{
     xCoordinate: number,
     yCoordinate: number,
     ready: boolean,
+    wantsToExecuteNextMove: boolean,
     hitpoints: number,
     status: string,
 }

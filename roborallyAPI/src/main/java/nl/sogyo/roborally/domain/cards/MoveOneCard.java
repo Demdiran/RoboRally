@@ -20,12 +20,6 @@ public class MoveOneCard extends Card{
         checkIfWinner(robot, board);
     }
 
-    // public void doCardAction(Robot robot, Board board){
-    //     if(canMoveForward(robot, board)) robot.moveForward();    
-    //     if(robotNotOnBoard(robot, board) || robotInPit(robot, board)) robot.respawn();
-    // }
-
-
     public String getName(){
         return "MoveOneCard";
     }
