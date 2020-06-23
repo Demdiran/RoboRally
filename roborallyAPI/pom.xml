@@ -50,7 +50,8 @@
 			<artifactId>json-simple</artifactId>
 			<version>${google-json-simple.version}</version>
 		</dependency>
-	</dependencies>
+	
+ </dependencies>
 
 	<build>
 		<finalName>Roborally API</finalName>

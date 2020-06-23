@@ -97,6 +97,7 @@ public class Roborally{
             fireBoardLasers();
             fireRobotLasers();
             activateBoardElements(Checkpoint.class);
+            if(registernr == 4) activateBoardElements(RepairSquare.class);
         }
     }
 
@@ -128,7 +129,7 @@ public class Roborally{
         return this.winner;
     }
 
-    void activateAllBoardElements(){
+    public void activateAllBoardElements(){
         activateFastConveyorbelt();
         activateSlowConveyorbelt();
         activateBoardElements(Gear180.class);
