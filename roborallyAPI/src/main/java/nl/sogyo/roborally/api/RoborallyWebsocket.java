@@ -53,9 +53,12 @@ public class RoborallyWebsocket{
             robot.wantsToExecuteNextMove();
             roborally.playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove();
             if(roborally.getWinner() != null){
-                String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
+                String winner = new JSONResultProcessor().createWinnerResponse(roborally);
+                session.getBasicRemote().sendText(winner);
+            }else if(!robot.isAlive()){
+                String gameover = new JSONResultProcessor().createGameOverResponse();
                 session.getBasicRemote().sendText(gameover);
-            } else if(roborally.getNextRegisterToBePlayed() <= 5){
+            }else if(roborally.getNextRegisterToBePlayed() <= 5){
                 for(Session player : players){
                     updateRobots(player);
                 }
@@ -93,8 +96,8 @@ public class RoborallyWebsocket{
             updatePlayerPowerStatus(player);
             updatePlayerHand(player);
             if(roborally.getWinner() != null){
-                String gameover = new JSONResultProcessor().createGameOverResponse(roborally);
-                player.getBasicRemote().sendText(gameover);
+                String winner = new JSONResultProcessor().createWinnerResponse(roborally);
+                player.getBasicRemote().sendText(winner);
             }
         }
     }

@@ -47,7 +47,7 @@ public class Roborally{
     public boolean allRobotsReady(){
         boolean robotsReady = true;
         for(Robot robot : robots){
-            robotsReady &= (robot.isReady() || robot.isInactive());
+            robotsReady &= (robot.isReady() || robot.isInactive() || !robot.isAlive());
         }
         return robotsReady;
     }
@@ -55,7 +55,7 @@ public class Roborally{
     public boolean allRobotsReadyForNextMove(){
         boolean robotsReadyForNextMove = true;
         for(Robot robot : robots){
-            robotsReadyForNextMove &= (robot.readyForNextMove());
+            robotsReadyForNextMove &= (robot.readyForNextMove() || robot.isInactive() || !robot.isAlive());
         }
         return robotsReadyForNextMove;
     }
@@ -118,7 +118,7 @@ public class Roborally{
     private void removeUnactiveRobots(){
         List<Robot> copyRobots = new ArrayList<Robot>(robots);
         for(Robot r:copyRobots){
-            if(!r.isOnBoard()){
+            if(!r.isOnBoard() || !r.isAlive() ){
                 robots.remove(r);
             }
         }
