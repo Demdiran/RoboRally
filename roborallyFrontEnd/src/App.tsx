@@ -12,6 +12,7 @@ import { NextMoveButton } from "./NextMoveButton";
 import { DealNewCardsButton } from "./DealNewCardsButton";
 import { Laser } from "./board/Laser";
 import { ProgrammedCards } from "./board/ProgrammedCards";
+import * as $ from 'jquery';
 
 export function App() {
     const [ board, setBoard ] = useState<Square[][] | undefined>(undefined);
@@ -52,13 +53,11 @@ export function App() {
     else{
         return <Startscreen login={initialiseConnection}></Startscreen>;
     }
-    
     async function initialiseConnection(name: string){
         if (websocket !== undefined && websocket.readyState !== WebSocket.CLOSED) {
             return;
         }
-        let tempwebsocket = new WebSocket("ws://localhost:3000/roborally/websocket");
-
+        let tempwebsocket = new WebSocket("ws://"+window.location.host+"/roborally/websocket");
         if(tempwebsocket !== undefined && tempwebsocket.readyState !== WebSocket.CLOSED){
 
             tempwebsocket.onopen = function(){
