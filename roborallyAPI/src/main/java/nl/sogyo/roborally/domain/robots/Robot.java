@@ -610,4 +610,8 @@ public class Robot{
         return false;
     }
 
+    public int getLives(){
+        return this.lives;
+    }
+
 }

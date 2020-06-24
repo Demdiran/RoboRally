@@ -1,5 +1,6 @@
 import React from "react";
 import { Colorize } from "@material-ui/icons";
+import { Badge } from "@material-ui/core";
 
 export interface Laser{
     orientation: string,
@@ -58,14 +59,14 @@ export function LaserElement({laser}: LaserElementProps){
                         style.height = laserheight;
                         break;
     }
-    let image = createLaserImage(laser);
+    let image = createLaserImage(laser, laser.firepower);
     return (<div style={style}>
         {image}
     </div>
     );
 }
 
-function createLaserImage(laser: Laser){
+function createLaserImage(laser: Laser, damage:number){
     let style : React.CSSProperties = {
         fontSize: 30,
     };
@@ -79,7 +80,10 @@ function createLaserImage(laser: Laser){
         case "West":    style.transform = "rotate(45deg)";
                         break;
     }
-    return <Colorize style={style}/>;
+    return(
+        <Badge badgeContent= {damage} color="primary">
+        <Colorize style={style}/>
+        </Badge>);
 }
 
 export function BeamElement({beam, zIndex, situation}: LaserbeamProps){

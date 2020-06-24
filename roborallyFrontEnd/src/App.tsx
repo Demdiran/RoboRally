@@ -12,7 +12,6 @@ import { NextMoveButton } from "./NextMoveButton";
 import { DealNewCardsButton } from "./DealNewCardsButton";
 import { Laser } from "./board/Laser";
 import { ProgrammedCards } from "./board/ProgrammedCards";
-import * as $ from 'jquery';
 
 export function App() {
     const [ board, setBoard ] = useState<Square[][] | undefined>(undefined);
@@ -89,7 +88,7 @@ export function App() {
     }
 
     function createBoard(squares: Square[][]){
-        let board = squares.map(row => row.map(square => new Square(square.type, square.northwall, square.eastwall, square.southwall, square.westwall)));
+        let board = squares.map(row => row.map(square => new Square(square.type, square.northwall, square.eastwall, square.southwall, square.westwall, square.hp)));
         setBoard(board);
     }
 

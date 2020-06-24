@@ -3,9 +3,11 @@ import { Robot, RobotElement } from "./../Robot";
 import { Laser, Laserbeam, LaserElement, BeamElement } from "./Laser";
 import { Flag, Home, Rotate90DegreesCcw, RotateLeft, RotateRight, Brightness1, KeyboardArrowUp, KeyboardArrowRight, KeyboardArrowDown, KeyboardArrowLeft, DoubleArrow, Build } from "@material-ui/icons";
 import zIndex from "@material-ui/core/styles/zIndex";
+import { Badge } from "@material-ui/core";
 
 export class Square{
     type: string;
+    hp:number;
     northwall: boolean;
     eastwall: boolean;
     southwall: boolean;
@@ -14,7 +16,7 @@ export class Square{
     private lasers: Laser[];
     private laserbeams: Laserbeam[];
 
-    constructor(type: string, northwall: boolean, eastwall: boolean, southwall: boolean, westwall: boolean){
+    constructor(type: string, northwall: boolean, eastwall: boolean, southwall: boolean, westwall: boolean, hp:number){
         this.type = type;
         this.northwall = northwall;
         this.eastwall = eastwall;
@@ -22,6 +24,7 @@ export class Square{
         this.westwall = westwall;
         this.lasers = [];
         this.laserbeams = [];
+        this.hp = hp;
     }
 
     public addLaser(laser: Laser) {
@@ -76,13 +79,13 @@ export class Square{
         return false;
     }
 
-    public render(rowNumber: number, columnNumber: number){
+    public render(rowNumber: number, columnNumber: number, hp: number){
         const [ squareImageZIndex, setSquareImageZIndex ] = useState<number>(1);
         const [ robotZIndex, setRobotZIndex ] = useState<number>(2);
         const [ beamZIndex, setBeamZIndex ] = useState<number>(1);
         let style = createStyle(this, columnNumber, rowNumber);
     
-        let squareImage = createImage(this.type, squareImageZIndex);
+        let squareImage = createImage(this.type, squareImageZIndex, hp);
     
         let robotElement: JSX.Element = <div></div>;
         if(this.robot != undefined){
@@ -147,7 +150,8 @@ function createStyle(square: Square, columnNumber: number, rowNumber: number){
     return style;
 }
 
-function createImage(type: string, zIndex: number){
+function createImage(type: string, zIndex: number, hp: number){
+    let squareHp = hp;
     // let FastConveyorbeltWest: React.CSSProperties = {
     //     fontSize: 80,
     //     position: "absolute",
@@ -177,7 +181,10 @@ function createImage(type: string, zIndex: number){
         case "SlowConveyorbeltEast": return <KeyboardArrowRight style={iconStyle}/>;
         case "SlowConveyorbeltSouth": return <KeyboardArrowDown style={iconStyle}/>;
         case "SlowConveyorbeltWest": return <KeyboardArrowLeft style={iconStyle}/>;
-        case "RepairSquare": return <Build style={iconStyle}/>;
+        case "RepairSquare": return(
+        <Badge badgeContent= {squareHp} color="secondary">
+        <Build style={iconStyle}/>
+        </Badge>);
         case "FastConveyorbeltNorth": return <img src="https://img.icons8.com/material/50/000000/double-up.png" style={iconStyle}/>;
         // case "FastConveyorbeltEast": return <DoubleArrow style={iconStyle}></DoubleArrow>;
         case "FastConveyorbeltEast": return <img src="https://img.icons8.com/material/50/000000/double-right.png" style={iconStyle}/>;
