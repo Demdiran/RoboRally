@@ -49,9 +49,9 @@ public class JSONResultProcessor {
         return response.toJSONString();
     }
 
-    public String createGameOverResponse(Roborally r){
+    public String createWinnerResponse(Roborally r){
         JSONObject response = new JSONObject();
-        response.put("messagetype", "gameover");
+        response.put("messagetype", "winner");
         response.put("body", r.getWinner().getName());
         return response.toJSONString();
     }
@@ -141,5 +141,12 @@ public class JSONResultProcessor {
         result.put("yCoordinate", laser.getyCoordinate());
         result.put("firepower", laser.getFirepower());
         return result;
+    }
+
+    public String createGameOverResponse(){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "gameover");
+        result.put("body", " ");
+        return result.toJSONString();
     }
 }

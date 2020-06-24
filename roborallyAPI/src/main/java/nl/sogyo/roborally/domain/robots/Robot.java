@@ -41,6 +41,7 @@ public class Robot{
     boolean hasReachedCheckpoint;
     boolean hasWonTheGame;
     int lives = 3;
+    boolean alive = true;
     
     public Robot(){
     }
@@ -602,6 +603,11 @@ public class Robot{
         this.xCoordinate = -1;
         this.yCoordinate = -1;
         this.lives--;
+    }
+
+    public boolean isAlive(){
+        if(this.lives > 0) return true;
+        return false;
     }
 
 }

@@ -23,9 +23,11 @@ export function App() {
     const [ programmedCards, setProgrammedCards ] = useState<Card[]>([]);
     const [ lockedCards, setLockedCards ] = useState<Card[]>([]);
     const [gameWinner, setWinner]  = useState<String | undefined>(undefined);
+    const [gameOver, setGameOver]  = useState<String | undefined>(undefined);
     let readyButtonClicked = false;
 
-    if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined){
+    if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined
+        && gameOver == undefined){
         return (<div>
                     <Board squares = {board} robots={robots} lasers={lasers}></Board>
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
@@ -40,6 +42,11 @@ export function App() {
         return(
         <div>Game Over. A long battle has been fought.. But after an immense power struggle,
             {gameWinner} has gained victory and will now continue to reign the universe until eternity.</div>
+        )
+    }
+    else if(gameOver != undefined){
+        return(
+        <div>Game is over, and I am sorry to say, but you are the loser.</div>
         )
     }
     else{
@@ -70,7 +77,8 @@ export function App() {
                 } 
                 else if(message.messagetype == "powerstatus") setPowerstatus(message.body);
                 else if(message.messagetype == "lasers") setLasers(message.body);
-                else if(message.messagetype == "gameover") setWinner(message.body);
+                else if(message.messagetype == "winner") setWinner(message.body);
+                else if(message.messagetype == "gameover") setGameOver(message.body);
             };
 
             tempwebsocket.onclose = function(event: WebSocketCloseEvent){
