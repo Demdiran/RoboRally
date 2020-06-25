@@ -17,6 +17,7 @@ public class Roborally{
     private Robot winner = null;
     Deck deck = new Deck();
     private int nextRegisterToBePlayed = 0;
+    private boolean readyForNextRound = false;
     
     public Roborally(){
         this.board = BoardFactory.createTESTBOARD4X4();
@@ -111,6 +112,7 @@ public class Roborally{
         }
         removeUnactiveRobots();
         this.nextRegisterToBePlayed = 0;
+        this.readyForNextRound = true;
         for(Robot robot : robots){
             robot.drawCards(deck);
         }
@@ -229,5 +231,9 @@ public class Roborally{
 
     public void resetWinner(){
         this.winner = null;
+    }
+
+    public boolean isReadyForNextRound(){
+        return this.readyForNextRound;
     }
 }

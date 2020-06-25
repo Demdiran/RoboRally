@@ -58,16 +58,32 @@ public class RoborallyWebsocket{
             }else if(!robot.isAlive()){
                 String gameover = new JSONResultProcessor().createGameOverResponse();
                 session.getBasicRemote().sendText(gameover);
-            }else if(roborally.getNextRegisterToBePlayed() <= 5){
-                for(Session player : players){
-                    updateRobots(player);
+            }else{
+                int regis = roborally.getNextRegisterToBePlayed();
+                if(regis<4){
+                    String movenr = new JSONResultProcessor().createMoveNrResponse(regis);
+                    session.getBasicRemote().sendText(movenr);
+                    for(Session player : players){
+                        updateRobots(player);
+                    }
+                }else if(regis==4){
+                    String movenr = new JSONResultProcessor().createMoveNrResponse(regis);
+                    String readystate = new JSONResultProcessor().createReadyState(true);
+                    session.getBasicRemote().sendText(movenr);
+                    session.getBasicRemote().sendText(readystate);
+                    for(Session player : players){
+                        updateRobots(player);
+                    }
                 }
+
             }
         }
         else if(message.equals("end turn")){
-            if(roborally.getNextRegisterToBePlayed() >= 5){
+            if(roborally.isReadyForNextRound()){
                 roborally.prepareNextRound();
                 updateAllPlayers();
+                String readystate = new JSONResultProcessor().createReadyState(false);
+                session.getBasicRemote().sendText(readystate);
             }
         }
         else {
@@ -77,6 +93,8 @@ public class RoborallyWebsocket{
             for(Session player : players){
                 updateRobots(player);
             }
+            String movenr = new JSONResultProcessor().createMoveNrResponse(roborally.getNextRegisterToBePlayed());
+            session.getBasicRemote().sendText(movenr);
         }
     }
 

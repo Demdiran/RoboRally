@@ -6,9 +6,11 @@ interface ProgrammedCardsProps{
     lockedcards: Card[],
     ready(cardids: number[], lockedcardids: number[]): void,
     removeCard(cardid: number): void,
+    movenr:number,
+    readyfornextround:boolean
 }
 
-export function ProgrammedCards({cards, lockedcards, ready, removeCard}: ProgrammedCardsProps){
+export function ProgrammedCards({cards, lockedcards, ready, removeCard, movenr, readyfornextround}: ProgrammedCardsProps){
     let mycarddivs = cards.map((card: Card, index: number) => <CardElement card={card} key={card.speed} onClick={removeCard}/>);
     let lockedcarddivs = lockedcards.map((card: Card, index: number) => <CardElement card={card} key={card.speed} onClick={removeCard}/>);
     return (      
@@ -16,7 +18,8 @@ export function ProgrammedCards({cards, lockedcards, ready, removeCard}: Program
         {mycarddivs}{lockedcarddivs}
         <button onClick={() => ready( cards.map((card: Card) => card.cardid),
          lockedcards.map((card: Card) => card.cardid) ) }
-         disabled={(cards.length+lockedcards.length) != 5}>ready</button>
+         disabled={(cards.length+lockedcards.length) != 5 || movenr != 0 ||
+          readyfornextround == true}>Ready</button>
       </div>
     );
 }

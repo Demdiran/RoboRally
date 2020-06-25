@@ -25,6 +25,8 @@ export function App() {
     const [ lockedCards, setLockedCards ] = useState<Card[]>([]);
     const [gameWinner, setWinner]  = useState<String | undefined>(undefined);
     const [gameOver, setGameOver]  = useState<String | undefined>(undefined);
+    const [movenr, setMovenr]  = useState<number>(0);
+    const [readyfornextround, setreadystate]  = useState<boolean>(false);
     let readyButtonClicked = false;
 
     if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined
@@ -32,11 +34,13 @@ export function App() {
         return (<div>
                     <Board squares = {board} robots={robots} lasers={lasers}></Board>
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
-                    <NextMoveButton onClick={() => displayNextMove()}/>
-                    <DealNewCardsButton onClick={() => endTurn()}/>
+                    <NextMoveButton movenr = {movenr} onClick={() => displayNextMove()}/>
+                    <DealNewCardsButton readystate = {readyfornextround} onClick={() => endTurn()}/>
                     <PlayerList players={robots} board = {board}></PlayerList>
                     <CardsInhand cards = {cardsInHand} onClick={programCard}></CardsInhand>
-                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards} removeCard={unProgramCard} ready={sendProgrammedCardsToServer}></ProgrammedCards>
+                    <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards}
+                     removeCard={unProgramCard} ready={sendProgrammedCardsToServer} movenr = {movenr}
+                     readyfornextround = {readyfornextround}></ProgrammedCards>
                 </div>);
     }
     else if(gameWinner != undefined){
@@ -78,6 +82,10 @@ export function App() {
                 else if(message.messagetype == "lasers") setLasers(message.body);
                 else if(message.messagetype == "winner") setWinner(message.body);
                 else if(message.messagetype == "gameover") setGameOver(message.body);
+                else if(message.messagetype == "movenr") setMovenr(message.body);
+                else if(message.messagetype == "readystate") setreadystate(message.body);
+
+
             };
 
             tempwebsocket.onclose = function(event: WebSocketCloseEvent){

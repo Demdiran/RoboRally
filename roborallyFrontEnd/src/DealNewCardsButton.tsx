@@ -1,9 +1,11 @@
 import React from "react";
 
 interface DealNewCardsButtonProps{
-    onClick(): void
+    onClick(): void,
+    readystate:boolean
 }
-export function DealNewCardsButton({onClick }: DealNewCardsButtonProps){
+export function DealNewCardsButton({onClick, readystate}: DealNewCardsButtonProps){
     let backgroundcolour = "yellow";
-    return <button style={{backgroundColor: backgroundcolour, fontSize: "40px"}} onClick={onClick}>deal new cards</button>
+    return <button style={{backgroundColor: backgroundcolour, fontSize: "40px"}}
+     onClick={onClick} disabled = {readystate == false}>deal new cards</button>
 }

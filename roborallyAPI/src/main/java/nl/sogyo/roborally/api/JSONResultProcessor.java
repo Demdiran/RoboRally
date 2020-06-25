@@ -149,4 +149,21 @@ public class JSONResultProcessor {
         result.put("body", " ");
         return result.toJSONString();
     }
+
+    public String createMoveNrResponse(int x){
+        if(x<4) x+=1;
+        else x =0;
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "movenr");
+        result.put("body", Integer.toString(x));
+        return result.toJSONString();
+    }
+
+    public String createReadyState(boolean ready){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "readystate");
+        result.put("body", ready);
+        return result.toJSONString();
+    }
+
 }
