@@ -27,7 +27,7 @@ export function Board({ squares, robots, lasers }: BoardProps){
 }
 
 function createRow(row: Square[], rowNumber: number):JSX.Element[]{
-    return row.map((square: Square, index: number) => square.render(rowNumber, index));
+    return row.map((square: Square, index: number) => square.render(rowNumber, index, square.hp));
 }
 
 function addRobotToBoard(robot: Robot, board: Square[][]){

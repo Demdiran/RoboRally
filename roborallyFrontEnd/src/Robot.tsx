@@ -10,6 +10,8 @@ export interface Robot{
     wantsToExecuteNextMove: boolean,
     hitpoints: number,
     status: string,
+    flagreached: boolean,
+    lives: number
 }
 
 interface RobotElementProps{
