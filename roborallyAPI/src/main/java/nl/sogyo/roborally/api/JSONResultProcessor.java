@@ -111,7 +111,7 @@ public class JSONResultProcessor {
         result.put("southwall", square.hasWallAt(Direction.SOUTH));
         result.put("westwall", square.hasWallAt(Direction.WEST));
         if(square.getType() != "RepairSquare") result.put("hp", 0);
-        else result.put("hp", ((RepairSquare) square).healingPower);
+        else result.put("hp", ((RepairSquare) square).getHealingPower());
         return result;
     }
 
@@ -126,7 +126,7 @@ public class JSONResultProcessor {
         result.put("hitpoints", robot.getHealth());
         result.put("status", robot.getActivitylevel().toString());
         result.put("lives", robot.getLives());
-        result.put("flagReached", robot.hasReachedCheckpoint());
+        result.put("flagreached", robot.hasReachedCheckpoint());
         return result;
     }
 
