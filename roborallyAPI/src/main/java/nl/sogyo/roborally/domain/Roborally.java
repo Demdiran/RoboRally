@@ -61,6 +61,16 @@ public class Roborally{
         return robotsReadyForNextMove;
     }
 
+    public void playAllRegistersIfRobotsReady(){
+        if(allRobotsReady()){
+            for(int registernr=0;registernr<5;registernr++){
+                playRegister(registernr);
+                if(this.winner != null) break;
+            }
+            prepareNextRound();
+        }
+    }
+
     public void playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove(){
         if(this.nextRegisterToBePlayed < 5){
             if(allRobotsReady() & allRobotsReadyForNextMove()){
