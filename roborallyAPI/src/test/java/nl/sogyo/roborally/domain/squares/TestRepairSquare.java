@@ -17,7 +17,7 @@ public class TestRepairSquare {
         Robot robot = new Robot(1,0, Direction.SOUTH);
         Roborally roborally = new Roborally(repairBoard, robot);
         robot.takeDamage(5);
-        int[] cards = {0,7,7,7,7};
+        int[] cards = {0,0,7,7,7};
         robot.program(cards);
         roborally.playAllRegistersIfRobotsReady();
         assert(robot.getHealth() == 6);
@@ -28,7 +28,7 @@ public class TestRepairSquare {
         Robot robot = new Robot(1,0, Direction.SOUTH);
         Roborally roborally = new Roborally(repairBoard, robot);
         robot.takeDamage(5);
-        int[] cards = {0,0,7,7,7};
+        int[] cards = {1,7,7,7,7};
         robot.program(cards);
         roborally.playAllRegistersIfRobotsReady();
         assert(robot.getHealth() == 4);

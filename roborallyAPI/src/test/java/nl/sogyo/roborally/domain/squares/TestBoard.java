@@ -210,4 +210,11 @@ public class TestBoard{
         assert(fastSlowConveyorsInteractionTestBoard.hasConsistentWalls());
     }
 
+    @Test
+    public void testBeginner12x12GameBoard(){
+        Board beginner12x12GameBoard = BoardFactory.createBeginner12x12GameBoard();
+        assert(beginner12x12GameBoard.isRectangular());
+        assert(beginner12x12GameBoard.hasConsistentWalls());
+        assert(beginner12x12GameBoard.allLasersOnWalls());
+    }
 }
