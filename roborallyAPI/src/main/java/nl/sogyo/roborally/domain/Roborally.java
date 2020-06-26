@@ -61,16 +61,6 @@ public class Roborally{
         return robotsReadyForNextMove;
     }
 
-    public void playAllRegistersIfRobotsReady(){
-        if(allRobotsReady()){
-            for(int registernr=0;registernr<5;registernr++){
-                playRegister(registernr);
-                if(this.winner != null) break;
-            }
-            prepareNextRound();
-        }
-    }
-
     public void playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove(){
         if(this.nextRegisterToBePlayed < 5){
             if(allRobotsReady() & allRobotsReadyForNextMove()){
@@ -98,7 +88,10 @@ public class Roborally{
             fireBoardLasers();
             fireRobotLasers();
             activateBoardElements(Checkpoint.class);
-            if(registernr == 4) activateBoardElements(RepairSquare.class);
+            if(registernr == 4){
+                activateBoardElements(RepairSquare.class);
+                this.readyForNextRound = true;
+            } 
         }
     }
 
@@ -112,7 +105,7 @@ public class Roborally{
         }
         removeUnactiveRobots();
         this.nextRegisterToBePlayed = 0;
-        this.readyForNextRound = true;
+        this.readyForNextRound = false;
         for(Robot robot : robots){
             robot.drawCards(deck);
         }

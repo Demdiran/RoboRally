@@ -150,8 +150,9 @@ public class JSONResultProcessor {
         return result.toJSONString();
     }
 
-    public String createMoveNrResponse(int x){
-        if(x<4) x+=1;
+    public String createMoveNrResponse(Roborally r){
+        int x = r.getNextRegisterToBePlayed();
+        if(x<5) x+=1;
         else x =0;
         JSONObject result = new JSONObject();
         result.put("messagetype", "movenr");
@@ -159,10 +160,10 @@ public class JSONResultProcessor {
         return result.toJSONString();
     }
 
-    public String createReadyState(boolean ready){
+    public String createReadyState(Roborally r){
         JSONObject result = new JSONObject();
         result.put("messagetype", "readystate");
-        result.put("body", ready);
+        result.put("body", r.isReadyForNextRound());
         return result.toJSONString();
     }
 
