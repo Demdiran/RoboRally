@@ -211,18 +211,26 @@ public class TestBoard{
     }
 
     @Test
-    public void testBeginner12x12GameBoard(){
-        Board beginner12x12GameBoard = BoardFactory.createBeginner12x12GameBoard();
-        assert(beginner12x12GameBoard.isRectangular());
-        assert(beginner12x12GameBoard.hasConsistentWalls());
-        assert(beginner12x12GameBoard.allLasersOnWalls());
+    public void testBeginner12x12GameboardCorridorBlitz(){
+        Board beginner12x12GameboardCorridorBlitz = BoardFactory.createBeginner12x12GameboardCorridorBlitz();
+        assert(beginner12x12GameboardCorridorBlitz.isRectangular());
+        assert(beginner12x12GameboardCorridorBlitz.hasConsistentWalls());
+        assert(beginner12x12GameboardCorridorBlitz.allLasersOnWalls());
     }
 
     @Test
-    public void testIntermediate12x12GameBoard(){
-        Board intermediate12x12GameBoard = BoardFactory.createIntermediate12x12GameBoard();
-        assert(intermediate12x12GameBoard.isRectangular());
-        assert(intermediate12x12GameBoard.hasConsistentWalls());
-        assert(intermediate12x12GameBoard.allLasersOnWalls());
+    public void testIntermediate12x12GameboardPassingLane(){
+        Board intermediate12x12GameboardPassingLane = BoardFactory.createIntermediate12x12GameboardPassingLane();
+        assert(intermediate12x12GameboardPassingLane.isRectangular());
+        assert(intermediate12x12GameboardPassingLane.hasConsistentWalls());
+        assert(intermediate12x12GameboardPassingLane.allLasersOnWalls());
+    }
+
+    @Test
+    public void testIntermediate12x12GameboardBurnout(){
+        Board intermediate12x12GameboardBurnout = BoardFactory.createIntermediate12x12GameboardBurnout();
+        assert(intermediate12x12GameboardBurnout.isRectangular());
+        assert(intermediate12x12GameboardBurnout.hasConsistentWalls());
+        assert(intermediate12x12GameboardBurnout.allLasersOnWalls());
     }
 }

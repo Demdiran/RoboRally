@@ -1206,8 +1206,8 @@ public class BoardFactory{
 		return fastSlowConveyorsInteractionTestBoard;
 	}
 
-	public static Board createBeginner12x12GameBoard(){
-		Board beginner12x12GameBoard = new Board();
+	public static Board createBeginner12x12GameboardCorridorBlitz(){
+		Board board = new Board();
 
 		ArrayList<Square> row0 = new ArrayList<>();
 		row0.add(new EmptySquare());
@@ -1385,28 +1385,28 @@ public class BoardFactory{
 		row11.add(new EmptySquare());
 		row11.add(new EmptySquare());
 
-		beginner12x12GameBoard.addRow(row0);
-		beginner12x12GameBoard.addRow(row1);
-		beginner12x12GameBoard.addRow(row2);
-		beginner12x12GameBoard.addRow(row3);
-		beginner12x12GameBoard.addRow(row4);
-		beginner12x12GameBoard.addRow(row5);
-		beginner12x12GameBoard.addRow(row6);
-		beginner12x12GameBoard.addRow(row7);
-		beginner12x12GameBoard.addRow(row8);
-		beginner12x12GameBoard.addRow(row9);
-		beginner12x12GameBoard.addRow(row10);
-		beginner12x12GameBoard.addRow(row11);
+		board.addRow(row0);
+		board.addRow(row1);
+		board.addRow(row2);
+		board.addRow(row3);
+		board.addRow(row4);
+		board.addRow(row5);
+		board.addRow(row6);
+		board.addRow(row7);
+		board.addRow(row8);
+		board.addRow(row9);
+		board.addRow(row10);
+		board.addRow(row11);
 
-		beginner12x12GameBoard.addLaser(laser1);
-		beginner12x12GameBoard.addLaser(laser2);
-		beginner12x12GameBoard.addLaser(laser3);
-		beginner12x12GameBoard.addLaser(laser4);
+		board.addLaser(laser1);
+		board.addLaser(laser2);
+		board.addLaser(laser3);
+		board.addLaser(laser4);
 
-		return beginner12x12GameBoard;
+		return board;
 	}
 
-	public static Board createIntermediate12x12GameBoard(){
+	public static Board createIntermediate12x12GameboardPassingLane(){
 		Board board = new Board();
 
 		ArrayList<Square> row0 = new ArrayList<>();
@@ -1602,6 +1602,206 @@ public class BoardFactory{
 		board.addLaser(laser2);
 		board.addLaser(laser3);
 		board.addLaser(laser4);
+
+		return board;
+	}
+
+	public static Board createIntermediate12x12GameboardBurnout(){
+		Board board = new Board();
+
+		ArrayList<Square> row0 = new ArrayList<>();
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare("E"));
+		row0.add(new EmptySquare("W"));
+		row0.add(new FastConveyorbelt(Direction.SOUTH));
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new EmptySquare());
+		row0.add(new FastConveyorbelt(Direction.NORTH));
+		row0.add(new EmptySquare());
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new EmptySquare("ReS"));
+		row1.add(new EmptySquare("E"));
+		row1.add(new FinalCheckPoint("W"));
+		row1.add(new FastConveyorbelt(Direction.SOUTH));
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new EmptySquare());
+		row1.add(new FastConveyorbelt(Direction.NORTH));
+		row1.add(new RepairSquare(3));
+		
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare("N"));
+		row2.add(new EmptySquare());
+		row2.add(new SlowConveyorbelt(Direction.EAST));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare("S"));
+		row2.add(new EmptySquare());
+		row2.add(new Pit());
+		row2.add(new RepairSquare(1));
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new EmptySquare());
+		row2.add(new SlowConveyorbelt(Direction.WEST));
+
+		ArrayList<Square> row3 = new ArrayList<>();
+		row3.add(new EmptySquare("Re"));
+		row3.add(new EmptySquare("ES"));
+		row3.add(new EmptySquare("W"));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare("NE"));
+		row3.add(new EmptySquare("W"));
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare());
+		row3.add(new EmptySquare("ES"));
+		row3.add(new EmptySquare("W"));
+		row3.add(new EmptySquare());
+
+		Laser laserRow3 = new Laser(5, 3, Direction.EAST, 3);
+
+		ArrayList<Square> row4 = new ArrayList<>();
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare("N"));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+		row4.add(new FastConveyorbelt(Direction.EAST));
+		row4.add(new FastConveyorbelt(Direction.EAST));
+		row4.add(new FastConveyorbelt(Direction.EAST));
+		row4.add(new FastConveyorbelt(Direction.SOUTH));
+		row4.add(new EmptySquare("N"));
+		row4.add(new EmptySquare());
+		row4.add(new EmptySquare());
+
+		Laser laserRow4 = new Laser(9, 4, Direction.SOUTH, 3);
+		
+		ArrayList<Square> row5 = new ArrayList<>();
+		row5.add(new EmptySquare("Re"));
+		row5.add(new EmptySquare("E"));
+		row5.add(new EmptySquare("W"));
+		row5.add(new EmptySquare());
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.NORTH));
+		row5.add(new GearRight());
+		row5.add(new EmptySquare());
+		row5.add(new FastConveyorbelt(Direction.SOUTH));
+		row5.add(new EmptySquare());
+		row5.add(new Pit());
+		row5.add(new EmptySquare());
+
+		ArrayList<Square> row6 = new ArrayList<>();
+		row6.add(new EmptySquare("Re"));
+		row6.add(new EmptySquare("E"));
+		row6.add(new EmptySquare("W"));
+		row6.add(new Pit());
+		row6.add(new EmptySquare());
+		row6.add(new FastConveyorbelt(Direction.NORTH));
+		row6.add(new RepairSquare(3));
+		row6.add(new EmptySquare());
+		row6.add(new FastConveyorbelt(Direction.SOUTH));
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+		row6.add(new EmptySquare());
+
+		ArrayList<Square> row7 = new ArrayList<>();
+		row7.add(new Gear180());
+		row7.add(new EmptySquare("S"));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare("S"));
+		row7.add(new FastConveyorbelt(Direction.NORTH));
+		row7.add(new FastConveyorbelt(Direction.WEST));
+		row7.add(new FastConveyorbelt(Direction.WEST));
+		row7.add(new FastConveyorbelt(Direction.WEST));
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+		row7.add(new EmptySquare());
+
+		Laser laserRow7 = new Laser(4, 7, Direction.NORTH, 3);
+
+		ArrayList<Square> row8 = new ArrayList<>();
+		row8.add(new EmptySquare("Re"));
+		row8.add(new EmptySquare("NE"));
+		row8.add(new EmptySquare("W"));
+		row8.add(new EmptySquare("E"));
+		row8.add(new EmptySquare("NW"));
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare("E"));
+		row8.add(new EmptySquare("WS"));
+		row8.add(new EmptySquare());
+		row8.add(new EmptySquare());
+
+		Laser laserRow8 = new Laser(8, 8, Direction.WEST, 3);
+
+		ArrayList<Square> row9 = new ArrayList<>();
+		row9.add(new EmptySquare("S"));
+		row9.add(new EmptySquare());
+		row9.add(new SlowConveyorbelt(Direction.EAST));
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare());
+		row9.add(new RepairSquare(1));
+		row9.add(new Pit());
+		row9.add(new EmptySquare());
+		row9.add(new EmptySquare("N"));
+		row9.add(new EmptySquare());
+		row9.add(new SlowConveyorbelt(Direction.EAST));
+
+		ArrayList<Square> row10 = new ArrayList<>();
+		row10.add(new EmptySquare("ReN"));
+		row10.add(new EmptySquare("E"));
+		row10.add(new RepairSquare(2, "W"));
+		row10.add(new FastConveyorbelt(Direction.SOUTH));
+		row10.add(new EmptySquare());
+		row10.add(new EmptySquare());
+		row10.add(new EmptySquare());
+		row10.add(new EmptySquare());
+		row10.add(new EmptySquare());
+		row10.add(new EmptySquare());
+		row10.add(new FastConveyorbelt(Direction.NORTH));
+		row10.add(new Checkpoint());
+
+		ArrayList<Square> row11 = new ArrayList<>();
+		row11.add(new EmptySquare());
+		row11.add(new EmptySquare("E"));
+		row11.add(new EmptySquare("W"));
+		row11.add(new FastConveyorbelt(Direction.SOUTH));
+		row11.add(new EmptySquare());
+		row11.add(new EmptySquare());
+		row11.add(new EmptySquare());
+		row11.add(new EmptySquare());
+		row11.add(new EmptySquare());
+		row11.add(new EmptySquare());
+		row11.add(new FastConveyorbelt(Direction.NORTH));
+		row11.add(new EmptySquare());
+
+		board.addRow(row0);
+		board.addRow(row1);
+		board.addRow(row2);
+		board.addRow(row3);
+		board.addRow(row4);
+		board.addRow(row5);
+		board.addRow(row6);
+		board.addRow(row7);
+		board.addRow(row8);
+		board.addRow(row9);
+		board.addRow(row10);
+		board.addRow(row11);
+
+		board.addLaser(laserRow3);
+		board.addLaser(laserRow4);
+		board.addLaser(laserRow7);
+		board.addLaser(laserRow8);
 
 		return board;
 	}
