@@ -217,4 +217,12 @@ public class TestBoard{
         assert(beginner12x12GameBoard.hasConsistentWalls());
         assert(beginner12x12GameBoard.allLasersOnWalls());
     }
+
+    @Test
+    public void testIntermediate12x12GameBoard(){
+        Board intermediate12x12GameBoard = BoardFactory.createIntermediate12x12GameBoard();
+        assert(intermediate12x12GameBoard.isRectangular());
+        assert(intermediate12x12GameBoard.hasConsistentWalls());
+        assert(intermediate12x12GameBoard.allLasersOnWalls());
+    }
 }
