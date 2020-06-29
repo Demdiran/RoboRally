@@ -126,9 +126,9 @@ public class RoborallyWebsocket{
     }
 
     private void updateAllRobots()throws IOException{
-        System.out.print("All robots ready: "+ roborally.allRobotsReadyForNextMove());
-        System.out.print("Next register: "+ roborally.getNextRegisterToBePlayed());
-        System.out.print("Roborally in programming phase: "+ roborally.inProgrammingPhase());
+        // System.out.print("All robots ready: "+ roborally.allRobotsReadyForNextMove());
+        // System.out.print("Next register: "+ roborally.getNextRegisterToBePlayed());
+        // System.out.print("Roborally in programming phase: "+ roborally.inProgrammingPhase());
 
         for(Session session : players){
             String robotresponse = new JSONResultProcessor().createRobotsResponse(roborally);
