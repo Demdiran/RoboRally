@@ -2,11 +2,12 @@ import React from "react";
 
 interface NextMoveButtonProps{
     onClick(): void,
-    movenr: number
+    movenr: number,
+    allplayersreadyformove: boolean
 
 }
-export function NextMoveButton({onClick, movenr}: NextMoveButtonProps){
+export function NextMoveButton({onClick, movenr, allplayersreadyformove}: NextMoveButtonProps){
     let backgroundcolour = "paleyellow";
 return <button style={{backgroundColor: backgroundcolour, fontSize: "40px"}} onClick={onClick}
-        disabled={movenr == 0}> Play Move {movenr}</button>
+        disabled={allplayersreadyformove == false}> Play Move {movenr}</button>
 }

@@ -156,19 +156,31 @@ public class JSONResultProcessor {
 
     public String createMoveNrResponse(Roborally r){
         int x = r.getNextRegisterToBePlayed();
-        if(x<5) x+=1;
-        else x =0;
+        if(!(x<6)) x=1;
         JSONObject result = new JSONObject();
         result.put("messagetype", "movenr");
         result.put("body", Integer.toString(x));
         return result.toJSONString();
     }
 
-    public String createReadyState(Roborally r){
+    public String readyToDealCards(boolean ans){
         JSONObject result = new JSONObject();
-        result.put("messagetype", "readystate");
-        result.put("body", r.isReadyForNextRound());
+        result.put("messagetype", "readytodealcards");
+        result.put("body", ans);
         return result.toJSONString();
     }
 
+    public String createReadyForMoveState(boolean ans){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "readyformovestate");
+        result.put("body", ans);
+        return result.toJSONString();
+    }
+
+    public String readyToProgram(boolean ans){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "readytoprogram");
+        result.put("body", ans);
+        return result.toJSONString();
+    }
 }

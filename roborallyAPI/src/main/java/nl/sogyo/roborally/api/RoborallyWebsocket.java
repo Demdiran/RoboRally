@@ -51,6 +51,8 @@ public class RoborallyWebsocket{
         else if(message.equals("display next move")){
             Robot robot = robots.get(session);
             robot.wantsToExecuteNextMove();
+            String readyformove= new JSONResultProcessor().createReadyForMoveState(false);
+            session.getBasicRemote().sendText(readyformove);
             roborally.playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove();
             if(roborally.getWinner() != null){
                 String winner = new JSONResultProcessor().createWinnerResponse(roborally);
@@ -59,32 +61,34 @@ public class RoborallyWebsocket{
                 String gameover = new JSONResultProcessor().createGameOverResponse();
                 session.getBasicRemote().sendText(gameover);
             }else{
-                String movenr = new JSONResultProcessor().createMoveNrResponse(roborally);
-                session.getBasicRemote().sendText(movenr);
-                String readystate = new JSONResultProcessor().createReadyState(roborally);
-                session.getBasicRemote().sendText(readystate);
-                for(Session player : players){
-                    updateRobots(player);
-                }
+                updateAllRobots();
             }
         }
         else if(message.equals("end turn")){
-            if(roborally.isReadyForNextRound()){
-                roborally.prepareNextRound();
-                updateAllPlayers();
-                String readystate = new JSONResultProcessor().createReadyState(roborally);
-                session.getBasicRemote().sendText(readystate);
+            roborally.entersProgrammingPhase();
+            roborally.dealtCards();
+            roborally.prepareNextRound();
+            updateAllPlayers();
+            System.out.println("reached");
+            for(Session player : players){
+                String readytodeal = new JSONResultProcessor().readyToDealCards(false);
+                player.getBasicRemote().sendText(readytodeal);
+                String readytoprogram = new JSONResultProcessor().readyToProgram(true);
+                player.getBasicRemote().sendText(readytoprogram);
+                String readyformove= new JSONResultProcessor().createReadyForMoveState(false);
+                player.getBasicRemote().sendText(readyformove);
             }
+            
         }
         else {
             int[] cardnrs = MessageParser.parseMessage(message);
             Robot robot = robots.get(session);
             robot.programFromHand(cardnrs);
-            for(Session player : players){
-                updateRobots(player);
-            }
-            String movenr = new JSONResultProcessor().createMoveNrResponse(roborally);
-            session.getBasicRemote().sendText(movenr);
+            roborally.leavesProgrammingPhase();
+            robot.wantsToExecuteNextMove();
+            updateAllRobots();
+            String readyToProgram = new JSONResultProcessor().readyToProgram(false);
+            session.getBasicRemote().sendText(readyToProgram);
         }
     }
 
@@ -99,8 +103,8 @@ public class RoborallyWebsocket{
     }
 
     private void updateAllPlayers()throws IOException{
+        updateAllRobots();
         for(Session player : players){
-            updateRobots(player);
             updatePlayerPowerStatus(player);
             updatePlayerHand(player);
             if(roborally.getWinner() != null){
@@ -121,9 +125,26 @@ public class RoborallyWebsocket{
         session.getBasicRemote().sendText(cards);
     }
 
-    private void updateRobots(Session session)throws IOException{
-        String robotresponse = new JSONResultProcessor().createRobotsResponse(roborally);
-        session.getBasicRemote().sendText(robotresponse);
+    private void updateAllRobots()throws IOException{
+        System.out.print("All robots ready: "+ roborally.allRobotsReadyForNextMove());
+        System.out.print("Next register: "+ roborally.getNextRegisterToBePlayed());
+        System.out.print("Roborally in programming phase: "+ roborally.inProgrammingPhase());
+
+        for(Session session : players){
+            String robotresponse = new JSONResultProcessor().createRobotsResponse(roborally);
+            session.getBasicRemote().sendText(robotresponse);
+            if(roborally.allRobotsReadyForNextMove()&& (roborally.getNextRegisterToBePlayed()<6)
+                && !roborally.inProgrammingPhase()){               
+                    String readyformove= new JSONResultProcessor().createReadyForMoveState(true);
+                    session.getBasicRemote().sendText(readyformove);
+            }
+            boolean readyToDeal = roborally.isReadyToDealCards();         
+            String readytodealresponse = new JSONResultProcessor().readyToDealCards(readyToDeal);
+            session.getBasicRemote().sendText(readytodealresponse);
+            String movenr = new JSONResultProcessor().createMoveNrResponse(roborally);
+            session.getBasicRemote().sendText(movenr);
+        }
+       
     }
 
     private void sendBoardInformation(Session session)throws IOException{

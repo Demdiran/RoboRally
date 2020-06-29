@@ -24,8 +24,12 @@ export function App() {
     const [ lockedCards, setLockedCards ] = useState<Card[]>([]);
     const [gameWinner, setWinner]  = useState<String | undefined>(undefined);
     const [gameOver, setGameOver]  = useState<String | undefined>(undefined);
-    const [movenr, setMovenr]  = useState<number>(0);
-    const [readyfornextround, setreadystate]  = useState<boolean>(false);
+    const [movenr, setMovenr]  = useState<number>(1);
+    const [readytodealcards, setreadytodealcards]  = useState<boolean>(false);
+    const [readytomove, setmovereadystate]  = useState<boolean>(false);
+    const [readytoprogram, setreadytoprogram]  = useState<boolean>(true);
+
+
     let readyButtonClicked = false;
 
     if(board != undefined && robots != undefined && lasers != undefined && gameWinner == undefined
@@ -33,13 +37,14 @@ export function App() {
         return (<div>
                     <Board squares = {board} robots={robots} lasers={lasers}></Board>
                     <Powerbutton powerstatus={powerstatus} onClick={() => powerDown()}/>
-                    <NextMoveButton movenr = {movenr} onClick={() => displayNextMove()}/>
-                    <DealNewCardsButton readystate = {readyfornextround} onClick={() => endTurn()}/>
+                    <NextMoveButton movenr = {movenr} allplayersreadyformove = {readytomove}
+                    onClick={() => displayNextMove()}/>
+                    <DealNewCardsButton readystate = {readytodealcards} onClick={() => endTurn()}/>
                     <PlayerList players={robots} board = {board}></PlayerList>
                     <CardsInhand cards = {cardsInHand} onClick={programCard}></CardsInhand>
                     <ProgrammedCards cards={programmedCards} lockedcards = {lockedCards}
                      removeCard={unProgramCard} ready={sendProgrammedCardsToServer} movenr = {movenr}
-                     readyfornextround = {readyfornextround}></ProgrammedCards>
+                     readytoprogram = {readytoprogram}></ProgrammedCards>
                 </div>);
     }
     else if(gameWinner != undefined){
@@ -82,7 +87,9 @@ export function App() {
                 else if(message.messagetype == "winner") setWinner(message.body);
                 else if(message.messagetype == "gameover") setGameOver(message.body);
                 else if(message.messagetype == "movenr") setMovenr(message.body);
-                else if(message.messagetype == "readystate") setreadystate(message.body);
+                else if(message.messagetype == "readytodealcards") setreadytodealcards(message.body);
+                else if(message.messagetype == "readyformovestate") setmovereadystate(message.body);
+                else if(message.messagetype == "readytoprogram") setreadytoprogram(message.body);
 
 
             };
