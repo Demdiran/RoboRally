@@ -102,9 +102,7 @@ public class Roborally{
             fireBoardLasers();
             fireRobotLasers();
             activateBoardElements(Checkpoint.class);
-            if(registernr == 4){
-                activateBoardElements(RepairSquare.class);
-            } 
+            activateBoardElements(RepairSquare.class);
         }
     }
 

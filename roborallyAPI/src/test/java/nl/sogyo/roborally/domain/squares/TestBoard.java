@@ -210,4 +210,35 @@ public class TestBoard{
         assert(fastSlowConveyorsInteractionTestBoard.hasConsistentWalls());
     }
 
+    @Test
+    public void testBeginner12x12GameboardCorridorBlitz(){
+        Board beginner12x12GameboardCorridorBlitz = BoardFactory.createBeginner12x12GameboardCorridorBlitz();
+        assert(beginner12x12GameboardCorridorBlitz.isRectangular());
+        assert(beginner12x12GameboardCorridorBlitz.hasConsistentWalls());
+        assert(beginner12x12GameboardCorridorBlitz.allLasersOnWalls());
+    }
+
+    @Test
+    public void testIntermediate12x12GameboardPassingLane(){
+        Board intermediate12x12GameboardPassingLane = BoardFactory.createIntermediate12x12GameboardPassingLane();
+        assert(intermediate12x12GameboardPassingLane.isRectangular());
+        assert(intermediate12x12GameboardPassingLane.hasConsistentWalls());
+        assert(intermediate12x12GameboardPassingLane.allLasersOnWalls());
+    }
+
+    @Test
+    public void testIntermediate12x12GameboardBurnout(){
+        Board intermediate12x12GameboardBurnout = BoardFactory.createIntermediate12x12GameboardBurnout();
+        assert(intermediate12x12GameboardBurnout.isRectangular());
+        assert(intermediate12x12GameboardBurnout.hasConsistentWalls());
+        assert(intermediate12x12GameboardBurnout.allLasersOnWalls());
+    }
+
+    @Test
+    public void testAdvanced12x12GameboardHeavyMergeArea(){
+        Board advanced12x12GameboardHeavyMergeArea = BoardFactory.createAdvanced12x12GameboardHeavyMergeArea();
+        assert(advanced12x12GameboardHeavyMergeArea.isRectangular());
+        assert(advanced12x12GameboardHeavyMergeArea.hasConsistentWalls());
+        assert(advanced12x12GameboardHeavyMergeArea.allLasersOnWalls());
+    }
 }
