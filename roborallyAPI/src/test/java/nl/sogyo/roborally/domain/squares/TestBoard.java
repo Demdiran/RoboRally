@@ -233,4 +233,12 @@ public class TestBoard{
         assert(intermediate12x12GameboardBurnout.hasConsistentWalls());
         assert(intermediate12x12GameboardBurnout.allLasersOnWalls());
     }
+
+    @Test
+    public void testAdvanced12x12GameboardHeavyMergeArea(){
+        Board advanced12x12GameboardHeavyMergeArea = BoardFactory.createAdvanced12x12GameboardHeavyMergeArea();
+        assert(advanced12x12GameboardHeavyMergeArea.isRectangular());
+        assert(advanced12x12GameboardHeavyMergeArea.hasConsistentWalls());
+        assert(advanced12x12GameboardHeavyMergeArea.allLasersOnWalls());
+    }
 }
