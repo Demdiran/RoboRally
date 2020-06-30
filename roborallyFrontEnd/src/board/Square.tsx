@@ -152,21 +152,18 @@ function createStyle(square: Square, columnNumber: number, rowNumber: number){
 
 function createImage(type: string, zIndex: number, hp: number){
     let squareHp = hp;
-    // let FastConveyorbeltWest: React.CSSProperties = {
-    //     fontSize: 80,
-    //     position: "absolute",
-    //     left: "50%",
-    //     top: "50%",
-    //     transform: "translate(-50%, -50%)",
-    //     transform: rotate(180deg),
-    //     -webkit-transform: rotate(180deg),
-    //     zIndex: zIndex,
-    // };
     let iconStyle: React.CSSProperties = {
-        fontSize: 80,
+        fontSize: 60,
         position: "absolute",
         left: "50%",
         top: "50%",
+        transform: "translate(-50%, -50%)",
+        zIndex: zIndex,
+    };
+    let repairStyle: React.CSSProperties = {
+        fontSize: 60,
+        position: "relative",
+        top: "0%",
         transform: "translate(-50%, -50%)",
         zIndex: zIndex,
     };
@@ -182,11 +179,10 @@ function createImage(type: string, zIndex: number, hp: number){
         case "SlowConveyorbeltSouth": return <KeyboardArrowDown style={iconStyle}/>;
         case "SlowConveyorbeltWest": return <KeyboardArrowLeft style={iconStyle}/>;
         case "RepairSquare": return(
-        <Badge badgeContent= {squareHp} color="secondary">
-        <Build style={iconStyle}/>
+        <Badge badgeContent= {squareHp} color="secondary" style={repairStyle}>
+        <Build />
         </Badge>);
         case "FastConveyorbeltNorth": return <img src="https://img.icons8.com/material/50/000000/double-up.png" style={iconStyle}/>;
-        // case "FastConveyorbeltEast": return <DoubleArrow style={iconStyle}></DoubleArrow>;
         case "FastConveyorbeltEast": return <img src="https://img.icons8.com/material/50/000000/double-right.png" style={iconStyle}/>;
         case "FastConveyorbeltSouth": return <img src="https://img.icons8.com/material/50/000000/double-down--v1.png" style={iconStyle}/>;
         case "FastConveyorbeltWest": return <img src="https://img.icons8.com/material/50/000000/double-left.png" style={iconStyle}/>;

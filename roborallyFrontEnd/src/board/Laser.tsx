@@ -89,11 +89,11 @@ function createLaserImage(laser: Laser, damage:number){
 export function BeamElement({beam, zIndex, situation}: LaserbeamProps){
     let beamLength = "0px";
     switch(situation){
-        case "robot":   beamLength = "37px";
+        case "robot":   beamLength = "17px";
                         break;
-        case "wall":    beamLength = "70px";
+        case "wall":    beamLength = "50px";
                         break;
-        case "none":    beamLength = "75px";
+        case "none":    beamLength = "55px";
     }
     let beamColor = "red";
     if(beam.firepower == 2) beamColor = "blue";
