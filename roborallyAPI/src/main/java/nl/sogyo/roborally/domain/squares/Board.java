@@ -102,8 +102,8 @@ public class Board{
 						for(int j=0; j<currentRow.size(); j++){
 							if(currentRow.get(j).respawnSquare)countRespawnSquares++;
 							if(countRespawnSquares == spawningNumber){
-								xRespawnPoint = i;
-								yRespawnPoint = j;
+								yRespawnPoint = i;
+								xRespawnPoint = j;
 								spawningDirection = currentRow.get(j).dir;
 								break outerloop;
 							}
