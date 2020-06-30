@@ -153,4 +153,34 @@ public class JSONResultProcessor {
         result.put("body", " ");
         return result.toJSONString();
     }
+
+    public String createMoveNrResponse(Roborally r){
+        int x = r.getNextRegisterToBePlayed();
+        if(!(x<6)) x=1;
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "movenr");
+        result.put("body", Integer.toString(x));
+        return result.toJSONString();
+    }
+
+    public String readyToDealCards(boolean ans){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "readytodealcards");
+        result.put("body", ans);
+        return result.toJSONString();
+    }
+
+    public String createReadyForMoveState(boolean ans){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "readyformovestate");
+        result.put("body", ans);
+        return result.toJSONString();
+    }
+
+    public String readyToProgram(boolean ans){
+        JSONObject result = new JSONObject();
+        result.put("messagetype", "readytoprogram");
+        result.put("body", ans);
+        return result.toJSONString();
+    }
 }

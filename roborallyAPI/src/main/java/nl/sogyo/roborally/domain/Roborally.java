@@ -17,6 +17,8 @@ public class Roborally{
     private Robot winner = null;
     Deck deck = new Deck();
     private int nextRegisterToBePlayed = 0;
+    private boolean readyToDealCards = false;
+    private boolean programmingPhase = true;
     
     public Roborally(){
         this.board = BoardFactory.createTESTBOARD4X4();
@@ -77,13 +79,16 @@ public class Roborally{
                 this.nextRegisterToBePlayed++;
             }
         }
+        if(this.nextRegisterToBePlayed == 5){
+            setReadyToDealCards();
+        }
     }   
 
     private void playRegister(int registernr){
         robots.sort(Robot.COMPARE_BY_CARD(registernr));
         for(Robot robot : robots){
             robotPlaysCard(robot, registernr);
-            robot.hasExecutedNextMove();
+            robot.wantsToExecuteNextMove();
             if(robot.isWinner()){
                 this.winner = robot;
             }                
@@ -108,6 +113,7 @@ public class Roborally{
             robot.unready();
             robot.respawnIfNecessary(board, robots);
             robot.clearHand(deck);
+            robot.hasExecutedNextMove();
         }
         removeUnactiveRobots();
         this.nextRegisterToBePlayed = 0;
@@ -220,7 +226,7 @@ public class Roborally{
     }
 
     public int getNextRegisterToBePlayed(){
-        return this.nextRegisterToBePlayed;
+        return this.nextRegisterToBePlayed+1;
     }
 
     public void resetNextRegisterToBePlayed(){
@@ -229,5 +235,29 @@ public class Roborally{
 
     public void resetWinner(){
         this.winner = null;
+    }
+
+    public boolean isReadyToDealCards(){
+        return this.readyToDealCards;
+    }
+
+    public void dealtCards(){
+        this.readyToDealCards = false;
+    }
+
+    public void setReadyToDealCards(){
+        this.readyToDealCards = true;
+    }
+
+    public boolean inProgrammingPhase(){
+        return this.programmingPhase;
+    }
+
+    public void entersProgrammingPhase(){
+        this.programmingPhase = true;
+    }
+
+    public void leavesProgrammingPhase(){
+        this.programmingPhase = false;
     }
 }
