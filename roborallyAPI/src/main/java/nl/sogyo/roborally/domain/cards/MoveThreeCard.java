@@ -21,7 +21,6 @@ public class MoveThreeCard extends Card{
             hasMoved = moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);            
             if(hasMoved && robot.isOnBoard()){
                 moveRobotInDirectionIfPossible(robot, robot.getOrientation(), board, robots);
-                checkIfWinner(robot, board);
             }
         }
     }

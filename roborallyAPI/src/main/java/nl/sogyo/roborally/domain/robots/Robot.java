@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-//import jdk.javadoc.internal.doclets.toolkit.resources.doclets;
 import nl.sogyo.roborally.domain.Direction;
 import nl.sogyo.roborally.domain.cards.DoNothingCard;
 import nl.sogyo.roborally.domain.cards.Card;
@@ -374,6 +373,10 @@ public class Robot{
 
     public void unready(){
         this.ready = false;
+    }
+
+    public void setReadyState(boolean readystate){
+        this.ready = readystate;
     }
 
     public boolean isReady(){

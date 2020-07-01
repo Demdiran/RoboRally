@@ -89,9 +89,7 @@ public class Roborally{
         for(Robot robot : robots){
             robotPlaysCard(robot, registernr);
             robot.wantsToExecuteNextMove();
-            if(robot.isWinner()){
-                this.winner = robot;
-            }                
+            if(robotIsWinner(robot, this.board)) this.winner = robot;
         }
         if(this.winner == null){
             activateFastConveyorbelt();
@@ -104,6 +102,21 @@ public class Roborally{
             activateBoardElements(Checkpoint.class);
             activateBoardElements(RepairSquare.class);
         }
+        for(Robot robot : robots){
+            if(robotIsWinner(robot, this.board)) this.winner = robot;
+        }
+    }
+
+    private boolean robotIsWinner(Robot robot, Board board){
+        boolean isWinner = false;
+        if(robot.isOnBoard()){
+            Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
+            if(currentPosition instanceof FinalCheckPoint && robot.hasReachedCheckpoint()){
+                robot.setToWinner();
+                isWinner = true;
+            } 
+        }
+        return isWinner;            
     }
 
     public void prepareNextRound(){

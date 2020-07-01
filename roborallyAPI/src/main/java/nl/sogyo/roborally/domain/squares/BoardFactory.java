@@ -1206,6 +1206,33 @@ public class BoardFactory{
 		return fastSlowConveyorsInteractionTestBoard;
 	}
 
+	public static Board createWinningFromBeltTestBoard(){
+		Board winningFromBeltTestBoard = new Board();
+
+		ArrayList<Square> row0 = new ArrayList<>();
+		row0.add(new EmptySquare());
+		row0.add(new SlowConveyorbelt(Direction.SOUTH));
+		row0.add(new EmptySquare());
+
+		ArrayList<Square> row1 = new ArrayList<>();
+		row1.add(new SlowConveyorbelt(Direction.EAST));
+		row1.add(new FinalCheckPoint());
+		row1.add(new SlowConveyorbelt(Direction.WEST));
+
+		ArrayList<Square> row2 = new ArrayList<>();
+		row2.add(new EmptySquare());
+		row2.add(new SlowConveyorbelt(Direction.NORTH));
+		row2.add(new EmptySquare());
+
+		winningFromBeltTestBoard.addRow(row0);
+		winningFromBeltTestBoard.addRow(row1);
+		winningFromBeltTestBoard.addRow(row2);
+
+		return winningFromBeltTestBoard;
+	}
+
+	// ------------------ GAME BOARDS ------------------------
+
 	public static Board createBeginner12x12GameboardCorridorBlitz(){
 		Board board = new Board();
 

@@ -17,6 +17,7 @@ public class TestRoborally {
     private Board ROBOTLASERTESTBOARDWALL = null;
     private Board BOARDLASERTESTBOARD = null;
     private Board WINNINGTESTBOARD = null;
+    private Board WINNINGFROMBELTTESTBOARD = null;
 
     private final int[] doNothingIntArray = {7,7,7,7,7};
     
@@ -28,6 +29,7 @@ public class TestRoborally {
         ROBOTLASERTESTBOARDWALL = BoardFactory.createRobotLaserWallTestBoard();
         BOARDLASERTESTBOARD = BoardFactory.createBoardlaserTestBoard();
         WINNINGTESTBOARD = BoardFactory.createWinningBoard();
+        WINNINGFROMBELTTESTBOARD = BoardFactory.createWinningFromBeltTestBoard();
      
     }
 
@@ -845,5 +847,15 @@ public class TestRoborally {
         assertEquals(roborally.getWinner(), robot2);
     }
 
-   
+    @Test
+    public void testWinnerFromConveyorBelt(){
+        Robot robot = new Robot(1, 0);
+        robot.reachCheckpoint();
+        robot.setReadyState(true);
+        robot.wantsToExecuteNextMove();
+        Roborally roborally = new Roborally(WINNINGFROMBELTTESTBOARD, robot);
+        robot.program(new DoNothingCard());
+        roborally.playNextRegisterIfAllRobotsReadyAndWantToExecuteNextMove();
+        assertEquals(roborally.getWinner(), robot);
+    }
 }

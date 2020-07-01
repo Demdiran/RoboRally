@@ -64,13 +64,6 @@ public abstract class Card{
         return false;
     }
 
-    protected void checkIfWinner(Robot robot, Board board){
-        if(robot.isOnBoard()){
-            Square currentPosition = board.getSquare(robot.getXCoordinate(), robot.getYCoordinate());
-            if(currentPosition instanceof FinalCheckPoint && robot.hasReachedCheckpoint()) robot.setToWinner(); 
-        }            
-    }
-
     public int getSpeed(){
         return this.speed;
     }

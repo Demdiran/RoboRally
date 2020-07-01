@@ -211,6 +211,13 @@ public class TestBoard{
     }
 
     @Test
+    public void testWinningFromBeltTestBoard(){
+        Board winningFromBeltTestBoard = BoardFactory.createWinningFromBeltTestBoard();
+        assert(winningFromBeltTestBoard.isRectangular());
+        assert(winningFromBeltTestBoard.hasConsistentWalls());
+    }
+
+    @Test
     public void testBeginner12x12GameboardCorridorBlitz(){
         Board beginner12x12GameboardCorridorBlitz = BoardFactory.createBeginner12x12GameboardCorridorBlitz();
         assert(beginner12x12GameboardCorridorBlitz.isRectangular());
